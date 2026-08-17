@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="presentation">
+  <defs>
+    <linearGradient id="bg-translation" x1="0" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#FAF8F3"/><stop offset="48%" stop-color="#EAF2F8"/><stop offset="100%" stop-color="#F7F4EE"/></linearGradient>
+    <radialGradient id="glow-83">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vig-translation" cx="0.5" cy="0.45" r="0.78">
+      <stop offset="55%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#192C3B" stop-opacity="0.12"/>
+    </radialGradient>
+    <filter id="grain-translation" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="83"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg-translation)"/>
+  <g transform="rotate(-7 336.0 442.8)" opacity="0.55"><rect x="96.0" y="126.0" width="480.0" height="633.6" fill="#FFFFFF" opacity="0.9"/><rect x="96.0" y="126.0" width="480.0" height="633.6" fill="none" stroke="#192C3B" stroke-opacity="0.26" stroke-width="0.9"/><g stroke="#192C3B" stroke-width="1" opacity="0.2" fill="none"><path d="M 148.8 208.4 L 397.5 208.4"/><path d="M 148.8 245.1 L 511.2 245.1"/><path d="M 148.8 281.9 L 478.1 281.9"/><path d="M 148.8 318.6 L 497.1 318.6"/><path d="M 148.8 355.4 L 488.8 355.4"/><path d="M 148.8 392.1 L 484.8 392.1"/><path d="M 148.8 428.9 L 366.1 428.9"/><path d="M 148.8 465.6 L 484.6 465.6"/><path d="M 148.8 502.4 L 495.2 502.4"/><path d="M 148.8 539.1 L 414.7 539.1"/><path d="M 148.8 575.9 L 437.1 575.9"/><path d="M 148.8 612.6 L 462.7 612.6"/><path d="M 148.8 649.4 L 487.2 649.4"/></g><path d="M 148.8 176.7 L 278.4 176.7" stroke="#285A8C" stroke-width="2.4" opacity="0.5"/></g><g transform="rotate(4 576.0 388.8)" opacity="0.75"><rect x="336.0" y="72.0" width="480.0" height="633.6" fill="#FFFFFF" opacity="0.9"/><rect x="336.0" y="72.0" width="480.0" height="633.6" fill="none" stroke="#192C3B" stroke-opacity="0.26" stroke-width="0.9"/><g stroke="#192C3B" stroke-width="1" opacity="0.2" fill="none"><path d="M 388.8 154.4 L 767.9 154.4"/><path d="M 388.8 191.1 L 783.1 191.1"/><path d="M 388.8 227.9 L 623.2 227.9"/><path d="M 388.8 264.6 L 669.4 264.6"/><path d="M 388.8 301.4 L 701.9 301.4"/><path d="M 388.8 338.1 L 616.0 338.1"/><path d="M 388.8 374.9 L 633.1 374.9"/><path d="M 388.8 411.6 L 767.7 411.6"/><path d="M 388.8 448.4 L 635.0 448.4"/><path d="M 388.8 485.1 L 587.1 485.1"/><path d="M 388.8 521.9 L 622.8 521.9"/><path d="M 388.8 558.6 L 740.6 558.6"/><path d="M 388.8 595.4 L 778.4 595.4"/></g><path d="M 388.8 122.7 L 518.4 122.7" stroke="#285A8C" stroke-width="2.4" opacity="0.5"/></g><g transform="rotate(-1.5 792.0 487.8)" opacity="1"><rect x="552.0" y="171.0" width="480.0" height="633.6" fill="#FFFFFF" opacity="0.9"/><rect x="552.0" y="171.0" width="480.0" height="633.6" fill="none" stroke="#192C3B" stroke-opacity="0.26" stroke-width="0.9"/><g stroke="#192C3B" stroke-width="1" opacity="0.2" fill="none"><path d="M 604.8 253.4 L 950.5 253.4"/><path d="M 604.8 290.1 L 855.8 290.1"/><path d="M 604.8 326.9 L 938.5 326.9"/><path d="M 604.8 363.6 L 875.1 363.6"/><path d="M 604.8 400.4 L 820.9 400.4"/><path d="M 604.8 437.1 L 986.3 437.1"/><path d="M 604.8 473.9 L 865.6 473.9"/><path d="M 604.8 510.6 L 946.2 510.6"/><path d="M 604.8 547.4 L 1002.4 547.4"/><path d="M 604.8 584.1 L 841.9 584.1"/><path d="M 604.8 620.9 L 945.7 620.9"/><path d="M 604.8 657.6 L 881.0 657.6"/><path d="M 604.8 694.4 L 912.5 694.4"/></g><path d="M 604.8 221.7 L 734.4 221.7" stroke="#285A8C" stroke-width="2.4" opacity="0.5"/></g>
+  <rect width="1200" height="900" fill="url(#vig-translation)"/>
+  <rect width="1200" height="900" filter="url(#grain-translation)" opacity="0.55"/>
+</svg>

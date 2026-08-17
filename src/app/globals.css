@@ -1,0 +1,179 @@
+/*
+ * 한글 본문 서체(Pretendard)는 src/app/layout.tsx 의 <link> 로 불러옵니다.
+ * (CSS @import 체인을 피해 렌더 블로킹을 줄이기 위함)
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --header-height: 76px;
+  }
+
+  * {
+    @apply border-line;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* sticky header 보정 */
+    scroll-padding-top: calc(var(--header-height) + 16px);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white text-navy antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+    word-break: keep-all; /* 한글 줄바꿈 품질 */
+    overflow-wrap: break-word;
+  }
+
+  ::selection {
+    @apply bg-brand text-white;
+  }
+
+  /*
+   * Cormorant Garamond 는 기본이 old-style figures 라 "01" 이 "oɪ" 처럼 보입니다.
+   * 세리프로 조판하는 번호는 lining figures 로 강제합니다.
+   */
+  .font-serif {
+    font-variant-numeric: lining-nums proportional-nums;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand ring-offset-2 ring-offset-white;
+  }
+
+  .on-dark :focus-visible {
+    @apply ring-white ring-offset-brand-deep;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-shell px-gutter;
+  }
+
+  /* 섹션 상단 소형 영문 라벨 */
+  .eyebrow {
+    @apply text-eyebrow font-semibold uppercase text-brand;
+  }
+
+  .eyebrow-invert {
+    @apply text-eyebrow font-semibold uppercase text-white/60;
+  }
+
+  /* 링크 hover underline (과하지 않게) */
+  .link-underline {
+    @apply relative inline-block;
+  }
+
+  .link-underline::after {
+    content: '';
+    @apply absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-500 ease-certo;
+  }
+
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    @apply origin-left scale-x-100;
+  }
+
+  /* 얇은 규칙선 — editorial */
+  .rule {
+    @apply h-px w-full bg-line;
+  }
+
+  .rule-invert {
+    @apply h-px w-full bg-line-invert;
+  }
+
+  /* 가로 스와이프 영역 (모바일) */
+  .swipe-row {
+    @apply flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .swipe-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .swipe-item {
+    @apply snap-start shrink-0;
+  }
+
+  /* 이미지 위 톤 통일 오버레이 */
+  .tone-blue::after {
+    content: '';
+    @apply pointer-events-none absolute inset-0;
+    background: linear-gradient(180deg, rgba(23, 59, 94, 0.12) 0%, rgba(23, 59, 94, 0.42) 100%);
+  }
+
+  .tone-ivory::after {
+    content: '';
+    @apply pointer-events-none absolute inset-0;
+    background: linear-gradient(180deg, rgba(247, 244, 238, 0.1) 0%, rgba(25, 44, 59, 0.28) 100%);
+  }
+}
+
+@layer utilities {
+  /* 아주 약한 image zoom */
+  .zoom-slow img {
+    @apply transition-transform duration-[1200ms] ease-certo;
+  }
+
+  .zoom-slow:hover img {
+    transform: scale(1.035);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+/* 스크롤 진입 애니메이션 (Reveal 컴포넌트) */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 1s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+[data-reveal='shown'] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal],
+  [data-reveal='shown'] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .zoom-slow img,
+  .zoom-slow:hover img {
+    transition: none;
+    transform: none;
+  }
+}
