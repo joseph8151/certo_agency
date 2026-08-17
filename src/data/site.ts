@@ -4,14 +4,28 @@
  * 회사 정보와 연락처는 이 파일만 수정하면 사이트 전체에 반영됩니다.
  */
 
+/**
+ * 사이트 절대 주소 — canonical, sitemap.xml, OG 태그, JSON-LD 에 사용됩니다.
+ *
+ * 배포 환경에서는 환경 변수로 지정하는 것을 권장합니다. (코드 수정 없이 도메인 변경 가능)
+ *   Cloudflare  → Workers 설정 > Variables and Secrets 에 NEXT_PUBLIC_SITE_URL 추가
+ *   Vercel      → Project Settings > Environment Variables
+ *   로컬        → .env.local  (`.env.example` 참고)
+ *
+ * 빌드 시점에 인라인되므로, 값을 바꾼 뒤에는 반드시 재배포해야 반영됩니다.
+ */
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.certoagency.com').replace(
+  /\/+$/,
+  '',
+);
+
 export const site = {
   name: 'CERTO AGENCY',
   nameKo: '체르토 에이전시',
   tagline: 'Global Interpretation & Translation Agency',
   taglineKo: '해외 통번역 · 국내 통번역 · 기업 전문 통번역 · 고품격 전문가 매칭',
   promise: '필요한 언어만 연결하는 것이 아니라, 프로젝트에 적합한 전문가를 연결합니다.',
-  // 배포 도메인으로 교체하세요. (metadataBase / sitemap / JSON-LD 에 사용됩니다)
-  url: 'https://www.certoagency.com',
+  url: SITE_URL,
   locale: 'ko_KR',
 } as const;
 

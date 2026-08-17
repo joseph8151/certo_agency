@@ -69,7 +69,7 @@ src/
 │   ├── ServicePage.tsx         # 서비스 상세 페이지 템플릿 (4개 페이지 공용)
 │   └── ui/                     # Button · Figure · LineMap · Reveal · SectionHeading
 ├── data/                       # ← 내용 수정은 대부분 여기서 끝납니다
-│   ├── site.ts                 # 회사 정보 · 연락처 · 사업자 정보 · 네비게이션
+│   ├── site.ts                 # 회사 정보 · 연락처 · 사업자 정보 · 네비게이션 · 사이트 주소
 │   ├── content.ts              # 홈 각 섹션의 문구 · 목록 데이터
 │   ├── services.ts             # 서비스 상세 페이지 4개의 콘텐츠
 │   └── images.ts               # 이미지 매니페스트
@@ -204,8 +204,9 @@ GTM 트리거 예: *Click - All Elements* / `Click Element` matches CSS selector
 - `sitemap.xml`, `robots.txt` 자동 생성
 - 시맨틱 HTML (`<header> <main> <section> <nav> <footer>`, 섹션별 `aria-labelledby`)
 
-**배포 전에 `src/data/site.ts` 의 `url` 을 실제 도메인으로 바꿔주세요.**
-`metadataBase`, canonical, sitemap, JSON-LD 가 이 값을 사용합니다.
+**배포 전에 `NEXT_PUBLIC_SITE_URL` 환경 변수를 실제 도메인으로 설정하세요.**
+`metadataBase`, canonical, `sitemap.xml`, `robots.txt`, OG 태그, JSON-LD 가 모두 이 값을 씁니다.
+설정하지 않으면 `src/data/site.ts` 의 기본값이 사용됩니다.
 
 ### OG 이미지
 
@@ -282,31 +283,49 @@ node scripts/generate-placeholders.mjs
 
 ```bash
 npm run cf:preview   # 로컬에서 Workers 런타임으로 미리보기
-npm run cf:deploy    # Cloudflare 에 배포
+npm run cf:deploy    # 로컬에서 직접 배포
 ```
 
-대시보드에서 Git 연동으로 배포하는 경우 빌드 명령은 `npm run cf:build`,
-배포 명령은 `npx wrangler deploy` 로 설정합니다.
+**대시보드 Git 연동으로 배포하는 경우** 빌드 설정을 아래로 맞춰야 합니다.
+Next.js 기본 프리셋(`next build`)을 그대로 쓰면 Workers 번들이 생성되지 않아 실패합니다.
+
+| 항목 | 값 |
+| --- | --- |
+| Build command | `npm run cf:build` |
+| Deploy command | `npx wrangler deploy` |
+| Version command | *(비움)* |
+
+`wrangler.jsonc` 의 `name` 은 `certo-agency` 입니다. 대시보드에서 만든 Worker 이름이
+다르면 이 값을 같은 이름으로 맞춰주세요. 다르면 별도 Worker 가 새로 생성됩니다.
+
+**환경 변수** — Workers 설정 > Variables and Secrets 에 등록합니다.
+빌드 시점에 인라인되는 값이므로, 변경 후에는 재배포가 필요합니다.
+
+| 변수 | 용도 |
+| --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | 배포 도메인. canonical / sitemap / OG / JSON-LD 에 사용 |
+| `NEXT_IMAGE_UNOPTIMIZED` | 실사 사진 사용 + Cloudflare Images 미사용 시 `true` |
+
+**로그 확인** — `wrangler.jsonc` 에 `observability` 를 켜두었습니다.
+알림 채널을 연결하기 전까지는 접수된 문의를 Workers 로그에서만 볼 수 있습니다.
+로그는 장기 보관되지 않으므로, 운영 시작 전에 이메일 연동을 먼저 마치세요.
 
 확인된 동작 범위 — 홈과 서비스 상세 페이지, `sitemap.xml`, `robots.txt`,
-OG 이미지, 그리고 문의 API(`/api/contact`)까지 Workers 런타임에서 정상 동작합니다.
+OG 이미지, 문의 API(`/api/contact`)까지 Workers 런타임에서 정상 동작합니다.
 
-**한 가지 주의할 점.** 지금은 이미지가 SVG 라서 Next.js 가 이미지 최적화를 건너뛰고
+**이미지 최적화 주의.** 지금은 이미지가 SVG 라서 Next.js 가 최적화를 건너뛰고
 원본을 그대로 내보냅니다. 그래서 현재 상태로는 추가 설정이 필요 없습니다.
 하지만 실사 사진(.jpg/.png)으로 교체하면 `next/image` 가 최적화 경로를 타게 되고,
 Cloudflare 에서는 이때 둘 중 하나를 선택해야 합니다.
 
 - Cloudflare Images 바인딩을 붙인다 (유료, 변환 단위 과금)
-- 최적화를 끈다 → 빌드 시 `NEXT_IMAGE_UNOPTIMIZED=true` 설정
+- 최적화를 끈다 → `NEXT_IMAGE_UNOPTIMIZED=true`
   (이 경우 사진을 업로드 전에 미리 리사이즈·압축해 두세요)
-
-Vercel 은 이미지 최적화가 기본 포함이라 이 선택이 필요 없습니다.
-사진을 많이 쓸 계획이라면 Vercel 이, 이미 Cloudflare 에 도메인과 인프라가 있다면
-Cloudflare 가 유리합니다.
 
 ### 배포 전 체크리스트
 
-- [ ] `src/data/site.ts` 의 `url` 을 실제 도메인으로 변경
+- [ ] `NEXT_PUBLIC_SITE_URL` 환경 변수를 실제 도메인으로 설정
+      (미설정 시 `src/data/site.ts` 의 기본값 `https://www.certoagency.com` 사용)
 - [ ] `contactInfo` / `businessInfo` 실제 정보 입력
 - [ ] `src/app/api/contact/route.ts` 에 알림 채널 연결
 - [ ] `public/images/` 실사 사진 교체 및 `src/data/images.ts` 의 `alt` 갱신
