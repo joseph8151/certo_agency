@@ -228,6 +228,7 @@ const plates = [
   { name: 'translation', w: 1200, h: 900, seed: 83, tone: 'light', motif: 'documents' },
   { name: 'domestic', w: 1200, h: 1400, seed: 109, tone: 'dark', motif: 'skyline' },
   { name: 'business', w: 1600, h: 900, seed: 151, tone: 'dark', motif: 'skyline' },
+  { name: 'global', w: 1000, h: 1250, seed: 271, tone: 'dark', motif: 'perspective' },
 ];
 
 for (const p of plates) {

@@ -37,7 +37,7 @@ export default function GlobalInterpretation() {
 
             <Reveal delay={200}>
               <div className="mt-12">
-                <Cta href="#contact" variant="invert" track="global-cta">
+                <Cta href="/global" variant="invert" track="global-cta">
                   해외 통역 문의
                 </Cta>
               </div>

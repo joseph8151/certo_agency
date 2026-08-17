@@ -71,7 +71,7 @@ export default function Services() {
 
                   <Reveal delay={240}>
                     <div className="mt-10">
-                      <Cta href="#contact" variant="outline" track={`service-${area.id}`}>
+                      <Cta href={`/${area.id}`} variant="outline" track={`service-${area.id}`}>
                         {area.cta}
                       </Cta>
                     </div>

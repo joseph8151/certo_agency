@@ -57,11 +57,11 @@ export const images = {
     alt: '기업 글로벌 커뮤니케이션 현장',
     subject: '기업 임원 미팅 · 글로벌 오피스 · 파트너십 현장',
   },
-  industries: {
-    src: '/images/industries.svg',
-    ratio: '3 / 2',
-    alt: '다양한 산업 분야의 비즈니스 현장',
-    subject: '산업 현장 · 전시회 부스 · 기업 방문',
+  global: {
+    src: '/images/global.svg',
+    ratio: '4 / 5',
+    alt: '해외 비즈니스 현장',
+    subject: '공항 · 해외 컨벤션 센터 · 국제 전시회 현장, 세로형 구도',
   },
 } satisfies Record<string, ImageSlot>;
 

@@ -11,6 +11,13 @@ type Props = {
   className?: string;
   /** 아주 약한 hover zoom */
   zoom?: boolean;
+  /**
+   * 프레임 비율 강제 지정 (예: '4 / 5').
+   * 생략하면 이미지 매니페스트의 ratio 를 사용합니다.
+   * 소스 비율이 달라도 object-cover 로 채워지므로, 여러 페이지의
+   * 이미지 무게를 동일하게 맞출 때 사용합니다.
+   */
+  ratio?: string;
 };
 
 export default function Figure({
@@ -20,13 +27,14 @@ export default function Figure({
   sizes = '(max-width: 768px) 100vw, 50vw',
   className = '',
   zoom = true,
+  ratio,
 }: Props) {
   const toneClass = tone === 'blue' ? 'tone-blue' : tone === 'ivory' ? 'tone-ivory' : '';
 
   return (
     <div
       className={`relative isolate overflow-hidden bg-ivory ${toneClass} ${zoom ? 'zoom-slow' : ''} ${className}`}
-      style={{ aspectRatio: image.ratio }}
+      style={{ aspectRatio: ratio ?? image.ratio }}
     >
       <Image
         src={image.src}

@@ -48,7 +48,7 @@ export default function DomesticInterpretation() {
 
           <Reveal delay={180}>
             <div className="mt-11">
-              <Cta href="#contact" track="domestic-cta">
+              <Cta href="/interpretation" track="domestic-cta">
                 국내 통역 문의하기
               </Cta>
             </div>

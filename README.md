@@ -4,7 +4,8 @@
 
 > 필요한 언어만 연결하는 것이 아니라, 프로젝트에 적합한 전문가를 연결합니다.
 
-국내·해외 통역과 전문 번역을 제공하는 프리미엄 랭귀지 에이전시의 원페이지 사이트입니다.
+국내·해외 통역과 전문 번역을 제공하는 프리미엄 랭귀지 에이전시 웹사이트입니다.
+홈 1개 + 서비스 상세 4개(`/interpretation` `/translation` `/global` `/business`)로 구성되며,
 Next.js(App Router) + TypeScript + Tailwind CSS 로 제작되었습니다.
 
 ---
@@ -18,6 +19,9 @@ npm run build    # 프로덕션 빌드
 npm start        # 프로덕션 서버
 npm run lint     # ESLint
 npm run typecheck
+
+npm run cf:preview  # Cloudflare Workers 런타임으로 로컬 미리보기
+npm run cf:deploy   # Cloudflare Workers 배포
 ```
 
 Node.js 20 이상을 권장합니다.
@@ -29,8 +33,14 @@ Node.js 20 이상을 권장합니다.
 ```
 src/
 ├── app/
-│   ├── layout.tsx          # 폰트, SEO 메타데이터, JSON-LD 구조화 데이터
-│   ├── page.tsx            # 섹션 조립 (여기서 순서를 바꿀 수 있습니다)
+│   ├── layout.tsx          # 폰트, SEO 메타데이터, 조직 JSON-LD, Header/Footer 공용 배치
+│   ├── page.tsx            # 홈 — 섹션 조립 (여기서 순서를 바꿀 수 있습니다)
+│   ├── interpretation/     # 통역 서비스 상세
+│   ├── translation/        # 번역 서비스 상세
+│   ├── global/             # 해외 통역 상세
+│   ├── business/           # 기업 전담 통번역 상세
+│   ├── not-found.tsx       # 404
+│   ├── opengraph-image.tsx # OG 카드 이미지 (빌드 시 생성)
 │   ├── globals.css         # 디자인 토큰 기반 전역 스타일
 │   ├── icon.svg            # 파비콘
 │   ├── robots.ts / sitemap.ts
@@ -56,10 +66,12 @@ src/
 │   ├── Contact.tsx             # 문의 폼
 │   ├── Footer.tsx
 │   ├── StickyCta.tsx           # 모바일 하단 고정 CTA
+│   ├── ServicePage.tsx         # 서비스 상세 페이지 템플릿 (4개 페이지 공용)
 │   └── ui/                     # Button · Figure · LineMap · Reveal · SectionHeading
 ├── data/                       # ← 내용 수정은 대부분 여기서 끝납니다
 │   ├── site.ts                 # 회사 정보 · 연락처 · 사업자 정보 · 네비게이션
-│   ├── content.ts              # 모든 섹션의 문구 · 목록 데이터
+│   ├── content.ts              # 홈 각 섹션의 문구 · 목록 데이터
+│   ├── services.ts             # 서비스 상세 페이지 4개의 콘텐츠
 │   └── images.ts               # 이미지 매니페스트
 └── lib/inquiry.ts              # 문의 폼 스키마 및 검증 (클라이언트/서버 공용)
 ```
@@ -108,6 +120,20 @@ export const contactInfo = {
 ### 섹션 순서 변경 / 제거
 
 `src/app/page.tsx` 에서 컴포넌트 순서를 바꾸거나 지우면 됩니다.
+
+### 서비스 상세 페이지
+
+`/interpretation`, `/translation`, `/global`, `/business` 네 페이지는
+하나의 템플릿(`src/components/ServicePage.tsx`)이 `src/data/services.ts` 의
+데이터를 받아 렌더링합니다. 문구를 고치려면 데이터만 수정하면 됩니다.
+
+새 서비스 페이지를 추가하려면
+
+1. `src/data/services.ts` 의 `servicePages` 에 항목을 추가합니다.
+2. `src/app/<slug>/page.tsx` 를 기존 파일과 동일한 형태로 만듭니다.
+
+네비게이션(`src/data/site.ts`), `sitemap.xml`, 조직 구조화 데이터는
+이 데이터를 참조하므로 자동으로 반영됩니다.
 
 ---
 
@@ -173,7 +199,8 @@ GTM 트리거 예: *Click - All Elements* / `Click Element` matches CSS selector
 ## SEO
 
 - `src/app/layout.tsx` 에 title / description / keywords / Open Graph / Twitter Card 설정
-- `ProfessionalService` + `FAQPage` JSON-LD 구조화 데이터 (FAQ 데이터에서 자동 생성)
+- 구조화 데이터 — 전 페이지 `ProfessionalService`, 홈 `FAQPage`,
+  서비스 상세 페이지 `Service` + `BreadcrumbList` + `FAQPage` (모두 데이터에서 자동 생성)
 - `sitemap.xml`, `robots.txt` 자동 생성
 - 시맨틱 HTML (`<header> <main> <section> <nav> <footer>`, 섹션별 `aria-labelledby`)
 
@@ -182,8 +209,9 @@ GTM 트리거 예: *Click - All Elements* / `Click Element` matches CSS selector
 
 ### OG 이미지
 
-`src/app/opengraph-image.(png|jpg)` 파일을 추가하면 Next.js가 자동으로 인식합니다.
-권장 크기 1200×630.
+`src/app/opengraph-image.tsx` 가 브랜드 디자인의 OG 카드(1200×630)를 빌드 시 생성합니다.
+촬영된 브랜드 이미지로 바꾸려면 이 파일을 지우고
+`src/app/opengraph-image.png` (1200×630) 을 넣으면 됩니다.
 
 ---
 
@@ -228,13 +256,59 @@ node scripts/generate-placeholders.mjs
 
 ## 배포
 
-Vercel 을 권장합니다. (Next.js App Router 기본 지원)
+### 어디에 호스팅할까
 
-배포 전 체크리스트
+| 호스팅 | 적합도 | 비고 |
+| --- | --- | --- |
+| **Vercel** | ★ 권장 | Next.js 제작사. 추가 설정 없이 그대로 동작합니다. |
+| **Cloudflare Workers** | ★ 가능 (설정 완료) | `@opennextjs/cloudflare` 어댑터로 이미 구성해 두었습니다. |
+| Netlify / AWS Amplify / Render | 가능 | Next.js 어댑터를 통해 배포합니다. |
+| Node 서버 (Docker, NCP, NHN 등) | 가능 | `npm run build && npm start` (Node 20+) |
+| 순수 정적 호스팅 (S3, GitHub Pages) | ✗ | 문의 API(`/api/contact`)가 서버에서 동작해야 하므로 부적합합니다. |
+
+이 사이트는 홈 + 서비스 상세 4개가 모두 정적 프리렌더되고, 서버에서 동작하는 것은
+문의 접수 API 하나뿐입니다. 따라서 트래픽 대비 서버 비용 부담이 거의 없습니다.
+
+### Vercel
+
+1. GitHub 저장소를 Vercel 프로젝트로 연결합니다.
+2. 프레임워크는 Next.js 로 자동 감지됩니다. 빌드 설정을 바꿀 필요가 없습니다.
+3. 도메인을 연결하고 `src/data/site.ts` 의 `url` 을 같은 도메인으로 맞춥니다.
+4. 문의 알림 채널의 API 키를 환경 변수로 등록합니다.
+
+### Cloudflare Workers
+
+`@opennextjs/cloudflare` 어댑터와 `wrangler.jsonc` 가 저장소에 포함되어 있습니다.
+
+```bash
+npm run cf:preview   # 로컬에서 Workers 런타임으로 미리보기
+npm run cf:deploy    # Cloudflare 에 배포
+```
+
+대시보드에서 Git 연동으로 배포하는 경우 빌드 명령은 `npm run cf:build`,
+배포 명령은 `npx wrangler deploy` 로 설정합니다.
+
+확인된 동작 범위 — 홈과 서비스 상세 페이지, `sitemap.xml`, `robots.txt`,
+OG 이미지, 그리고 문의 API(`/api/contact`)까지 Workers 런타임에서 정상 동작합니다.
+
+**한 가지 주의할 점.** 지금은 이미지가 SVG 라서 Next.js 가 이미지 최적화를 건너뛰고
+원본을 그대로 내보냅니다. 그래서 현재 상태로는 추가 설정이 필요 없습니다.
+하지만 실사 사진(.jpg/.png)으로 교체하면 `next/image` 가 최적화 경로를 타게 되고,
+Cloudflare 에서는 이때 둘 중 하나를 선택해야 합니다.
+
+- Cloudflare Images 바인딩을 붙인다 (유료, 변환 단위 과금)
+- 최적화를 끈다 → 빌드 시 `NEXT_IMAGE_UNOPTIMIZED=true` 설정
+  (이 경우 사진을 업로드 전에 미리 리사이즈·압축해 두세요)
+
+Vercel 은 이미지 최적화가 기본 포함이라 이 선택이 필요 없습니다.
+사진을 많이 쓸 계획이라면 Vercel 이, 이미 Cloudflare 에 도메인과 인프라가 있다면
+Cloudflare 가 유리합니다.
+
+### 배포 전 체크리스트
 
 - [ ] `src/data/site.ts` 의 `url` 을 실제 도메인으로 변경
 - [ ] `contactInfo` / `businessInfo` 실제 정보 입력
 - [ ] `src/app/api/contact/route.ts` 에 알림 채널 연결
 - [ ] `public/images/` 실사 사진 교체 및 `src/data/images.ts` 의 `alt` 갱신
-- [ ] `src/app/opengraph-image.png` 추가
+- [ ] (사진 교체 후 Cloudflare 배포 시) 이미지 최적화 방식 결정
 - [ ] GA4 / GTM 스크립트 삽입

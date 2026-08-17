@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" width="1000" height="1250" role="presentation">
+  <defs>
+    <linearGradient id="bg-global" x1="0" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#0F2B45"/><stop offset="52%" stop-color="#173B5E"/><stop offset="100%" stop-color="#0B1F33"/></linearGradient>
+    <radialGradient id="glow-271">
+      <stop offset="0%" stop-color="#7FB0DA" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#7FB0DA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vig-global" cx="0.5" cy="0.45" r="0.78">
+      <stop offset="55%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#050F1A" stop-opacity="0.55"/>
+    </radialGradient>
+    <filter id="grain-global" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="271"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.14"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="1000" height="1250" fill="url(#bg-global)"/>
+  <g stroke="#FFFFFF" stroke-width="0.8" opacity="0.34" fill="none"><path d="M -600.0 1250 L 474.6 550.0"/><path d="M -500.0 1250 L 474.6 550.0"/><path d="M -400.0 1250 L 474.6 550.0"/><path d="M -300.0 1250 L 474.6 550.0"/><path d="M -200.0 1250 L 474.6 550.0"/><path d="M -100.0 1250 L 474.6 550.0"/><path d="M 0.0 1250 L 474.6 550.0"/><path d="M 100.0 1250 L 474.6 550.0"/><path d="M 200.0 1250 L 474.6 550.0"/><path d="M 300.0 1250 L 474.6 550.0"/><path d="M 400.0 1250 L 474.6 550.0"/><path d="M 500.0 1250 L 474.6 550.0"/><path d="M 600.0 1250 L 474.6 550.0"/><path d="M 700.0 1250 L 474.6 550.0"/><path d="M 800.0 1250 L 474.6 550.0"/><path d="M 900.0 1250 L 474.6 550.0"/><path d="M 1000.0 1250 L 474.6 550.0"/><path d="M 1100.0 1250 L 474.6 550.0"/><path d="M 1200.0 1250 L 474.6 550.0"/><path d="M 1300.0 1250 L 474.6 550.0"/><path d="M 1400.0 1250 L 474.6 550.0"/><path d="M 1500.0 1250 L 474.6 550.0"/><path d="M 1600.0 1250 L 474.6 550.0"/></g><g stroke="#FFFFFF" stroke-width="0.9" opacity="0.26" fill="none"><path d="M 0 551.5 L 1000 551.5"/><path d="M 0 557.8 L 1000 557.8"/><path d="M 0 570.7 L 1000 570.7"/><path d="M 0 591.4 L 1000 591.4"/><path d="M 0 620.7 L 1000 620.7"/><path d="M 0 659.4 L 1000 659.4"/><path d="M 0 708.4 L 1000 708.4"/><path d="M 0 768.3 L 1000 768.3"/><path d="M 0 839.6 L 1000 839.6"/><path d="M 0 922.9 L 1000 922.9"/><path d="M 0 1018.8 L 1000 1018.8"/><path d="M 0 1127.7 L 1000 1127.7"/></g><g stroke="#FFFFFF" stroke-width="0.7" opacity="0.14" fill="none"><path d="M -425.4 550.0 L 1374.6 550.0"/><path d="M -425.4 539.5 L 1374.6 539.5"/><path d="M -425.4 513.3 L 1374.6 513.3"/><path d="M -425.4 473.9 L 1374.6 473.9"/><path d="M -425.4 422.2 L 1374.6 422.2"/><path d="M -425.4 359.1 L 1374.6 359.1"/><path d="M -425.4 284.9 L 1374.6 284.9"/><path d="M -425.4 200.1 L 1374.6 200.1"/><path d="M -425.4 105.1 L 1374.6 105.1"/><path d="M -425.4 0.0 L 1374.6 0.0"/></g><circle cx="474.6" cy="550.0" r="320.0" fill="url(#glow-271)"/>
+  <rect width="1000" height="1250" fill="url(#vig-global)"/>
+  <rect width="1000" height="1250" filter="url(#grain-global)" opacity="0.55"/>
+</svg>

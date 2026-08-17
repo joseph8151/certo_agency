@@ -1,12 +1,17 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { cta, navigation, site } from '@/data/site';
 
 export default function Header() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  /** 서비스 상세 페이지에서 현재 메뉴를 표시합니다. (홈 앵커 링크는 제외) */
+  const isCurrent = (href: string) => !href.includes('#') && href === pathname;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -34,7 +39,7 @@ export default function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-certo ${
-        scrolled || open
+        scrolled || open || pathname !== '/'
           ? 'border-b border-line bg-white/95 backdrop-blur-md'
           : 'border-b border-transparent bg-transparent'
       }`}
@@ -42,7 +47,7 @@ export default function Header() {
       <div className="shell flex h-[var(--header-height)] items-center justify-between gap-6">
         {/* 로고 */}
         <Link
-          href="#top"
+          href="/"
           onClick={() => setOpen(false)}
           className="group flex shrink-0 flex-col leading-[1.05]"
           aria-label={`${site.name} 홈으로 이동`}
@@ -57,7 +62,10 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="link-underline text-[0.8125rem] font-medium tracking-wide text-navy/75 transition-colors duration-300 hover:text-navy"
+              aria-current={isCurrent(item.href) ? 'page' : undefined}
+              className={`link-underline text-[0.8125rem] font-medium tracking-wide transition-colors duration-300 hover:text-navy ${
+                isCurrent(item.href) ? 'text-brand' : 'text-navy/75'
+              }`}
             >
               {item.label}
             </Link>
@@ -107,7 +115,10 @@ export default function Header() {
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="flex items-baseline justify-between border-b border-line py-5 text-xl font-medium text-navy"
+              aria-current={isCurrent(item.href) ? 'page' : undefined}
+              className={`flex items-baseline justify-between border-b border-line py-5 text-xl font-medium ${
+                isCurrent(item.href) ? 'text-brand' : 'text-navy'
+              }`}
             >
               <span>{item.label}</span>
               <span className="text-[0.6875rem] tracking-[0.2em] text-brand/50">

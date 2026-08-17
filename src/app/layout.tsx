@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 import { Cormorant_Garamond, Inter } from 'next/font/google';
 import './globals.css';
-import { faqs } from '@/data/content';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import StickyCta from '@/components/StickyCta';
+import { servicePageList } from '@/data/services';
 import { contactInfo, site } from '@/data/site';
 
 const inter = Inter({
@@ -78,8 +81,11 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
-/** 구조화 데이터 — 검색 결과에서 조직/서비스/FAQ 를 인식하도록 합니다. */
-function StructuredData() {
+/**
+ * 조직 구조화 데이터 — 모든 페이지 공통.
+ * FAQPage 구조화 데이터는 FAQ 가 실제로 존재하는 홈에서만 출력합니다. (src/app/page.tsx)
+ */
+function OrganizationSchema() {
   const organization = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
@@ -94,35 +100,21 @@ function StructuredData() {
     knowsLanguage: ['ko', 'en', 'ja', 'zh'],
     ...(contactInfo.email ? { email: contactInfo.email } : {}),
     ...(contactInfo.phone ? { telephone: contactInfo.phone } : {}),
-    makesOffer: [
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '국내 통역 서비스' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '해외 통역 서비스' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '기업 전문 통번역' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '전문 문서 번역' } },
-    ],
-  };
-
-  const faqPage = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.q,
-      acceptedAnswer: { '@type': 'Answer', text: faq.a },
+    makesOffer: servicePageList.map((page) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: page.serviceName,
+        url: `${site.url}/${page.slug}`,
+      },
     })),
   };
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }}
-      />
-    </>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
+    />
   );
 }
 
@@ -147,8 +139,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           본문 바로가기
         </a>
+        <Header />
         {children}
-        <StructuredData />
+        <Footer />
+        <StickyCta />
+        <OrganizationSchema />
       </body>
     </html>
   );

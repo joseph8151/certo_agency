@@ -71,7 +71,7 @@ export default function Business() {
                 이어서 관리합니다.
               </p>
               <div className="mt-8">
-                <Cta href="#contact" track="business-cta">
+                <Cta href="/business" track="business-cta">
                   기업 프로젝트 문의
                 </Cta>
               </div>

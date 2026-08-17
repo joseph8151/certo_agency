@@ -5,7 +5,17 @@ import typescript from 'eslint-config-next/typescript';
 const config = [
   ...coreWebVitals,
   ...typescript,
-  { ignores: ['.next/**', 'node_modules/**', 'out/**', 'next-env.d.ts'] },
+  {
+    ignores: [
+      '.next/**',
+      'node_modules/**',
+      'out/**',
+      'next-env.d.ts',
+      // 빌드 산출물 (Cloudflare / OpenNext)
+      '.open-next/**',
+      '.wrangler/**',
+    ],
+  },
 ];
 
 export default config;

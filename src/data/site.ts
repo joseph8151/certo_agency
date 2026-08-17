@@ -50,26 +50,30 @@ export const businessInfo: { label: string; value: string }[] = [
 
 export type NavItem = { label: string; href: string };
 
+/**
+ * 홈 섹션 앵커는 하위 페이지에서도 동작하도록 절대 경로(`/#...`)로 씁니다.
+ * 서비스 항목은 상세 페이지로 연결됩니다.
+ */
 export const navigation: NavItem[] = [
-  { label: 'About', href: '#about' },
-  { label: 'Interpretation', href: '#interpretation' },
-  { label: 'Translation', href: '#translation' },
-  { label: 'Global Service', href: '#global' },
-  { label: 'For Business', href: '#business' },
-  { label: 'Process', href: '#process' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', href: '/#about' },
+  { label: 'Interpretation', href: '/interpretation' },
+  { label: 'Translation', href: '/translation' },
+  { label: 'Global Service', href: '/global' },
+  { label: 'For Business', href: '/business' },
+  { label: 'Process', href: '/#process' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export const footerNavigation: NavItem[] = [
-  { label: 'About', href: '#about' },
-  { label: 'Interpretation', href: '#interpretation' },
-  { label: 'Translation', href: '#translation' },
-  { label: 'Global', href: '#global' },
-  { label: 'Business', href: '#business' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', href: '/#about' },
+  { label: 'Interpretation', href: '/interpretation' },
+  { label: 'Translation', href: '/translation' },
+  { label: 'Global', href: '/global' },
+  { label: 'Business', href: '/business' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export const cta = {
   primary: '프로젝트 문의하기',
-  href: '#contact',
+  href: '/#contact',
 } as const;
