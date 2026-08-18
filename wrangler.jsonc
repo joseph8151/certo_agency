@@ -20,6 +20,15 @@
    *   Cloudflare  → 대시보드 Build command 에 `npm run cf:build`
    */
 
+  /*
+   * 환경 변수는 이 파일에 두지 않습니다. (저장소가 공개되어 있습니다)
+   * 대신 Cloudflare 대시보드에 **Secret** 으로 등록합니다.
+   *
+   * 주의 — `vars` 가 여기 없으므로, 대시보드에서 `Text` 로 넣은 변수는
+   * `wrangler deploy` 가 실행될 때마다 지워집니다. `Secret` 만 살아남습니다.
+   * (INQUIRY_TO_EMAIL 을 Text 로 넣었다가 매 배포마다 사라진 사례가 있습니다)
+   */
+
   "observability": {
     "enabled": true
   }

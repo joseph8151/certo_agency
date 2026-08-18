@@ -52,7 +52,7 @@ export async function GET() {
       ? '알림 채널이 설정되어 있습니다. 그래도 메일이 오지 않으면 Resend 대시보드의 발송 로그를 확인하세요.'
       : email === 'missing-key'
         ? 'RESEND_API_KEY 를 Secret 으로 등록하세요.'
-        : 'INQUIRY_TO_EMAIL 을 등록하세요. (문의를 받을 주소)',
+        : 'INQUIRY_TO_EMAIL 을 Secret 으로 등록하세요. (문의를 받을 주소 · Text 로 등록하면 배포할 때 삭제됩니다)',
     ...(debug ? { debug } : {}),
   });
 }

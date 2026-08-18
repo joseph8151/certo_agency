@@ -198,7 +198,18 @@ hero: {
    INQUIRY_TO_EMAIL = 받을주소@example.com    ← Variable (쉼표로 여러 명 가능)
    ```
    Cloudflare → Workers 설정 > Variables and Secrets
-   API 키는 반드시 **Secret** 으로, 수신 주소는 Variable 로 두면 됩니다.
+   **두 값 모두 `Secret` 으로 등록하세요.** (아래 경고 참고)
+
+> ⚠️ **Text 변수는 배포할 때마다 지워집니다**
+>
+> `wrangler deploy` 는 Worker 의 일반 변수(`vars`)를 설정 파일 기준으로 덮어씁니다.
+> `wrangler.jsonc` 에 `vars` 가 없으므로, 대시보드에서 **Text** 로 넣은 값은
+> 다음 배포 때 **전부 사라집니다.** `Secret` 은 배포의 영향을 받지 않습니다.
+>
+> 저장소가 공개되어 있어 수신 주소를 `wrangler.jsonc` 에 적을 수도 없으므로,
+> 문의 관련 값(`INQUIRY_TO_EMAIL`, `INQUIRY_DEBUG`)은 **Secret** 으로 등록합니다.
+> 증상: `RESEND_API_KEY`(Secret)는 살아있는데 `/api/contact` 가 계속
+> `missing-recipient` 를 반환한다면 이 경우입니다.
 
 둘 중 하나라도 빠지면 문의가 발송되지 않습니다. 다만 조용히 실패하지 않고
 `INQUIRY_TO_EMAIL 이 설정되지 않았습니다` 오류를 남기며 502 로 응답합니다.
@@ -472,14 +483,15 @@ Cloudflare 는 Build 와 Deploy 를 별도 단계로 실행하는데, Deploy 단
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | 배포 도메인. canonical / sitemap / OG / JSON-LD 에 사용 |
 | `RESEND_API_KEY` | 문의 이메일 발송 (Secret 으로 등록 · **필수**) |
-| `INQUIRY_TO_EMAIL` | 문의 수신 주소 (**필수** · Variable 로 등록) |
+| `INQUIRY_TO_EMAIL` | 문의 수신 주소 (**필수** · **Secret** 으로 등록 — Text 는 배포 시 삭제됨) |
 | `SLACK_WEBHOOK_URL` | 문의 Slack 알림 (Secret 으로 등록) |
-| `INQUIRY_DEBUG` | `1` 로 두면 `/api/contact` 가 발송 실패 원인을 보여줍니다 (진단용 · 끝나면 삭제) |
+| `INQUIRY_DEBUG` | `1` 로 두면 `/api/contact` 가 발송 실패 원인을 보여줍니다 (진단용 · **Secret** · 끝나면 삭제) |
 | `NEXT_PUBLIC_CF_BEACON_TOKEN` | Cloudflare Web Analytics |
 | `NEXT_PUBLIC_GA_ID` | GA4 |
 | `NEXT_IMAGE_UNOPTIMIZED` | 실사 사진 사용 + Cloudflare Images 미사용 시 `true` |
 
-API 키는 일반 변수가 아닌 **Secret** 으로 등록하세요.
+Cloudflare 대시보드에서는 **모두 `Secret` 으로 등록하세요.** `Text` 로 넣은 값은
+`wrangler deploy` 때 삭제됩니다. (위 「문의 알림」 절의 경고 참고)
 `NEXT_PUBLIC_` 접두사가 붙은 값은 브라우저에 노출되므로 비밀값에 쓰면 안 됩니다.
 로컬에서 `npm run cf:preview` 로 테스트할 때는 `.dev.vars` 파일을 사용합니다. (gitignore 됨)
 
