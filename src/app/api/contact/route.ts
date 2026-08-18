@@ -45,16 +45,20 @@ export async function GET() {
     ? { ...describeEmailConfig(), resend: await probeResend() }
     : undefined;
 
-  return NextResponse.json({
-    ready,
-    channels: { email, slack },
-    hint: ready
-      ? '알림 채널이 설정되어 있습니다. 그래도 메일이 오지 않으면 Resend 대시보드의 발송 로그를 확인하세요.'
-      : email === 'missing-key'
-        ? 'RESEND_API_KEY 를 Secret 으로 등록하세요.'
-        : 'INQUIRY_TO_EMAIL 을 Secret 으로 등록하세요. (문의를 받을 주소 · Text 로 등록하면 배포할 때 삭제됩니다)',
-    ...(debug ? { debug } : {}),
-  });
+  // 설정 점검 결과가 캐시되면 "변수를 넣었는데 왜 안 보이지?" 로 이어집니다.
+  return NextResponse.json(
+    {
+      ready,
+      channels: { email, slack },
+      hint: ready
+        ? '알림 채널이 설정되어 있습니다. 그래도 메일이 오지 않으면 Resend 대시보드의 발송 로그를 확인하세요.'
+        : email === 'missing-key'
+          ? 'RESEND_API_KEY 를 Secret 으로 등록하세요.'
+          : 'INQUIRY_TO_EMAIL 을 Secret 으로 등록하세요. (문의를 받을 주소 · Text 로 등록하면 배포할 때 삭제됩니다)',
+      ...(debug ? { debug } : {}),
+    },
+    { headers: { 'Cache-Control': 'no-store, max-age=0' } },
+  );
 }
 
 export async function POST(request: Request) {
