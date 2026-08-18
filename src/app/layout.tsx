@@ -5,7 +5,7 @@ import Analytics from '@/components/Analytics';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import StickyCta from '@/components/StickyCta';
-import { servicePageList } from '@/data/services';
+import { allServicePages } from '@/data/services';
 import { contactInfo, site } from '@/data/site';
 
 const inter = Inter({
@@ -101,7 +101,7 @@ function OrganizationSchema() {
     knowsLanguage: ['ko', 'en', 'ja', 'zh'],
     ...(contactInfo.email ? { email: contactInfo.email } : {}),
     ...(contactInfo.phone ? { telephone: contactInfo.phone } : {}),
-    makesOffer: servicePageList.map((page) => ({
+    makesOffer: allServicePages.map((page) => ({
       '@type': 'Offer',
       itemOffered: {
         '@type': 'Service',

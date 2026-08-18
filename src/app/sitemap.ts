@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { servicePageList } from '@/data/services';
+import { allServicePages } from '@/data/services';
 import { site } from '@/data/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 1,
     },
-    ...servicePageList.map((page) => ({
+    ...allServicePages.map((page) => ({
       url: `${site.url}/${page.slug}`,
       lastModified,
       changeFrequency: 'monthly' as const,

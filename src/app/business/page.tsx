@@ -1,26 +1,24 @@
 import type { Metadata } from 'next';
-import ServicePageTemplate from '@/components/ServicePage';
-import { servicePages } from '@/data/services';
-
-const page = servicePages.business;
+import BusinessPage from '@/components/business/BusinessPage';
+import { businessPage } from '@/data/business';
 
 export const metadata: Metadata = {
-  title: page.seo.title,
-  description: page.seo.description,
-  keywords: page.seo.keywords,
-  alternates: { canonical: `/${page.slug}` },
+  title: businessPage.seo.title,
+  description: businessPage.seo.description,
+  keywords: [...businessPage.seo.keywords],
+  alternates: { canonical: `/${businessPage.slug}` },
   openGraph: {
     type: 'website',
-    title: `${page.seo.title} | CERTO AGENCY`,
-    description: page.seo.description,
-    url: `/${page.slug}`,
+    title: `${businessPage.seo.title} | CERTO AGENCY`,
+    description: businessPage.seo.description,
+    url: `/${businessPage.slug}`,
   },
 };
 
 export default function Page() {
   return (
     <main id="main">
-      <ServicePageTemplate page={page} />
+      <BusinessPage />
     </main>
   );
 }

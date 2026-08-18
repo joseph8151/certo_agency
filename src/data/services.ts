@@ -6,6 +6,7 @@
  *   1) 아래 servicePages 에 항목을 추가하고
  *   2) src/app/<slug>/page.tsx 를 기존 파일과 동일한 형태로 만들면 됩니다.
  */
+import { businessPage } from './business';
 import type { ImageKey } from './images';
 
 export type ServiceOffering = {
@@ -479,146 +480,20 @@ export const servicePages: Record<string, ServicePage> = {
     ],
   },
 
-  business: {
-    slug: 'business',
-    serviceName: '기업 전담 통번역',
-    navLabel: 'For Business',
-    eyebrow: 'CERTO for Business',
-    title: '매번 처음부터\n설명하지 않아도 됩니다.',
-    titleSerif: 'For Business',
-    lead: '해외 커뮤니케이션이 반복되는 기업을 위한 운영 방식입니다. 담당자를 두고 프로젝트 이력과 용어를 이어서 관리하여, 새 일정마다 배경을 다시 설명하지 않아도 되도록 합니다.',
-    imageKey: 'business',
-    seo: {
-      title: '기업 전담 통번역 | 장기 프로젝트·다국어 통합 관리',
-      description:
-        '기업 전담 통번역, 해외 출장 통역, 국제회의, 전시회, 다국어 콘텐츠까지. 여러 언어와 여러 국가가 동시에 필요한 프로젝트를 하나의 창구에서 관리하는 CERTO for Business.',
-      keywords: [
-        '기업 통역',
-        '기업 번역',
-        '기업 전담 통번역',
-        '다국어 번역',
-        '장기 통역 계약',
-        '해외 출장 통역',
-        '국제회의 통역',
-        '전시회 통역',
-      ],
-    },
-    intro: {
-      heading: '언어별로 업체를 따로 찾지 않으셔도 됩니다.',
-      paragraphs: [
-        '해외 사업이 늘어나면 통번역 수요는 한 번으로 끝나지 않습니다. 이번 달에는 영어 계약서, 다음 달에는 일본 바이어 미팅, 그 다음에는 독일 전시회. 매번 업체를 찾고 배경을 설명하는 일이 담당자의 업무가 되어버립니다.',
-        'CERTO for Business는 이 과정을 하나의 창구로 정리합니다. 기업의 제품, 용어, 이전 프로젝트 맥락을 CERTO가 이어서 관리하고, 여러 국가와 언어가 동시에 필요한 경우에도 프로젝트 단위로 함께 운영합니다.',
-      ],
-    },
-    offeringsHeading: '기업 지원 범위',
-    offeringsLead: '단건 의뢰부터 장기 협력까지 규모에 맞춰 운영합니다.',
-    offerings: [
-      {
-        en: 'Dedicated',
-        title: '기업 전담 통번역',
-        body: '담당자를 지정해 문의 창구를 고정합니다. 기업의 용어와 선호 표현을 축적해 다음 프로젝트에 이어서 적용합니다.',
-        fit: '통번역 수요가 반복되는 기업',
-      },
-      {
-        en: 'Multilingual',
-        title: '다국어 통합 관리',
-        body: '여러 언어가 동시에 필요한 프로젝트를 하나로 묶어 관리합니다. 언어별로 각각 업체를 찾으실 필요가 없습니다.',
-        fit: '동시 다국어 행사, 글로벌 동시 출시',
-      },
-      {
-        en: 'Long-term',
-        title: '장기 프로젝트',
-        body: '수개월 단위로 이어지는 프로젝트는 동일한 인력이 연속 배정되도록 관리해 맥락이 끊기지 않게 합니다.',
-        fit: '플랜트 사업, 장기 협상, 지속 콘텐츠 운영',
-      },
-      {
-        en: 'Events',
-        title: '기업 행사 · 국제회의',
-        body: '행사 준비 단계부터 참여해 통역 방식과 인원, 장비를 함께 설계합니다.',
-        fit: '기업 행사, 기자회견, 국제 컨퍼런스',
-      },
-      {
-        en: 'Documents',
-        title: '기업 문서 번역',
-        body: '용어집과 스타일 가이드를 관리하여, 담당자가 바뀌어도 표현이 흔들리지 않도록 합니다.',
-        fit: '계약서, 제안서, IR 자료, 사내 문서',
-      },
-      {
-        en: 'Content',
-        title: '다국어 콘텐츠',
-        body: '홈페이지와 마케팅 자료를 시장별 언어로 정리합니다. 업데이트가 이어지는 콘텐츠도 함께 관리합니다.',
-        fit: '글로벌 홈페이지, 브랜드 콘텐츠, 제품 문서',
-      },
-    ],
-    flowHeading: '운영 방식',
-    flow: [
-      { no: '01', label: '수요 파악', body: '연간 통번역 수요와 언어, 반복되는 업무 유형을 함께 정리합니다.' },
-      { no: '02', label: '담당자 지정', body: '기업 전담 담당자를 지정해 문의 창구를 고정합니다.' },
-      { no: '03', label: '기준 정리', body: '용어집과 스타일 가이드, 선호 표현을 정리해 기록합니다.' },
-      { no: '04', label: '프로젝트 운영', body: '개별 일정은 프로젝트 단위로 매칭하고 진행 상황을 관리합니다.' },
-      { no: '05', label: '이력 축적', body: '진행된 프로젝트를 기록해 다음 의뢰의 준비 시간을 줄입니다.' },
-    ],
-    briefHeading: '상담 시 알려주시면 좋은 정보',
-    briefLead: '연간 계획이 확정되지 않았더라도 현재 필요한 업무부터 시작할 수 있습니다.',
-    brief: [
-      { label: '업종', body: '산업 분야와 주요 제품·서비스' },
-      { label: '언어', body: '현재 필요한 언어와 향후 확대 예정 언어' },
-      { label: '업무 유형', body: '통역, 번역, 행사, 콘텐츠 등 필요한 범위' },
-      { label: '빈도', body: '월 단위 예상 건수 또는 연간 규모' },
-      { label: '기존 자료', body: '보유하신 용어집, 기존 번역물, 스타일 가이드' },
-      { label: '내부 절차', body: '견적·계약·정산에 필요한 사내 절차' },
-    ],
-    factorsHeading: '계약 방식',
-    factorsLead: '기업의 수요 규모와 내부 절차에 맞춰 조정합니다.',
-    factors: [
-      '건별 정산 — 필요할 때마다 프로젝트 단위로 진행',
-      '월 정산 — 반복 수요를 한 달 단위로 합산하여 정산',
-      '연간 계약 — 예상 물량을 기준으로 조건을 사전 합의',
-      '용어집·스타일 가이드 관리 포함 여부',
-      '비밀유지 서약 및 사내 보안 요건 반영',
-      '전담 담당자 지정 범위',
-    ],
-    faqs: [
-      {
-        q: '어느 정도 규모부터 기업 전담이 의미가 있나요?',
-        a: '분기에 두세 건 이상 반복되면 이력을 축적하는 편이 유리합니다. 규모가 크지 않아도 담당자를 지정해 두는 것만으로 문의와 준비 시간이 줄어듭니다.',
-      },
-      {
-        q: '여러 부서에서 각각 의뢰해도 되나요?',
-        a: '가능합니다. 부서별 요청을 하나의 창구에서 받아 프로젝트 단위로 구분해 관리하고, 정산은 사내 절차에 맞춰 조정합니다.',
-      },
-      {
-        q: '기존에 쓰던 용어집을 그대로 쓸 수 있나요?',
-        a: '보유하신 용어집과 기존 번역물을 주시면 그 기준을 우선으로 적용합니다. 없으시면 프로젝트를 진행하면서 함께 정리해 드립니다.',
-      },
-      {
-        q: '연간 계약을 하면 무엇이 달라지나요?',
-        a: '예상 물량을 기준으로 조건을 미리 합의하므로 건별 견적 절차가 줄고, 긴급 건에 대한 대응 순서도 사전에 정할 수 있습니다.',
-      },
-    ],
-    ctaTitle: '기업 통번역을 정리해 보시겠습니까?',
-    ctaBody: '현재 반복되는 업무만 알려주셔도 운영 방식을 제안드립니다.',
-    ctaLabel: '기업 프로젝트 상담',
-    related: [
-      {
-        label: '전문 통역',
-        description: '동시·순차·수행 통역과 국제회의 지원',
-        href: '/interpretation',
-      },
-      {
-        label: '전문 번역',
-        description: '계약서, 기술 문서, 다국어 콘텐츠',
-        href: '/translation',
-      },
-      {
-        label: '해외 통역',
-        description: '해외 출장, 현지 미팅, 전시회 지원',
-        href: '/global',
-      },
-    ],
-  },
 };
 
+/**
+ * 공용 템플릿으로 렌더링하는 서비스 페이지 목록.
+ */
 export const servicePageList: ServicePage[] = Object.values(servicePages);
 
-export const serviceSlugs = Object.keys(servicePages);
+/**
+ * 사이트 전체의 서비스 페이지 (네비게이션 · sitemap · 조직 구조화 데이터용).
+ * 기업 페이지는 전용 컴포넌트를 쓰지만 목록에는 포함되어야 합니다.
+ */
+export const allServicePages: Pick<ServicePage, 'slug' | 'serviceName'>[] = [
+  ...servicePageList,
+  { slug: businessPage.slug, serviceName: businessPage.serviceName },
+];
+
+export const serviceSlugs = allServicePages.map((page) => page.slug);

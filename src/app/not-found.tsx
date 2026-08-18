@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Cta from '@/components/ui/Button';
-import { servicePageList } from '@/data/services';
+import { allServicePages } from '@/data/services';
 
 export const metadata: Metadata = {
   title: '페이지를 찾을 수 없습니다',
@@ -31,7 +31,7 @@ export default function NotFound() {
 
         <nav aria-label="서비스 목록" className="mt-16 border-t border-line">
           <ul>
-            {servicePageList.map((page) => (
+            {allServicePages.map((page) => (
               <li key={page.slug}>
                 <a
                   href={`/${page.slug}`}

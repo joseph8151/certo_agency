@@ -64,14 +64,20 @@ export const hasPublicContact = Boolean(
 );
 
 /**
- * 사업자 정보 — 확정 후 값을 채우면 Footer에 자동 노출됩니다.
+ * 사업자 정보 — 사업자등록증 기재 사항 기준.
+ * 값이 비어 있는 항목은 푸터에 표시되지 않습니다.
+ *
+ * 참고 — 등록된 상호(체르토 드라이브)와 브랜드명(CERTO AGENCY)이 다릅니다.
+ * 법정 표기는 등록 상호를 따르고, 브랜드명은 그대로 사용합니다.
+ * 생년월일 등 개인정보는 웹사이트에 표기하지 않습니다.
  */
 export const businessInfo: { label: string; value: string }[] = [
-  { label: '상호', value: 'CERTO AGENCY' },
-  { label: '대표', value: '' },
-  { label: '사업자등록번호', value: '' },
+  { label: '상호', value: '체르토 드라이브' },
+  { label: '대표', value: '김형기' },
+  { label: '사업자등록번호', value: '654-60-00645' },
+  // 통신판매업 신고를 마치면 신고번호를 채워주세요.
   { label: '통신판매업신고', value: '' },
-  { label: '주소', value: '' },
+  { label: '주소', value: '서울특별시 서초구 강남대로8길 39-26, 2층 A9호(양재동)' },
 ];
 
 export type NavItem = { label: string; href: string };
