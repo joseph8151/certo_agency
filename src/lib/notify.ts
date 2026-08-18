@@ -18,6 +18,15 @@ import type { InquiryPayload } from './inquiry';
 export type NotifyResult = { channel: string; ok: boolean; error?: string };
 
 /**
+ * 환경 변수를 읽으면서 앞뒤 공백을 제거합니다.
+ * 대시보드에 값을 붙여넣을 때 줄바꿈이나 공백이 함께 들어가는 일이 흔한데,
+ * 그대로 두면 `Bearer re_xxx\n` 같은 헤더가 만들어져 "API key is invalid" 로 거부됩니다.
+ */
+function env(name: string) {
+  return process.env[name]?.trim() || undefined;
+}
+
+/**
  * 발신 주소 (기본값).
  * onboarding@resend.dev 는 Resend 가 제공하는 검증용 발신 주소로, 도메인 인증 없이 쓸 수 있습니다.
  * 다만 도메인 인증 전에는 "Resend 가입에 사용한 이메일" 로만 발송됩니다.
@@ -104,9 +113,9 @@ function buildHtml(payload: InquiryPayload, receivedAt: string) {
 }
 
 async function sendResend(payload: InquiryPayload, receivedAt: string): Promise<NotifyResult> {
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.INQUIRY_TO_EMAIL;
-  const from = process.env.INQUIRY_FROM_EMAIL || DEFAULT_INQUIRY_FROM;
+  const apiKey = env('RESEND_API_KEY');
+  const to = env('INQUIRY_TO_EMAIL');
+  const from = env('INQUIRY_FROM_EMAIL') || DEFAULT_INQUIRY_FROM;
 
   // 키가 없으면 이메일 채널을 쓰지 않는 것으로 간주합니다.
   if (!apiKey) return { channel: 'resend', ok: false, error: 'not-configured' };
@@ -149,7 +158,7 @@ async function sendResend(payload: InquiryPayload, receivedAt: string): Promise<
 }
 
 async function sendSlack(payload: InquiryPayload, receivedAt: string): Promise<NotifyResult> {
-  const webhook = process.env.SLACK_WEBHOOK_URL;
+  const webhook = env('SLACK_WEBHOOK_URL');
   if (!webhook) return { channel: 'slack', ok: false, error: 'not-configured' };
 
   try {
@@ -191,7 +200,7 @@ async function sendSlack(payload: InquiryPayload, receivedAt: string): Promise<N
 
 /** 설정된 채널이 있는지 */
 export function hasConfiguredChannel() {
-  return Boolean(process.env.RESEND_API_KEY || process.env.SLACK_WEBHOOK_URL);
+  return Boolean(env('RESEND_API_KEY') || env('SLACK_WEBHOOK_URL'));
 }
 
 /**
@@ -221,7 +230,7 @@ export async function notifyInquiry(
 
 /** 진단 모드 여부 */
 export function isDebugEnabled() {
-  return process.env.INQUIRY_DEBUG === '1';
+  return env('INQUIRY_DEBUG') === '1';
 }
 
 /** yorkboy@gmail.com → y*******@gmail.com */
@@ -239,7 +248,7 @@ export function maskEmail(address: string) {
  *   403 → 키 권한 부족 (Sending access 로 만들었는지 확인)
  */
 export async function probeResend(): Promise<{ status: number | null; detail: string }> {
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = env('RESEND_API_KEY');
   if (!apiKey) return { status: null, detail: 'RESEND_API_KEY 없음' };
 
   try {
@@ -258,13 +267,21 @@ export async function probeResend(): Promise<{ status: number | null; detail: st
 /** 발신 / 수신 설정을 비밀값 없이 요약합니다. */
 export function describeEmailConfig() {
   const to = process.env.INQUIRY_TO_EMAIL ?? '';
+  const rawKey = process.env.RESEND_API_KEY ?? '';
+
   return {
-    from: process.env.INQUIRY_FROM_EMAIL || DEFAULT_INQUIRY_FROM,
+    from: env('INQUIRY_FROM_EMAIL') || DEFAULT_INQUIRY_FROM,
     to: to
       .split(',')
       .map((address) => address.trim())
       .filter(Boolean)
       .map(maskEmail),
-    usingSandboxSender: !process.env.INQUIRY_FROM_EMAIL,
+    usingSandboxSender: !env('INQUIRY_FROM_EMAIL'),
+    // 키 자체는 노출하지 않고 "모양" 만 봅니다. 잘못 붙여넣은 경우를 잡기 위한 것입니다.
+    keyShape: {
+      startsWithRe: rawKey.trim().startsWith('re_'),
+      length: rawKey.trim().length,
+      hadWhitespace: rawKey !== rawKey.trim(),
+    },
   };
 }

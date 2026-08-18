@@ -28,15 +28,15 @@ export const dynamic = 'force-dynamic';
  * 배포 후 "문의가 왜 안 오지?" 를 로그 없이 바로 확인하기 위한 용도입니다.
  */
 export async function GET() {
-  const hasKey = Boolean(process.env.RESEND_API_KEY);
-  const hasRecipient = Boolean(process.env.INQUIRY_TO_EMAIL);
+  const hasKey = Boolean(process.env.RESEND_API_KEY?.trim());
+  const hasRecipient = Boolean(process.env.INQUIRY_TO_EMAIL?.trim());
 
   const email = !hasKey
     ? 'missing-key'
     : !hasRecipient
       ? 'missing-recipient'
       : 'ready';
-  const slack = process.env.SLACK_WEBHOOK_URL ? 'ready' : 'off';
+  const slack = process.env.SLACK_WEBHOOK_URL?.trim() ? 'ready' : 'off';
   const ready = email === 'ready' || slack === 'ready';
 
   // INQUIRY_DEBUG=1 일 때만 원인 추적에 필요한 정보를 덧붙입니다.
