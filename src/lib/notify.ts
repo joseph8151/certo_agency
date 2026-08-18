@@ -1,25 +1,21 @@
 /**
  * 문의 알림 전송
  * ─────────────────────────────────────────────
- * 상담 문의는 기본적으로 DEFAULT_INQUIRY_TO 주소로 발송됩니다.
- * 실제 발송을 위해서는 RESEND_API_KEY 만 등록하면 됩니다.
+ * 이메일 발송에는 아래 두 값이 모두 필요합니다.
  *
- *   RESEND_API_KEY     Resend API 키          (필수 — 이 값이 있어야 메일이 나갑니다)
- *   INQUIRY_TO_EMAIL   수신 주소 변경          (기본값을 덮어씁니다. 쉼표로 여러 개 가능)
+ *   RESEND_API_KEY     Resend API 키          (필수)
+ *   INQUIRY_TO_EMAIL   수신 주소              (필수 · 쉼표로 여러 개 가능)
  *   INQUIRY_FROM_EMAIL 발신 주소 변경          (Resend 에서 도메인 인증을 마친 뒤에만)
  *   SLACK_WEBHOOK_URL  Slack Incoming Webhook (선택 — 즉시 알림)
+ *
+ * 수신 주소를 소스에 두지 않는 이유 — 저장소가 공개되어 있으면
+ * 이메일 주소가 스팸 수집 대상이 됩니다. 배포 환경 변수로만 관리합니다.
  *
  * fetch 만 사용하므로 Cloudflare Workers / Vercel / Node 어디서든 동작합니다.
  */
 import type { InquiryPayload } from './inquiry';
 
 export type NotifyResult = { channel: string; ok: boolean; error?: string };
-
-/**
- * 상담 문의 수신 주소 (기본값).
- * 환경 변수 INQUIRY_TO_EMAIL 을 설정하면 그 값이 우선합니다.
- */
-export const DEFAULT_INQUIRY_TO = 'yorkboy@gmail.com';
 
 /**
  * 발신 주소 (기본값).
@@ -89,11 +85,20 @@ function buildHtml(payload: InquiryPayload, receivedAt: string) {
 
 async function sendResend(payload: InquiryPayload, receivedAt: string): Promise<NotifyResult> {
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.INQUIRY_TO_EMAIL || DEFAULT_INQUIRY_TO;
+  const to = process.env.INQUIRY_TO_EMAIL;
   const from = process.env.INQUIRY_FROM_EMAIL || DEFAULT_INQUIRY_FROM;
 
-  // 수신 주소는 기본값이 있으므로 API 키만 있으면 발송을 시도합니다.
+  // 키가 없으면 이메일 채널을 쓰지 않는 것으로 간주합니다.
   if (!apiKey) return { channel: 'resend', ok: false, error: 'not-configured' };
+
+  // 키는 있는데 수신 주소가 없는 설정 실수 — 조용히 넘기지 않고 실패로 처리합니다.
+  if (!to) {
+    return {
+      channel: 'resend',
+      ok: false,
+      error: 'INQUIRY_TO_EMAIL 이 설정되지 않았습니다. 수신 주소를 등록하세요.',
+    };
+  }
 
   try {
     const response = await fetch('https://api.resend.com/emails', {

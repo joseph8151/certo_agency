@@ -34,18 +34,17 @@ loadEnvFile('.env.local');
 loadEnvFile('.dev.vars');
 
 // src/lib/notify.ts 의 기본값과 동일하게 유지해야 합니다.
-const DEFAULT_TO = 'yorkboy@gmail.com';
 const DEFAULT_FROM = 'CERTO AGENCY <onboarding@resend.dev>';
 
 const apiKey = process.env.RESEND_API_KEY;
-const to = process.env.INQUIRY_TO_EMAIL || DEFAULT_TO;
+const to = process.env.INQUIRY_TO_EMAIL;
 const from = process.env.INQUIRY_FROM_EMAIL || DEFAULT_FROM;
 
 console.log('─'.repeat(60));
 console.log('CERTO 문의 이메일 발송 점검');
 console.log('─'.repeat(60));
 console.log(`발신  ${from}`);
-console.log(`수신  ${to}`);
+console.log(`수신  ${to || '(없음)'}`);
 console.log(`키    ${apiKey ? `${apiKey.slice(0, 6)}…${apiKey.slice(-4)}` : '(없음)'}`);
 console.log('');
 
@@ -56,6 +55,17 @@ if (!apiKey) {
   console.error('  2) API Keys 메뉴에서 키 발급');
   console.error('  3) .env.local 에 RESEND_API_KEY=re_... 추가 또는');
   console.error('     RESEND_API_KEY=re_... node scripts/check-email.mjs 로 실행');
+  process.exit(1);
+}
+
+if (!to) {
+  console.error('✗ INQUIRY_TO_EMAIL 이 없습니다. (문의를 받을 주소)');
+  console.error('');
+  console.error('  수신 주소는 소스에 두지 않고 환경 변수로만 관리합니다.');
+  console.error('  저장소가 공개되어 있으면 이메일이 스팸 수집 대상이 되기 때문입니다.');
+  console.error('');
+  console.error('  .env.local 에 INQUIRY_TO_EMAIL=받을주소@example.com 추가 또는');
+  console.error('  배포 환경(Cloudflare Variables and Secrets)에 등록하세요.');
   process.exit(1);
 }
 
