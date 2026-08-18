@@ -327,6 +327,31 @@ export const faqs: Faq[] = [
 /* ── 22. 문의 폼 옵션 ───────────────────────────────── */
 export const serviceOptions: string[] = ['통역', '번역', '해외 통역', '기업 프로젝트', '기타'];
 
+/** 통역 방식 — 통역 관련 문의에서 선택합니다. */
+export const interpretationTypeOptions: string[] = [
+  '순차 통역',
+  '동시 통역',
+  '수행 통역',
+  '화상회의 통역',
+  '전시회 · 부스 통역',
+  '아직 모르겠습니다',
+];
+
+/** 산업 분야 — 전문 분야 매칭에 사용합니다. */
+export const industryOptions: string[] = [
+  '비즈니스 · 경영',
+  '금융 · 투자',
+  '법률 · 계약',
+  '의료 · 제약',
+  '기술 · IT',
+  '엔지니어링 · 제조',
+  '교육 · 학술',
+  '공공 · 정부',
+  '패션 · 뷰티 · 소비재',
+  '엔터테인먼트 · 미디어',
+  '기타',
+];
+
 export const languageOptions: string[] = [
   '영어',
   '일본어',

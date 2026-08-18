@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { contactInfo } from '@/data/site';
 import { emptyInquiry, validateInquiry, type InquiryPayload } from '@/lib/inquiry';
 import { hasConfiguredChannel, notifyInquiry } from '@/lib/notify';
 
@@ -15,6 +16,34 @@ export const dynamic = 'force-dynamic';
  * 채널이 하나도 설정되지 않으면 서버 로그에만 남습니다.
  * 로그는 장기 보관되지 않으므로 운영 전에 반드시 채널을 연결하세요.
  */
+/**
+ * 설정 점검용 — 브라우저에서 /api/contact 를 열면 알림 채널 준비 상태를 보여줍니다.
+ * 비밀값이나 수신 주소는 노출하지 않고 준비 여부만 반환합니다.
+ * 배포 후 "문의가 왜 안 오지?" 를 로그 없이 바로 확인하기 위한 용도입니다.
+ */
+export async function GET() {
+  const hasKey = Boolean(process.env.RESEND_API_KEY);
+  const hasRecipient = Boolean(process.env.INQUIRY_TO_EMAIL);
+
+  const email = !hasKey
+    ? 'missing-key'
+    : !hasRecipient
+      ? 'missing-recipient'
+      : 'ready';
+  const slack = process.env.SLACK_WEBHOOK_URL ? 'ready' : 'off';
+  const ready = email === 'ready' || slack === 'ready';
+
+  return NextResponse.json({
+    ready,
+    channels: { email, slack },
+    hint: ready
+      ? '알림 채널이 설정되어 있습니다. 그래도 메일이 오지 않으면 Resend 대시보드의 발송 로그를 확인하세요.'
+      : email === 'missing-key'
+        ? 'RESEND_API_KEY 를 Secret 으로 등록하세요.'
+        : 'INQUIRY_TO_EMAIL 을 등록하세요. (문의를 받을 주소)',
+  });
+}
+
 export async function POST(request: Request) {
   let body: unknown;
 
@@ -73,8 +102,11 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         ok: false,
-        message:
-          '일시적인 오류로 문의를 접수하지 못했습니다. 잠시 후 다시 시도하시거나 이메일로 보내주세요.',
+        // 공개 이메일이 없을 때 "이메일로 보내달라"고 하면 갈 곳이 없으므로
+        // 실제로 노출 중인 대체 연락처가 있을 때만 안내합니다.
+        message: contactInfo.email
+          ? `일시적인 오류로 문의를 접수하지 못했습니다. 잠시 후 다시 시도하시거나 ${contactInfo.email} 로 보내주세요.`
+          : '일시적인 오류로 문의를 접수하지 못했습니다. 잠시 후 다시 시도해 주세요. 계속 실패하면 잠시 뒤에 다시 방문해 주세요.',
       },
       { status: 502 },
     );

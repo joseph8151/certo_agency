@@ -1,11 +1,21 @@
 'use client';
 
-import { useId, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useId, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
 import Reveal from './ui/Reveal';
 import SectionHeading from './ui/SectionHeading';
-import { languageOptions, serviceOptions } from '@/data/content';
+import {
+  industryOptions,
+  interpretationTypeOptions,
+  languageOptions,
+  serviceOptions,
+} from '@/data/content';
 import { contactInfo, hasPublicContact } from '@/data/site';
-import { emptyInquiry, validateInquiry, type InquiryErrors, type InquiryPayload } from '@/lib/inquiry';
+import {
+  emptyInquiry,
+  validateInquiry,
+  type InquiryErrors,
+  type InquiryPayload,
+} from '@/lib/inquiry';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -34,6 +44,7 @@ export default function Contact() {
     if (Object.keys(nextErrors).length > 0) {
       const first = document.getElementById(`${formId}-${Object.keys(nextErrors)[0]}`);
       first?.focus();
+      first?.scrollIntoView({ block: 'center' });
       return;
     }
 
@@ -133,16 +144,11 @@ export default function Contact() {
                 ) : null}
               </dl>
             ) : (
-              /*
-                공개 연락처가 없을 때 — 빈 목록 대신 문의 문턱을 낮추는 안내를 둡니다.
-                기밀 유지 문구는 The CERTO Standard 섹션과 폼 하단에 이미 있어
-                여기서는 반복하지 않습니다.
-              */
               <div className="mt-12 border-t border-line pt-8">
                 <p className="eyebrow">Before You Send</p>
                 <p className="mt-4 text-[0.9375rem] leading-[1.85] text-pretty text-navy/70">
-                  확정된 정보가 없어도 괜찮습니다. 언어와 대략적인 일정만 알려주셔도
-                  가능 여부를 먼저 확인해 드립니다.
+                  확정된 정보가 없어도 괜찮습니다. 언어와 대략적인 일정만 알려주셔도 가능 여부를 먼저
+                  확인해 드립니다.
                 </p>
                 <p className="mt-5 text-[0.875rem] leading-relaxed text-navy/65">
                   견적 확인만을 위한 문의도 편하게 남겨주세요.
@@ -174,7 +180,7 @@ export default function Contact() {
             </div>
           ) : (
             <Reveal>
-              <form onSubmit={handleSubmit} noValidate className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
+              <form onSubmit={handleSubmit} noValidate>
                 {/* 봇 트랩 */}
                 <div aria-hidden="true" className="hidden">
                   <label htmlFor={fid('website')}>Website</label>
@@ -189,160 +195,245 @@ export default function Contact() {
                   />
                 </div>
 
-                <Field
-                  id={fid('name')}
-                  label="의뢰인 / 회사명"
-                  required
-                  error={errors.name}
-                  className="sm:col-span-1"
-                >
-                  <input
+                {/* ── 의뢰인 정보 ───────────────── */}
+                <FieldGroup label="의뢰인 정보">
+                  <Field
                     id={fid('name')}
-                    name="name"
-                    type="text"
-                    autoComplete="organization"
-                    className={fieldClass}
-                    placeholder="예) 체르토 주식회사 / 홍길동"
-                    value={values.name}
-                    onChange={update('name')}
-                    aria-invalid={Boolean(errors.name)}
-                  />
-                </Field>
-
-                <Field id={fid('phone')} label="연락처" required error={errors.phone}>
-                  <input
-                    id={fid('phone')}
-                    name="phone"
-                    type="tel"
-                    inputMode="tel"
-                    autoComplete="tel"
-                    className={fieldClass}
-                    placeholder="010-0000-0000"
-                    value={values.phone}
-                    onChange={update('phone')}
-                    aria-invalid={Boolean(errors.phone)}
-                  />
-                </Field>
-
-                <Field id={fid('email')} label="이메일" required error={errors.email}>
-                  <input
-                    id={fid('email')}
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    className={fieldClass}
-                    placeholder="name@company.com"
-                    value={values.email}
-                    onChange={update('email')}
-                    aria-invalid={Boolean(errors.email)}
-                  />
-                </Field>
-
-                <Field id={fid('language')} label="희망 언어" error={errors.language}>
-                  <select
-                    id={fid('language')}
-                    name="language"
-                    className={fieldClass}
-                    value={values.language}
-                    onChange={update('language')}
+                    label="의뢰인 / 회사명"
+                    required
+                    error={errors.name}
+                    className="sm:col-span-2"
                   >
-                    <option value="">선택해 주세요</option>
-                    {languageOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </Field>
+                    <input
+                      id={fid('name')}
+                      name="name"
+                      type="text"
+                      autoComplete="organization"
+                      className={fieldClass}
+                      placeholder="예) 체르토 주식회사 / 홍길동"
+                      value={values.name}
+                      onChange={update('name')}
+                      aria-invalid={Boolean(errors.name)}
+                    />
+                  </Field>
 
-                <Field id={fid('service')} label="서비스 선택" required error={errors.service}>
-                  <select
-                    id={fid('service')}
-                    name="service"
-                    className={fieldClass}
-                    value={values.service}
-                    onChange={update('service')}
-                    aria-invalid={Boolean(errors.service)}
-                  >
-                    <option value="">선택해 주세요</option>
-                    {serviceOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </Field>
+                  <Field id={fid('phone')} label="연락처" required error={errors.phone}>
+                    <input
+                      id={fid('phone')}
+                      name="phone"
+                      type="tel"
+                      inputMode="tel"
+                      autoComplete="tel"
+                      className={fieldClass}
+                      placeholder="010-0000-0000"
+                      value={values.phone}
+                      onChange={update('phone')}
+                      aria-invalid={Boolean(errors.phone)}
+                    />
+                  </Field>
 
-                <Field id={fid('schedule')} label="프로젝트 일정" error={errors.schedule}>
-                  <input
-                    id={fid('schedule')}
-                    name="schedule"
-                    type="text"
-                    className={fieldClass}
-                    placeholder="예) 3월 12일 ~ 13일 / 미정"
-                    value={values.schedule}
-                    onChange={update('schedule')}
-                  />
-                </Field>
+                  <Field id={fid('email')} label="이메일" required error={errors.email}>
+                    <input
+                      id={fid('email')}
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      className={fieldClass}
+                      placeholder="name@company.com"
+                      value={values.email}
+                      onChange={update('email')}
+                      aria-invalid={Boolean(errors.email)}
+                    />
+                  </Field>
+                </FieldGroup>
 
-                <Field
-                  id={fid('location')}
-                  label="프로젝트 장소"
-                  error={errors.location}
-                  className="sm:col-span-2"
-                >
-                  <input
-                    id={fid('location')}
-                    name="location"
-                    type="text"
-                    className={fieldClass}
-                    placeholder="예) 서울 코엑스 / 독일 프랑크푸르트 / 온라인"
-                    value={values.location}
-                    onChange={update('location')}
-                  />
-                </Field>
-
-                <Field
-                  id={fid('message')}
-                  label="프로젝트 내용"
-                  required
-                  error={errors.message}
-                  className="sm:col-span-2"
-                >
-                  <textarea
-                    id={fid('message')}
-                    name="message"
-                    rows={5}
-                    className={`${fieldClass} resize-y`}
-                    placeholder="행사 성격, 참석자 구성, 필요한 통역 방식, 문서 분량 등 알고 계신 내용을 적어주세요."
-                    value={values.message}
-                    onChange={update('message')}
-                    aria-invalid={Boolean(errors.message)}
-                  />
-                </Field>
-
-                <div className="sm:col-span-2">
-                  {status === 'error' && serverMessage ? (
-                    <p role="alert" className="mb-5 text-[0.875rem] text-[#B03A2E]">
-                      {serverMessage}
-                    </p>
-                  ) : null}
-
-                  <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-                    <button
-                      type="submit"
-                      data-cta="contact-submit"
-                      disabled={status === 'submitting'}
-                      className="inline-flex w-full items-center justify-center gap-2.5 rounded-xs bg-brand px-9 py-4 text-[0.9375rem] font-medium text-white transition-colors duration-500 ease-certo hover:bg-brand-deep disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                {/* ── 프로젝트 정보 ─────────────── */}
+                <FieldGroup label="프로젝트 정보" hint="확정되지 않은 항목은 비워두셔도 됩니다.">
+                  <Field id={fid('service')} label="서비스" required error={errors.service}>
+                    <select
+                      id={fid('service')}
+                      name="service"
+                      className={fieldClass}
+                      value={values.service}
+                      onChange={update('service')}
+                      aria-invalid={Boolean(errors.service)}
                     >
-                      {status === 'submitting' ? '접수 중…' : 'CERTO에 문의하기'}
-                      <span aria-hidden="true">→</span>
-                    </button>
+                      <option value="">선택해 주세요</option>
+                      {serviceOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </Field>
 
-                    <p className="text-[0.75rem] leading-relaxed text-navy/65">
-                      보내주신 정보는 프로젝트 상담 목적으로만 사용됩니다.
-                    </p>
-                  </div>
+                  <Field id={fid('interpretationType')} label="통역 방식">
+                    <select
+                      id={fid('interpretationType')}
+                      name="interpretationType"
+                      className={fieldClass}
+                      value={values.interpretationType}
+                      onChange={update('interpretationType')}
+                    >
+                      <option value="">선택해 주세요</option>
+                      {interpretationTypeOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </Field>
+
+                  <Field id={fid('language')} label="필요한 언어" className="sm:col-span-2">
+                    <input
+                      id={fid('language')}
+                      name="language"
+                      type="text"
+                      list={`${formId}-language-options`}
+                      className={fieldClass}
+                      placeholder="예) 한국어 ↔ 영어 / 영어 · 일본어 동시 필요"
+                      value={values.language}
+                      onChange={update('language')}
+                    />
+                    {/* 자주 쓰는 언어는 제안하되, 다국어 프로젝트를 위해 직접 입력도 허용합니다. */}
+                    <datalist id={`${formId}-language-options`}>
+                      {languageOptions.map((option) => (
+                        <option key={option} value={option} />
+                      ))}
+                    </datalist>
+                  </Field>
+
+                  <Field id={fid('country')} label="국가 · 지역">
+                    <input
+                      id={fid('country')}
+                      name="country"
+                      type="text"
+                      className={fieldClass}
+                      placeholder="예) 대한민국 / 독일 / 미국"
+                      value={values.country}
+                      onChange={update('country')}
+                    />
+                  </Field>
+
+                  <Field id={fid('location')} label="장소 (도시 · 상세)">
+                    <input
+                      id={fid('location')}
+                      name="location"
+                      type="text"
+                      className={fieldClass}
+                      placeholder="예) 서울 코엑스 / 프랑크푸르트 / 온라인"
+                      value={values.location}
+                      onChange={update('location')}
+                    />
+                  </Field>
+
+                  <Field id={fid('startDate')} label="시작일">
+                    <input
+                      id={fid('startDate')}
+                      name="startDate"
+                      type="date"
+                      className={fieldClass}
+                      value={values.startDate}
+                      onChange={update('startDate')}
+                    />
+                  </Field>
+
+                  <Field id={fid('endDate')} label="종료일" error={errors.endDate}>
+                    <input
+                      id={fid('endDate')}
+                      name="endDate"
+                      type="date"
+                      className={fieldClass}
+                      value={values.endDate}
+                      onChange={update('endDate')}
+                      aria-invalid={Boolean(errors.endDate)}
+                    />
+                  </Field>
+
+                  <Field id={fid('time')} label="시간">
+                    <input
+                      id={fid('time')}
+                      name="time"
+                      type="text"
+                      className={fieldClass}
+                      placeholder="예) 09:00 ~ 18:00 / 오전 반일"
+                      value={values.time}
+                      onChange={update('time')}
+                    />
+                  </Field>
+
+                  <Field id={fid('headcount')} label="참석 인원">
+                    <input
+                      id={fid('headcount')}
+                      name="headcount"
+                      type="text"
+                      className={fieldClass}
+                      placeholder="예) 5명 / 임원 3명 포함"
+                      value={values.headcount}
+                      onChange={update('headcount')}
+                    />
+                  </Field>
+
+                  <Field id={fid('industry')} label="산업 분야" className="sm:col-span-2">
+                    <select
+                      id={fid('industry')}
+                      name="industry"
+                      className={fieldClass}
+                      value={values.industry}
+                      onChange={update('industry')}
+                    >
+                      <option value="">선택해 주세요</option>
+                      {industryOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </Field>
+                </FieldGroup>
+
+                {/* ── 프로젝트 내용 ─────────────── */}
+                <FieldGroup label="프로젝트 내용">
+                  <Field
+                    id={fid('message')}
+                    label="상세 내용"
+                    required
+                    error={errors.message}
+                    className="sm:col-span-2"
+                  >
+                    <textarea
+                      id={fid('message')}
+                      name="message"
+                      rows={5}
+                      className={`${fieldClass} resize-y`}
+                      placeholder="행사 성격, 참석자 구성, 다뤄질 주제, 문서 분량, 사전 자료 유무 등 알고 계신 내용을 적어주세요."
+                      value={values.message}
+                      onChange={update('message')}
+                      aria-invalid={Boolean(errors.message)}
+                    />
+                  </Field>
+                </FieldGroup>
+
+                {status === 'error' && serverMessage ? (
+                  <p role="alert" className="mt-8 text-[0.875rem] text-[#B03A2E]">
+                    {serverMessage}
+                  </p>
+                ) : null}
+
+                <div className="mt-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                  <button
+                    type="submit"
+                    data-cta="contact-submit"
+                    disabled={status === 'submitting'}
+                    className="inline-flex w-full items-center justify-center gap-2.5 rounded-xs bg-brand px-9 py-4 text-[0.9375rem] font-medium text-white transition-colors duration-500 ease-certo hover:bg-brand-deep disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                  >
+                    {status === 'submitting' ? '접수 중…' : 'CERTO에 문의하기'}
+                    <span aria-hidden="true">→</span>
+                  </button>
+
+                  <p className="text-[0.75rem] leading-relaxed text-navy/65">
+                    보내주신 정보는 프로젝트 상담 목적으로만 사용됩니다.
+                  </p>
                 </div>
               </form>
             </Reveal>
@@ -350,6 +441,29 @@ export default function Contact() {
         </div>
       </div>
     </section>
+  );
+}
+
+/** 입력 항목 묶음 — 필드가 많아 한 덩어리로 보이지 않도록 구분합니다. */
+function FieldGroup({
+  label,
+  hint,
+  children,
+}: {
+  label: string;
+  hint?: string;
+  children: ReactNode;
+}) {
+  return (
+    <fieldset className="mt-12 first:mt-0">
+      <legend className="mb-1 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
+          {label}
+        </span>
+        {hint ? <span className="text-[0.75rem] text-navy/65">{hint}</span> : null}
+      </legend>
+      <div className="grid gap-x-8 gap-y-7 border-t border-line pt-7 sm:grid-cols-2">{children}</div>
+    </fieldset>
   );
 }
 
@@ -366,7 +480,7 @@ function Field({
   required?: boolean;
   error?: string;
   className?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <div className={className}>

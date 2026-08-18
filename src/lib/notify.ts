@@ -28,13 +28,18 @@ export const DEFAULT_INQUIRY_FROM = 'CERTO AGENCY <onboarding@resend.dev>';
 
 const FIELD_LABELS: [keyof InquiryPayload, string][] = [
   ['name', '의뢰인 / 회사명'],
-  ['company', '회사'],
   ['phone', '연락처'],
   ['email', '이메일'],
-  ['language', '희망 언어'],
   ['service', '서비스'],
-  ['schedule', '프로젝트 일정'],
-  ['location', '프로젝트 장소'],
+  ['interpretationType', '통역 방식'],
+  ['language', '희망 언어'],
+  ['country', '국가 · 지역'],
+  ['location', '장소'],
+  ['startDate', '시작일'],
+  ['endDate', '종료일'],
+  ['time', '시간'],
+  ['headcount', '참석 인원'],
+  ['industry', '산업 분야'],
   ['message', '프로젝트 내용'],
 ];
 
@@ -45,12 +50,27 @@ function filledFields(payload: InquiryPayload) {
   );
 }
 
+/** 배열을 size 개씩 나눕니다. */
+function chunk<T>(items: T[], size: number): T[][] {
+  const groups: T[][] = [];
+  for (let i = 0; i < items.length; i += size) groups.push(items.slice(i, i + size));
+  return groups;
+}
+
 function escapeHtml(value: string) {
   return value
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+/** 받은편지함에서 한 줄로 구분되도록 핵심 정보를 제목에 담습니다. */
+function buildSubject(payload: InquiryPayload) {
+  const parts = [payload.service, payload.country || payload.location, payload.startDate]
+    .map((part) => part?.trim())
+    .filter(Boolean);
+  return `[CERTO 문의] ${payload.name}${parts.length ? ` · ${parts.join(' · ')}` : ''}`;
 }
 
 function buildText(payload: InquiryPayload, receivedAt: string) {
@@ -112,7 +132,7 @@ async function sendResend(payload: InquiryPayload, receivedAt: string): Promise<
         to: to.split(',').map((address) => address.trim()).filter(Boolean),
         // 담당자가 메일에서 바로 회신할 수 있도록
         reply_to: payload.email,
-        subject: `[CERTO 문의] ${payload.name} · ${payload.service}`,
+        subject: buildSubject(payload),
         text: buildText(payload, receivedAt),
         html: buildHtml(payload, receivedAt),
       }),
@@ -143,15 +163,15 @@ async function sendSlack(payload: InquiryPayload, receivedAt: string): Promise<N
             type: 'header',
             text: { type: 'plain_text', text: '신규 프로젝트 문의', emoji: false },
           },
-          {
+          // Slack section 은 필드를 10개까지만 표시하므로 나눠 담습니다.
+          // (자르면 시간·인원·내용 같은 항목이 조용히 사라집니다)
+          ...chunk(filledFields(payload), 10).map((group) => ({
             type: 'section',
-            fields: filledFields(payload)
-              .slice(0, 10)
-              .map(([label, value]) => ({
-                type: 'mrkdwn',
-                text: `*${label}*\n${value.slice(0, 400)}`,
-              })),
-          },
+            fields: group.map(([label, value]) => ({
+              type: 'mrkdwn',
+              text: `*${label}*\n${value.slice(0, 1500)}`,
+            })),
+          })),
           {
             type: 'context',
             elements: [{ type: 'mrkdwn', text: `접수 시각 ${receivedAt}` }],
