@@ -243,24 +243,44 @@ export function maskEmail(address: string) {
 
 /**
  * 키가 실제로 유효한지 Resend 에 물어봅니다. (메일은 보내지 않습니다)
- *   200 → 키 정상
- *   401 → 키가 잘못됨 / 삭제됨
- *   403 → 키 권한 부족 (Sending access 로 만들었는지 확인)
+ *
+ * 도메인 목록 조회로 확인하는데, 여기서 나오는 응답 해석에 주의가 필요합니다.
+ *   200                              → 키 정상 (Full access)
+ *   401 restricted_api_key           → 키 정상 (Sending access 전용 — 문의 발송에는 문제 없음)
+ *   401 그 외 / validation_error     → 키가 잘못되었거나 삭제됨
+ *   그 외                            → 아래 detail 참고
+ *
+ * `restricted_api_key` 를 "키 오류" 로 읽으면 멀쩡한 키를 계속 다시 만들게 됩니다.
  */
-export async function probeResend(): Promise<{ status: number | null; detail: string }> {
+export async function probeResend(): Promise<{
+  status: number | null;
+  ok: boolean;
+  detail: string;
+}> {
   const apiKey = env('RESEND_API_KEY');
-  if (!apiKey) return { status: null, detail: 'RESEND_API_KEY 없음' };
+  if (!apiKey) return { status: null, ok: false, detail: 'RESEND_API_KEY 없음' };
 
   try {
     const response = await fetch('https://api.resend.com/domains', {
       headers: { Authorization: `Bearer ${apiKey}` },
     });
-    if (response.ok) return { status: response.status, detail: '키 정상' };
+    if (response.ok) return { status: response.status, ok: true, detail: '키 정상' };
+
     const body = await response.text().catch(() => '');
-    return { status: response.status, detail: body.slice(0, 300) };
+
+    // 발송 전용 키는 도메인 목록을 읽을 수 없습니다 — 정상입니다.
+    if (body.includes('restricted_api_key')) {
+      return {
+        status: response.status,
+        ok: true,
+        detail: '키 정상 (발송 전용 키라 도메인 조회만 막힌 것입니다)',
+      };
+    }
+
+    return { status: response.status, ok: false, detail: body.slice(0, 300) };
   } catch (error) {
     // 대개 네트워크 정책(아웃바운드 차단) 문제입니다.
-    return { status: null, detail: String(error).slice(0, 300) };
+    return { status: null, ok: false, detail: String(error).slice(0, 300) };
   }
 }
 
