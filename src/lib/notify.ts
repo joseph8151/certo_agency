@@ -210,3 +210,61 @@ export async function notifyInquiry(
   // 설정되지 않은 채널은 결과에서 제외합니다.
   return results.filter((result) => result.error !== 'not-configured');
 }
+
+/* ─────────────────────────────────────────────
+ * 진단용 도우미
+ *
+ * INQUIRY_DEBUG=1 일 때만 /api/contact 응답에 노출됩니다.
+ * API 키는 어떤 경우에도 반환하지 않고, 수신 주소는 가려서 보여줍니다.
+ * 원인을 찾은 뒤에는 INQUIRY_DEBUG 를 반드시 지우세요.
+ * ───────────────────────────────────────────── */
+
+/** 진단 모드 여부 */
+export function isDebugEnabled() {
+  return process.env.INQUIRY_DEBUG === '1';
+}
+
+/** yorkboy@gmail.com → y*******@gmail.com */
+export function maskEmail(address: string) {
+  const trimmed = address.trim();
+  const at = trimmed.lastIndexOf('@');
+  if (at < 1) return '***';
+  return `${trimmed[0]}${'*'.repeat(Math.max(at - 1, 1))}${trimmed.slice(at)}`;
+}
+
+/**
+ * 키가 실제로 유효한지 Resend 에 물어봅니다. (메일은 보내지 않습니다)
+ *   200 → 키 정상
+ *   401 → 키가 잘못됨 / 삭제됨
+ *   403 → 키 권한 부족 (Sending access 로 만들었는지 확인)
+ */
+export async function probeResend(): Promise<{ status: number | null; detail: string }> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return { status: null, detail: 'RESEND_API_KEY 없음' };
+
+  try {
+    const response = await fetch('https://api.resend.com/domains', {
+      headers: { Authorization: `Bearer ${apiKey}` },
+    });
+    if (response.ok) return { status: response.status, detail: '키 정상' };
+    const body = await response.text().catch(() => '');
+    return { status: response.status, detail: body.slice(0, 300) };
+  } catch (error) {
+    // 대개 네트워크 정책(아웃바운드 차단) 문제입니다.
+    return { status: null, detail: String(error).slice(0, 300) };
+  }
+}
+
+/** 발신 / 수신 설정을 비밀값 없이 요약합니다. */
+export function describeEmailConfig() {
+  const to = process.env.INQUIRY_TO_EMAIL ?? '';
+  return {
+    from: process.env.INQUIRY_FROM_EMAIL || DEFAULT_INQUIRY_FROM,
+    to: to
+      .split(',')
+      .map((address) => address.trim())
+      .filter(Boolean)
+      .map(maskEmail),
+    usingSandboxSender: !process.env.INQUIRY_FROM_EMAIL,
+  };
+}

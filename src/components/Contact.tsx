@@ -28,6 +28,8 @@ export default function Contact() {
   const [errors, setErrors] = useState<InquiryErrors>({});
   const [status, setStatus] = useState<Status>('idle');
   const [serverMessage, setServerMessage] = useState('');
+  // 서버가 INQUIRY_DEBUG=1 로 실행 중일 때만 내려오는 실패 사유입니다. (평소에는 빈 값)
+  const [serverDebug, setServerDebug] = useState('');
 
   const update =
     (key: keyof InquiryPayload) =>
@@ -50,6 +52,7 @@ export default function Contact() {
 
     setStatus('submitting');
     setServerMessage('');
+    setServerDebug('');
 
     try {
       const response = await fetch('/api/contact', {
@@ -62,6 +65,7 @@ export default function Contact() {
       if (!response.ok) {
         setErrors(result?.errors ?? {});
         setServerMessage(result?.message ?? '문의 접수에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+        setServerDebug(result?.debug ? JSON.stringify(result.debug, null, 2) : '');
         setStatus('error');
         return;
       }
@@ -415,9 +419,16 @@ export default function Contact() {
                 </FieldGroup>
 
                 {status === 'error' && serverMessage ? (
-                  <p role="alert" className="mt-8 text-[0.875rem] text-[#B03A2E]">
-                    {serverMessage}
-                  </p>
+                  <div className="mt-8">
+                    <p role="alert" className="text-[0.875rem] text-[#B03A2E]">
+                      {serverMessage}
+                    </p>
+                    {serverDebug ? (
+                      <pre className="mt-3 overflow-x-auto whitespace-pre-wrap break-all border border-line bg-ivory-light p-4 text-[0.75rem] leading-relaxed text-navy/70">
+                        {serverDebug}
+                      </pre>
+                    ) : null}
+                  </div>
                 ) : null}
 
                 <div className="mt-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">

@@ -215,6 +215,56 @@ RESEND_API_KEY=re_xxxx INQUIRY_TO_EMAIL=받을주소@example.com npm run check:e
 
 Resend 가 돌려주는 오류를 그대로 보여주므로 키 문제인지 수신 주소 제한인지 바로 구분됩니다.
 
+### 배포한 사이트에서 메일이 오지 않을 때
+
+환경 변수를 넣었는데도 메일이 오지 않으면 **배포 환경에서** 원인을 직접 확인합니다.
+
+1. 브라우저로 `https://사이트주소/api/contact` 를 엽니다. (로그를 뒤질 필요 없습니다)
+
+   ```json
+   { "ready": true, "channels": { "email": "ready", "slack": "off" } }
+   ```
+
+   | 값 | 뜻 |
+   | --- | --- |
+   | `"email": "missing-key"` | `RESEND_API_KEY` 가 Worker 에 없습니다 |
+   | `"email": "missing-recipient"` | `INQUIRY_TO_EMAIL` 이 없습니다 |
+   | `"email": "ready"` | 두 값 모두 있습니다 — 아래 2번으로 |
+
+   환경 변수를 저장한 뒤 **재배포하지 않으면 반영되지 않습니다.**
+
+2. `INQUIRY_DEBUG=1` 을 Variable 로 추가하고 재배포한 뒤 다시 `/api/contact` 를 엽니다.
+
+   ```json
+   "debug": {
+     "from": "CERTO AGENCY <onboarding@resend.dev>",
+     "to": ["y******@gmail.com"],
+     "usingSandboxSender": true,
+     "resend": { "status": 200, "detail": "키 정상" }
+   }
+   ```
+
+   | `resend.status` | 원인 |
+   | --- | --- |
+   | `200` | 키는 정상 — 폼을 한 번 보내면 화면에 실패 사유가 그대로 표시됩니다 |
+   | `401` | 키가 잘못되었거나 삭제됨 (`re_` 로 시작하는 값 전체를 붙여넣었는지) |
+   | `403` | 키 권한 부족 — Resend 에서 **Sending access** 로 다시 만드세요 |
+   | `null` | Worker 에서 `api.resend.com` 으로 나가지 못함 |
+
+   폼 전송이 실패하면 오류 문구 아래에 Resend 응답이 그대로 붙습니다.
+   자주 나오는 것:
+
+   - `403 You can only send testing emails to your own email address`
+     → `usingSandboxSender: true` 상태에서 **Resend 가입 주소가 아닌 곳으로** 보내려 한 경우입니다.
+       `INQUIRY_TO_EMAIL` 을 가입 주소와 같게 하거나, 도메인을 인증하고 `INQUIRY_FROM_EMAIL` 을 바꾸세요.
+   - `422 Invalid from field` → `INQUIRY_FROM_EMAIL` 도메인이 Resend 에서 인증되지 않았습니다.
+
+3. `resend.status` 가 `200` 이고 폼도 성공하는데 받은편지함이 비어 있다면
+   **스팸함** 과 Resend 대시보드의 **Emails** 로그를 확인하세요. 여기까지 왔다면 발송은 된 것입니다.
+
+> `INQUIRY_DEBUG` 는 진단이 끝나면 지웁니다. API 키는 노출되지 않고 수신 주소도 가려서
+> 표시되지만, 굳이 공개 엔드포인트에 남겨둘 이유는 없습니다.
+
 ### 수신 주소 추가 / 변경
 
 ```
@@ -424,6 +474,7 @@ Cloudflare 는 Build 와 Deploy 를 별도 단계로 실행하는데, Deploy 단
 | `RESEND_API_KEY` | 문의 이메일 발송 (Secret 으로 등록 · **필수**) |
 | `INQUIRY_TO_EMAIL` | 문의 수신 주소 (**필수** · Variable 로 등록) |
 | `SLACK_WEBHOOK_URL` | 문의 Slack 알림 (Secret 으로 등록) |
+| `INQUIRY_DEBUG` | `1` 로 두면 `/api/contact` 가 발송 실패 원인을 보여줍니다 (진단용 · 끝나면 삭제) |
 | `NEXT_PUBLIC_CF_BEACON_TOKEN` | Cloudflare Web Analytics |
 | `NEXT_PUBLIC_GA_ID` | GA4 |
 | `NEXT_IMAGE_UNOPTIMIZED` | 실사 사진 사용 + Cloudflare Images 미사용 시 `true` |

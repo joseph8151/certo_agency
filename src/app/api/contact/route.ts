@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server';
 import { contactInfo } from '@/data/site';
 import { emptyInquiry, validateInquiry, type InquiryPayload } from '@/lib/inquiry';
-import { hasConfiguredChannel, notifyInquiry } from '@/lib/notify';
+import {
+  describeEmailConfig,
+  hasConfiguredChannel,
+  isDebugEnabled,
+  notifyInquiry,
+  probeResend,
+} from '@/lib/notify';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -33,6 +39,12 @@ export async function GET() {
   const slack = process.env.SLACK_WEBHOOK_URL ? 'ready' : 'off';
   const ready = email === 'ready' || slack === 'ready';
 
+  // INQUIRY_DEBUG=1 일 때만 원인 추적에 필요한 정보를 덧붙입니다.
+  // 키는 노출하지 않고, 수신 주소는 가려서 보여줍니다. (src/lib/notify.ts)
+  const debug = isDebugEnabled()
+    ? { ...describeEmailConfig(), resend: await probeResend() }
+    : undefined;
+
   return NextResponse.json({
     ready,
     channels: { email, slack },
@@ -41,6 +53,7 @@ export async function GET() {
       : email === 'missing-key'
         ? 'RESEND_API_KEY 를 Secret 으로 등록하세요.'
         : 'INQUIRY_TO_EMAIL 을 등록하세요. (문의를 받을 주소)',
+    ...(debug ? { debug } : {}),
   });
 }
 
@@ -107,6 +120,8 @@ export async function POST(request: Request) {
         message: contactInfo.email
           ? `일시적인 오류로 문의를 접수하지 못했습니다. 잠시 후 다시 시도하시거나 ${contactInfo.email} 로 보내주세요.`
           : '일시적인 오류로 문의를 접수하지 못했습니다. 잠시 후 다시 시도해 주세요. 계속 실패하면 잠시 뒤에 다시 방문해 주세요.',
+        // 진단 모드에서만 실제 실패 사유(Resend 응답 코드/메시지)를 함께 내려줍니다.
+        ...(isDebugEnabled() ? { debug: results } : {}),
       },
       { status: 502 },
     );
