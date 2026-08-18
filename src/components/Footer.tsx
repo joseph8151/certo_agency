@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { businessInfo, contactInfo, footerNavigation, site } from '@/data/site';
+import { businessInfo, contactInfo, footerNavigation, hasPublicContact, site } from '@/data/site';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -42,39 +42,48 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* 연락처 */}
+          {/* 연락처 — 공개 연락처가 없으면 문의 폼으로만 안내합니다. */}
           <div className="lg:col-span-3 lg:col-start-10">
             <h2 className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/65">
               Contact
             </h2>
-            <ul className="mt-5 space-y-3 text-[0.875rem] text-navy/75">
-              {contactInfo.email ? (
-                <li>
-                  <a
-                    href={`mailto:${contactInfo.email}`}
-                    data-cta="footer-email"
-                    className="link-underline"
-                  >
-                    {contactInfo.email}
-                  </a>
-                </li>
-              ) : null}
-              {contactInfo.phone ? (
-                <li>
-                  <a
-                    href={`tel:${contactInfo.phone.replace(/[^0-9+]/g, '')}`}
-                    data-cta="footer-phone"
-                    className="link-underline"
-                  >
-                    {contactInfo.phone}
-                  </a>
-                </li>
-              ) : null}
-              {contactInfo.address ? <li className="leading-relaxed">{contactInfo.address}</li> : null}
-            </ul>
+
+            {hasPublicContact ? (
+              <ul className="mt-5 space-y-3 text-[0.875rem] text-navy/75">
+                {contactInfo.email ? (
+                  <li>
+                    <a
+                      href={`mailto:${contactInfo.email}`}
+                      data-cta="footer-email"
+                      className="link-underline"
+                    >
+                      {contactInfo.email}
+                    </a>
+                  </li>
+                ) : null}
+                {contactInfo.phone ? (
+                  <li>
+                    <a
+                      href={`tel:${contactInfo.phone.replace(/[^0-9+]/g, '')}`}
+                      data-cta="footer-phone"
+                      className="link-underline"
+                    >
+                      {contactInfo.phone}
+                    </a>
+                  </li>
+                ) : null}
+                {contactInfo.address ? (
+                  <li className="leading-relaxed">{contactInfo.address}</li>
+                ) : null}
+              </ul>
+            ) : (
+              <p className="mt-5 max-w-[22rem] text-[0.875rem] leading-relaxed text-navy/70">
+                프로젝트 내용을 남겨주시면 담당자가 확인 후 안내드립니다.
+              </p>
+            )}
 
             <Link
-              href="#contact"
+              href="/#contact"
               data-cta="footer-primary"
               className="mt-7 inline-block border-b border-brand pb-1 text-[0.875rem] font-medium text-brand"
             >

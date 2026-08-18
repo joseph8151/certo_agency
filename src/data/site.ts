@@ -30,8 +30,15 @@ export const site = {
 } as const;
 
 /**
- * 연락처 — 실제 정보로 교체해 주세요.
- * 값을 비워두면(''), 해당 항목은 화면에 렌더링되지 않습니다.
+ * 공개 연락처 — 화면에 노출되는 값입니다.
+ * ─────────────────────────────────────────────
+ * 값을 비워두면('') 해당 항목이 렌더링되지 않습니다.
+ * 세 항목이 모두 비어 있으면 문의 폼만 노출되고, 문의 섹션/푸터가
+ * 그에 맞게 자동으로 정리됩니다.
+ *
+ * 현재는 회사 도메인 이메일이 확정되기 전이라 비워둔 상태입니다.
+ * (문의는 폼 → 담당자 이메일로 전달됩니다. src/lib/notify.ts 참고)
+ * 회사 주소가 준비되면 email 에 넣기만 하면 다시 노출됩니다.
  */
 export type ContactInfo = {
   email: string;
@@ -43,13 +50,18 @@ export type ContactInfo = {
 };
 
 export const contactInfo: ContactInfo = {
-  email: 'contact@certoagency.com',
+  email: '',
   phone: '',
   phoneHours: '평일 09:00 – 18:00',
   kakao: '',
   address: '',
   addressDetail: '',
 };
+
+/** 화면에 노출할 공개 연락처가 하나라도 있는지 */
+export const hasPublicContact = Boolean(
+  contactInfo.email || contactInfo.phone || contactInfo.address,
+);
 
 /**
  * 사업자 정보 — 확정 후 값을 채우면 Footer에 자동 노출됩니다.

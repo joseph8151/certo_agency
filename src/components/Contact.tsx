@@ -4,7 +4,7 @@ import { useId, useState, type ChangeEvent, type FormEvent } from 'react';
 import Reveal from './ui/Reveal';
 import SectionHeading from './ui/SectionHeading';
 import { languageOptions, serviceOptions } from '@/data/content';
-import { contactInfo } from '@/data/site';
+import { contactInfo, hasPublicContact } from '@/data/site';
 import { emptyInquiry, validateInquiry, type InquiryErrors, type InquiryPayload } from '@/lib/inquiry';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
@@ -77,60 +77,78 @@ export default function Contact() {
           />
 
           <Reveal delay={160}>
-            <dl className="mt-12 space-y-6 border-t border-line pt-8">
-              {contactInfo.email ? (
-                <div>
-                  <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
-                    Email
-                  </dt>
-                  <dd className="mt-2">
-                    <a
-                      href={`mailto:${contactInfo.email}`}
-                      data-cta="contact-email"
-                      className="link-underline text-[0.9375rem] text-navy"
-                    >
-                      {contactInfo.email}
-                    </a>
-                  </dd>
-                </div>
-              ) : null}
+            {hasPublicContact ? (
+              <dl className="mt-12 space-y-6 border-t border-line pt-8">
+                {contactInfo.email ? (
+                  <div>
+                    <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
+                      Email
+                    </dt>
+                    <dd className="mt-2">
+                      <a
+                        href={`mailto:${contactInfo.email}`}
+                        data-cta="contact-email"
+                        className="link-underline text-[0.9375rem] text-navy"
+                      >
+                        {contactInfo.email}
+                      </a>
+                    </dd>
+                  </div>
+                ) : null}
 
-              {contactInfo.phone ? (
-                <div>
-                  <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
-                    Phone
-                  </dt>
-                  <dd className="mt-2">
-                    <a
-                      href={`tel:${contactInfo.phone.replace(/[^0-9+]/g, '')}`}
-                      data-cta="contact-phone"
-                      className="link-underline text-[0.9375rem] text-navy"
-                    >
-                      {contactInfo.phone}
-                    </a>
-                    {contactInfo.phoneHours ? (
-                      <span className="mt-1 block text-[0.8125rem] text-navy/65">
-                        {contactInfo.phoneHours}
-                      </span>
-                    ) : null}
-                  </dd>
-                </div>
-              ) : null}
+                {contactInfo.phone ? (
+                  <div>
+                    <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
+                      Phone
+                    </dt>
+                    <dd className="mt-2">
+                      <a
+                        href={`tel:${contactInfo.phone.replace(/[^0-9+]/g, '')}`}
+                        data-cta="contact-phone"
+                        className="link-underline text-[0.9375rem] text-navy"
+                      >
+                        {contactInfo.phone}
+                      </a>
+                      {contactInfo.phoneHours ? (
+                        <span className="mt-1 block text-[0.8125rem] text-navy/65">
+                          {contactInfo.phoneHours}
+                        </span>
+                      ) : null}
+                    </dd>
+                  </div>
+                ) : null}
 
-              {contactInfo.address ? (
-                <div>
-                  <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
-                    Office
-                  </dt>
-                  <dd className="mt-2 text-[0.9375rem] leading-relaxed text-navy/75">
-                    {contactInfo.address}
-                    {contactInfo.addressDetail ? (
-                      <span className="block text-navy/65">{contactInfo.addressDetail}</span>
-                    ) : null}
-                  </dd>
-                </div>
-              ) : null}
-            </dl>
+                {contactInfo.address ? (
+                  <div>
+                    <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
+                      Office
+                    </dt>
+                    <dd className="mt-2 text-[0.9375rem] leading-relaxed text-navy/75">
+                      {contactInfo.address}
+                      {contactInfo.addressDetail ? (
+                        <span className="block text-navy/65">{contactInfo.addressDetail}</span>
+                      ) : null}
+                    </dd>
+                  </div>
+                ) : null}
+              </dl>
+            ) : (
+              /*
+                공개 연락처가 없을 때 — 빈 목록 대신 문의 문턱을 낮추는 안내를 둡니다.
+                기밀 유지 문구는 The CERTO Standard 섹션과 폼 하단에 이미 있어
+                여기서는 반복하지 않습니다.
+              */
+              <div className="mt-12 border-t border-line pt-8">
+                <p className="eyebrow">Before You Send</p>
+                <p className="mt-4 text-[0.9375rem] leading-[1.85] text-pretty text-navy/70">
+                  확정된 정보가 없어도 괜찮습니다. 언어와 대략적인 일정만 알려주셔도
+                  가능 여부를 먼저 확인해 드립니다.
+                </p>
+                <p className="mt-5 text-[0.875rem] leading-relaxed text-navy/65">
+                  견적 확인만을 위한 문의도 편하게 남겨주세요.
+                </p>
+              </div>
+            )}
           </Reveal>
         </div>
 
