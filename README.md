@@ -23,8 +23,8 @@ npm run typecheck
 npm run check:email # 문의 이메일 발송 점검
 
 npm run cf:build    # Cloudflare Workers 번들 생성
-npm run cf:preview  # Workers 런타임으로 로컬 미리보기 (빌드 자동 수행)
-npm run cf:deploy   # Cloudflare Workers 배포 (빌드 자동 수행)
+npm run cf:preview  # Workers 런타임으로 로컬 미리보기 (빌드 포함)
+npm run cf:deploy   # Cloudflare Workers 배포 (빌드 포함)
 ```
 
 Node.js 20 이상을 권장합니다.
@@ -387,32 +387,30 @@ node scripts/generate-placeholders.mjs
 `@opennextjs/cloudflare` 어댑터와 `wrangler.jsonc` 가 저장소에 포함되어 있습니다.
 
 ```bash
-npm run cf:preview   # 로컬에서 Workers 런타임으로 미리보기 (빌드 자동 수행)
-npm run cf:deploy    # 로컬에서 직접 배포 (빌드 자동 수행)
+npm run cf:preview   # 로컬에서 Workers 런타임으로 미리보기 (빌드 포함)
+npm run cf:deploy    # 로컬에서 직접 배포 (빌드 포함)
 ```
 
-**대시보드 Git 연동으로 배포하는 경우** 설정은 아래 하나면 됩니다.
+**대시보드 Git 연동으로 배포하는 경우 Build command 를 반드시 채워야 합니다.**
 
 | 항목 | 값 |
 | --- | --- |
-| Build command | *(비움)* |
+| Build command | `npm run cf:build` |
 | Deploy command | `npx wrangler deploy` |
 | Version command | *(비움)* |
 
-`wrangler.jsonc` 에 build hook 이 들어 있어 `wrangler deploy` 가
-빌드를 먼저 실행합니다. 그래서 Build command 를 비워두어도 동작합니다.
+Build command 를 비워두면 `Could not find compiled Open Next config` 오류로 실패합니다.
+Cloudflare 는 Build 와 Deploy 를 별도 단계로 실행하는데, Deploy 단계의
+`wrangler deploy` 는 OpenNext 프로젝트를 감지하면 **곧바로**
+`opennextjs-cloudflare deploy` 로 넘어갑니다. 이때 이미 만들어진 `.open-next/`
+산출물을 찾기 때문에, 그 전에 빌드가 끝나 있어야 합니다.
 
-```jsonc
-"build": { "command": "npm run cf:build" }
-```
+> **주의 — `wrangler.jsonc` 의 `build.command` 로는 해결되지 않습니다.**
+> 위 위임이 build hook 보다 먼저 일어나기 때문입니다.
+> `wrangler deploy --dry-run` 으로 확인하면 위임이 일어나지 않아 hook 이 실행되고,
+> 그래서 잘 되는 것처럼 보입니다. 실제 배포 경로와 다르니 `--dry-run` 결과만 믿지 마세요.
 
-대시보드에도 Build command 를 지정하면 빌드가 두 번 돌게 되므로
-둘 중 한 곳에서만 지정하세요.
-
-> **`Could not find compiled Open Next config` 오류가 난다면**
-> 빌드가 실행되지 않은 상태에서 배포가 시도된 것입니다.
-> 위 build hook 이 있는 커밋을 배포하고 있는지 확인하거나,
-> 대시보드 Build command 에 `npm run cf:build` 를 넣으세요.
+로컬에서는 `npm run cf:deploy` 가 빌드와 배포를 함께 수행하므로 신경 쓰지 않아도 됩니다.
 
 `wrangler.jsonc` 의 `name` 은 `certo-agency` 입니다. 대시보드에서 만든 Worker 이름이
 다르면 이 값을 같은 이름으로 맞춰주세요. 다르면 별도 Worker 가 새로 생성됩니다.

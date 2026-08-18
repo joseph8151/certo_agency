@@ -10,8 +10,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "cf:build": "opennextjs-cloudflare build",
-    "cf:preview": "wrangler dev",
-    "cf:deploy": "wrangler deploy",
+    "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "check:email": "node scripts/check-email.mjs"
   },
   "dependencies": {
