@@ -1,18 +1,34 @@
 /**
  * 문의 알림 전송
  * ─────────────────────────────────────────────
- * 환경 변수로 채널을 켭니다. 설정된 채널이 하나도 없으면 서버 로그에만 남습니다.
+ * 상담 문의는 기본적으로 DEFAULT_INQUIRY_TO 주소로 발송됩니다.
+ * 실제 발송을 위해서는 RESEND_API_KEY 만 등록하면 됩니다.
  *
- *   RESEND_API_KEY     Resend API 키          (이메일 발송)
- *   INQUIRY_TO_EMAIL   문의를 받을 주소        (쉼표로 여러 개 가능)
- *   INQUIRY_FROM_EMAIL 발신 주소               (Resend 에서 인증된 도메인이어야 합니다)
- *   SLACK_WEBHOOK_URL  Slack Incoming Webhook (즉시 알림)
+ *   RESEND_API_KEY     Resend API 키          (필수 — 이 값이 있어야 메일이 나갑니다)
+ *   INQUIRY_TO_EMAIL   수신 주소 변경          (기본값을 덮어씁니다. 쉼표로 여러 개 가능)
+ *   INQUIRY_FROM_EMAIL 발신 주소 변경          (Resend 에서 도메인 인증을 마친 뒤에만)
+ *   SLACK_WEBHOOK_URL  Slack Incoming Webhook (선택 — 즉시 알림)
  *
  * fetch 만 사용하므로 Cloudflare Workers / Vercel / Node 어디서든 동작합니다.
  */
 import type { InquiryPayload } from './inquiry';
 
 export type NotifyResult = { channel: string; ok: boolean; error?: string };
+
+/**
+ * 상담 문의 수신 주소 (기본값).
+ * 환경 변수 INQUIRY_TO_EMAIL 을 설정하면 그 값이 우선합니다.
+ */
+export const DEFAULT_INQUIRY_TO = 'yorkboy@gmail.com';
+
+/**
+ * 발신 주소 (기본값).
+ * onboarding@resend.dev 는 Resend 가 제공하는 검증용 발신 주소로, 도메인 인증 없이 쓸 수 있습니다.
+ * 다만 도메인 인증 전에는 "Resend 가입에 사용한 이메일" 로만 발송됩니다.
+ * 회사 도메인을 Resend 에 인증한 뒤 INQUIRY_FROM_EMAIL 을 그 도메인 주소로 바꾸면
+ * 임의의 주소로도 발송할 수 있습니다.
+ */
+export const DEFAULT_INQUIRY_FROM = 'CERTO AGENCY <onboarding@resend.dev>';
 
 const FIELD_LABELS: [keyof InquiryPayload, string][] = [
   ['name', '의뢰인 / 회사명'],
@@ -73,10 +89,11 @@ function buildHtml(payload: InquiryPayload, receivedAt: string) {
 
 async function sendResend(payload: InquiryPayload, receivedAt: string): Promise<NotifyResult> {
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.INQUIRY_TO_EMAIL;
-  const from = process.env.INQUIRY_FROM_EMAIL || 'CERTO AGENCY <onboarding@resend.dev>';
+  const to = process.env.INQUIRY_TO_EMAIL || DEFAULT_INQUIRY_TO;
+  const from = process.env.INQUIRY_FROM_EMAIL || DEFAULT_INQUIRY_FROM;
 
-  if (!apiKey || !to) return { channel: 'resend', ok: false, error: 'not-configured' };
+  // 수신 주소는 기본값이 있으므로 API 키만 있으면 발송을 시도합니다.
+  if (!apiKey) return { channel: 'resend', ok: false, error: 'not-configured' };
 
   try {
     const response = await fetch('https://api.resend.com/emails', {
@@ -149,9 +166,7 @@ async function sendSlack(payload: InquiryPayload, receivedAt: string): Promise<N
 
 /** 설정된 채널이 있는지 */
 export function hasConfiguredChannel() {
-  return Boolean(
-    (process.env.RESEND_API_KEY && process.env.INQUIRY_TO_EMAIL) || process.env.SLACK_WEBHOOK_URL,
-  );
+  return Boolean(process.env.RESEND_API_KEY || process.env.SLACK_WEBHOOK_URL);
 }
 
 /**

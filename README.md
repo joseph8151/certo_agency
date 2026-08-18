@@ -20,6 +20,8 @@ npm start        # 프로덕션 서버
 npm run lint     # ESLint
 npm run typecheck
 
+npm run check:email # 문의 이메일 발송 점검
+
 npm run cf:preview  # Cloudflare Workers 런타임으로 로컬 미리보기
 npm run cf:deploy   # Cloudflare Workers 배포
 ```
@@ -171,29 +173,52 @@ hero: {
 
 ## 문의 폼 알림 (배포 전 필수)
 
-문의 폼은 `/api/contact` 로 접수되고, **환경 변수로 켜진 채널로 발송**됩니다.
-채널이 하나도 설정되지 않으면 서버 로그에만 남습니다. 로그는 장기 보관되지 않으므로
-운영을 시작하기 전에 반드시 하나 이상 설정하세요.
+문의 폼은 `/api/contact` 로 접수되어 **이메일로 발송**됩니다.
+수신 주소 기본값은 `src/lib/notify.ts` 의 `DEFAULT_INQUIRY_TO` 에 있습니다.
+(현재 `yorkboy@gmail.com`)
 
-### 이메일 (Resend)
+### 설정 — API 키 하나만 등록하면 됩니다
+
+1. **[resend.com](https://resend.com) 에 가입합니다. 반드시 문의를 받을 주소로 가입하세요.**
+   Resend 는 도메인 인증 전까지 *가입에 사용한 이메일 주소로만* 발송을 허용합니다.
+   문의를 받을 주소로 가입하면 도메인 설정 없이 바로 쓸 수 있습니다.
+2. API Keys 메뉴에서 키를 발급합니다.
+3. 배포 환경에 **Secret** 으로 등록합니다.
+   ```
+   RESEND_API_KEY=re_xxxxxxxxxxxxxxxx
+   ```
+   Cloudflare → Workers 설정 > Variables and Secrets > **Secret** 으로 추가
+
+무료 플랜은 월 3,000통 / 일 100통입니다. 문의 폼 용도로는 충분합니다.
+
+### 발송 확인
+
+폼에 가짜 문의를 넣지 않고도 이메일 경로를 점검할 수 있습니다.
+
+```bash
+RESEND_API_KEY=re_xxxx npm run check:email
+```
+
+Resend 가 돌려주는 오류를 그대로 보여주므로 키 문제인지 수신 주소 제한인지 바로 구분됩니다.
+
+### 수신 주소 변경 / 추가
 
 ```
-RESEND_API_KEY=re_xxxxxxxxxxxxxxxx
-INQUIRY_TO_EMAIL=contact@certoagency.com        # 쉼표로 여러 명 지정 가능
-INQUIRY_FROM_EMAIL=CERTO AGENCY <noreply@certoagency.com>
+INQUIRY_TO_EMAIL=yorkboy@gmail.com,manager@certoagency.com
 ```
 
-`INQUIRY_FROM_EMAIL` 은 Resend 에서 **도메인 인증을 마친 주소**여야 합니다.
-인증 전이라면 이 값을 비워두세요. 테스트용 주소로 발송됩니다.
-받은 메일에서 바로 회신하면 문의자에게 가도록 `reply_to` 가 설정되어 있습니다.
+여러 명에게 보내거나 회사 주소로 바꿀 때 설정합니다.
+단, **도메인 인증 전에는 Resend 가입 주소 외에는 발송되지 않습니다.**
+회사 도메인을 Resend 에 인증한 뒤 `INQUIRY_FROM_EMAIL` 을 그 도메인 주소로 바꾸면
+임의의 주소로도 보낼 수 있습니다.
 
-### Slack
+### Slack (선택)
 
 ```
 SLACK_WEBHOOK_URL=https://hooks.slack.com/services/XXX/YYY/ZZZ
 ```
 
-두 채널을 함께 켜면 양쪽으로 모두 발송됩니다.
+이메일과 함께 켜면 양쪽으로 모두 발송됩니다.
 
 ### 동작 방식
 
@@ -208,6 +233,7 @@ SLACK_WEBHOOK_URL=https://hooks.slack.com/services/XXX/YYY/ZZZ
 
 구현은 `src/lib/notify.ts` 이며 `fetch` 만 사용하므로
 Cloudflare Workers / Vercel / Node 어디서든 동일하게 동작합니다.
+받은 메일에서 바로 회신하면 문의자에게 가도록 `reply_to` 가 설정되어 있습니다.
 검증 로직(`src/lib/inquiry.ts`)은 클라이언트와 서버가 공유하고 서버에서 다시 검증합니다.
 사람에게 보이지 않는 `website` 필드는 스팸 봇 트랩입니다.
 
@@ -369,7 +395,8 @@ Next.js 기본 프리셋(`next build`)을 그대로 쓰면 Workers 번들이 생
 | 변수 | 용도 |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | 배포 도메인. canonical / sitemap / OG / JSON-LD 에 사용 |
-| `RESEND_API_KEY` · `INQUIRY_TO_EMAIL` | 문의 이메일 발송 (Secret 으로 등록) |
+| `RESEND_API_KEY` | 문의 이메일 발송 (Secret 으로 등록 · **필수**) |
+| `INQUIRY_TO_EMAIL` | 수신 주소 변경 (기본값은 코드에 있음 · 선택) |
 | `SLACK_WEBHOOK_URL` | 문의 Slack 알림 (Secret 으로 등록) |
 | `NEXT_PUBLIC_CF_BEACON_TOKEN` | Cloudflare Web Analytics |
 | `NEXT_PUBLIC_GA_ID` | GA4 |
@@ -399,7 +426,7 @@ Cloudflare 에서는 이때 둘 중 하나를 선택해야 합니다.
 - [ ] `NEXT_PUBLIC_SITE_URL` 환경 변수를 실제 도메인으로 설정
       (미설정 시 `src/data/site.ts` 의 기본값 `https://www.certoagency.com` 사용)
 - [ ] `contactInfo` / `businessInfo` 실제 정보 입력
-- [ ] 문의 알림 채널 연결 (`RESEND_API_KEY` + `INQUIRY_TO_EMAIL` 또는 `SLACK_WEBHOOK_URL`)
+- [ ] `RESEND_API_KEY` 등록 후 `npm run check:email` 로 발송 확인
 - [ ] `public/images/` 실사 사진 교체 및 `src/data/images.ts` 의 `alt` 갱신
 - [ ] (사진 교체 후 Cloudflare 배포 시) 이미지 최적화 방식 결정
 - [ ] 분석 도구 연결 (`NEXT_PUBLIC_CF_BEACON_TOKEN` 또는 `NEXT_PUBLIC_GA_ID`)
