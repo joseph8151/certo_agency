@@ -8,6 +8,19 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
+
+  /*
+   * wrangler 가 deploy / dev 직전에 이 명령을 실행합니다.
+   * 덕분에 Cloudflare 대시보드에서 Build command 를 비워두고
+   * Deploy command 만 `npx wrangler deploy` 로 두어도 빌드가 함께 수행됩니다.
+   *
+   * 대시보드에 Build command 를 따로 지정하면 빌드가 두 번 돌게 되므로
+   * 둘 중 한 곳에서만 지정하세요. (권장: 대시보드는 비워두기)
+   */
+  "build": {
+    "command": "npm run cf:build"
+  },
+
   "observability": {
     "enabled": true
   }
