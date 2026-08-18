@@ -67,13 +67,16 @@ src/
 │   ├── Footer.tsx
 │   ├── StickyCta.tsx           # 모바일 하단 고정 CTA
 │   ├── ServicePage.tsx         # 서비스 상세 페이지 템플릿 (4개 페이지 공용)
+│   ├── Analytics.tsx           # CF Web Analytics / GA4 (환경 변수로 활성화)
 │   └── ui/                     # Button · Figure · LineMap · Reveal · SectionHeading
 ├── data/                       # ← 내용 수정은 대부분 여기서 끝납니다
 │   ├── site.ts                 # 회사 정보 · 연락처 · 사업자 정보 · 네비게이션 · 사이트 주소
 │   ├── content.ts              # 홈 각 섹션의 문구 · 목록 데이터
 │   ├── services.ts             # 서비스 상세 페이지 4개의 콘텐츠
 │   └── images.ts               # 이미지 매니페스트
-└── lib/inquiry.ts              # 문의 폼 스키마 및 검증 (클라이언트/서버 공용)
+└── lib/
+    ├── inquiry.ts              # 문의 폼 스키마 및 검증 (클라이언트/서버 공용)
+    └── notify.ts               # 문의 알림 발송 (Resend / Slack)
 ```
 
 ---
@@ -166,33 +169,95 @@ hero: {
 
 ---
 
-## 문의 폼 연동 (배포 전 필수)
+## 문의 폼 알림 (배포 전 필수)
 
-`src/app/api/contact/route.ts` 는 현재 **서버 로그에만 기록**합니다.
-실제 운영 전에 알림 채널을 연결해야 문의가 담당자에게 전달됩니다.
+문의 폼은 `/api/contact` 로 접수되고, **환경 변수로 켜진 채널로 발송**됩니다.
+채널이 하나도 설정되지 않으면 서버 로그에만 남습니다. 로그는 장기 보관되지 않으므로
+운영을 시작하기 전에 반드시 하나 이상 설정하세요.
 
-- 이메일 발송: Resend / SendGrid / AWS SES
-- 스프레드시트: Google Sheets API
-- 메신저 알림: Slack Incoming Webhook / 카카오 알림톡
-- CRM: HubSpot / Notion Database
+### 이메일 (Resend)
 
-파일 안의 `// TODO: 실제 알림 채널 연결 지점` 주석 위치에 추가하면 됩니다.
-검증 로직(`src/lib/inquiry.ts`)은 클라이언트와 서버가 공유하며, 서버에서도 다시 검증합니다.
+```
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxx
+INQUIRY_TO_EMAIL=contact@certoagency.com        # 쉼표로 여러 명 지정 가능
+INQUIRY_FROM_EMAIL=CERTO AGENCY <noreply@certoagency.com>
+```
+
+`INQUIRY_FROM_EMAIL` 은 Resend 에서 **도메인 인증을 마친 주소**여야 합니다.
+인증 전이라면 이 값을 비워두세요. 테스트용 주소로 발송됩니다.
+받은 메일에서 바로 회신하면 문의자에게 가도록 `reply_to` 가 설정되어 있습니다.
+
+### Slack
+
+```
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/XXX/YYY/ZZZ
+```
+
+두 채널을 함께 켜면 양쪽으로 모두 발송됩니다.
+
+### 동작 방식
+
+| 상황 | 응답 | 처리 |
+| --- | --- | --- |
+| 채널 미설정 | 200 | 접수 후 로그 기록 + 경고 로그 |
+| 한 채널 이상 성공 | 200 | 완료 화면 표시 (실패한 채널은 경고 로그) |
+| 설정된 채널이 전부 실패 | 502 | 사용자에게 재시도 안내, 문의 내용 전문을 에러 로그에 보존 |
+
+전송 실패를 성공으로 위장하지 않습니다. 사용자는 실패를 알 수 있고,
+문의 내용은 로그에 남아 복구할 수 있습니다.
+
+구현은 `src/lib/notify.ts` 이며 `fetch` 만 사용하므로
+Cloudflare Workers / Vercel / Node 어디서든 동일하게 동작합니다.
+검증 로직(`src/lib/inquiry.ts`)은 클라이언트와 서버가 공유하고 서버에서 다시 검증합니다.
 사람에게 보이지 않는 `website` 필드는 스팸 봇 트랩입니다.
 
 ---
 
-## CTA 추적
+## 분석 · CTA 추적
 
-모든 전환 버튼에는 `data-cta` 속성이 붙어 있어 GA4 / GTM 에서 구분할 수 있습니다.
+환경 변수로 켜집니다. 설정하지 않으면 아무 스크립트도 로드되지 않습니다.
+(`src/components/Analytics.tsx`)
+
+| 변수 | 도구 | 비고 |
+| --- | --- | --- |
+| `NEXT_PUBLIC_CF_BEACON_TOKEN` | Cloudflare Web Analytics | 무료 · 쿠키 미사용(동의 배너 불필요) · **페이지뷰 전용** |
+| `NEXT_PUBLIC_GA_ID` | GA4 | CTA 클릭 이벤트를 받으려면 이쪽이 필요합니다 |
+
+모든 전환 버튼에는 `data-cta` 속성이 있습니다. GA4 를 켜면
+클릭이 자동으로 `cta_click` 이벤트로 수집됩니다. (이벤트 위임 방식이라
+버튼을 추가해도 별도 작업이 필요 없습니다)
 
 ```
-[data-cta="hero-primary"]     [data-cta="global-cta"]     [data-cta="contact-submit"]
-[data-cta="header-primary"]   [data-cta="business-cta"]   [data-cta="sticky-mobile"]
-[data-cta="service-interpretation"] · [data-cta="usecase-1"] …
+event: cta_click
+  cta_id    "hero-primary"
+  cta_text  "통번역 문의하기"
+  page_path "/"
 ```
 
-GTM 트리거 예: *Click - All Elements* / `Click Element` matches CSS selector `[data-cta]`.
+주요 `cta_id` — `hero-primary` · `header-primary` · `sticky-mobile` ·
+`service-interpretation` · `global-cta` · `business-cta` · `contact-submit` ·
+`usecase-1`… · `interpretation-hero-primary` 등 서비스 페이지별 CTA
+
+GTM 을 쓰신다면 트리거를 `Click Element` matches CSS selector `[data-cta]` 로 잡으면 됩니다.
+
+---
+
+## 보안 헤더
+
+`next.config.mjs` 의 `headers()` 와 `public/_headers` 두 곳에 동일하게 정의되어 있습니다.
+(Cloudflare 는 정적 자산이 Worker 를 거치지 않을 수 있어 양쪽에 둡니다.
+Workers 런타임에서 HTML·정적 자산 모두 적용되는 것을 확인했습니다)
+
+`X-Content-Type-Options` · `X-Frame-Options` · `Referrer-Policy` ·
+`Permissions-Policy` · `Strict-Transport-Security`
+
+CSP 는 넣지 않았습니다. 정적 프리렌더를 유지하면서 nonce 를 쓸 수 없어
+`script-src` 에 `'unsafe-inline'` 을 열어야 하고, 그러면 실효가 크게 줄어듭니다.
+사용할 외부 스크립트가 확정되면 그때 추가하는 편이 낫습니다.
+
+참고 — `public/_headers` 는 Cloudflare 전용 설정 파일입니다. Cloudflare 에서는
+설정으로 소비되어 URL 로 노출되지 않지만(404), Node/Vercel 배포에서는
+`/_headers` 로 조회될 수 있습니다. 헤더 설정값 외에 민감한 내용은 없습니다.
 
 ---
 
@@ -304,11 +369,18 @@ Next.js 기본 프리셋(`next build`)을 그대로 쓰면 Workers 번들이 생
 | 변수 | 용도 |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | 배포 도메인. canonical / sitemap / OG / JSON-LD 에 사용 |
+| `RESEND_API_KEY` · `INQUIRY_TO_EMAIL` | 문의 이메일 발송 (Secret 으로 등록) |
+| `SLACK_WEBHOOK_URL` | 문의 Slack 알림 (Secret 으로 등록) |
+| `NEXT_PUBLIC_CF_BEACON_TOKEN` | Cloudflare Web Analytics |
+| `NEXT_PUBLIC_GA_ID` | GA4 |
 | `NEXT_IMAGE_UNOPTIMIZED` | 실사 사진 사용 + Cloudflare Images 미사용 시 `true` |
+
+API 키는 일반 변수가 아닌 **Secret** 으로 등록하세요.
+`NEXT_PUBLIC_` 접두사가 붙은 값은 브라우저에 노출되므로 비밀값에 쓰면 안 됩니다.
+로컬에서 `npm run cf:preview` 로 테스트할 때는 `.dev.vars` 파일을 사용합니다. (gitignore 됨)
 
 **로그 확인** — `wrangler.jsonc` 에 `observability` 를 켜두었습니다.
 알림 채널을 연결하기 전까지는 접수된 문의를 Workers 로그에서만 볼 수 있습니다.
-로그는 장기 보관되지 않으므로, 운영 시작 전에 이메일 연동을 먼저 마치세요.
 
 확인된 동작 범위 — 홈과 서비스 상세 페이지, `sitemap.xml`, `robots.txt`,
 OG 이미지, 문의 API(`/api/contact`)까지 Workers 런타임에서 정상 동작합니다.
@@ -327,7 +399,7 @@ Cloudflare 에서는 이때 둘 중 하나를 선택해야 합니다.
 - [ ] `NEXT_PUBLIC_SITE_URL` 환경 변수를 실제 도메인으로 설정
       (미설정 시 `src/data/site.ts` 의 기본값 `https://www.certoagency.com` 사용)
 - [ ] `contactInfo` / `businessInfo` 실제 정보 입력
-- [ ] `src/app/api/contact/route.ts` 에 알림 채널 연결
+- [ ] 문의 알림 채널 연결 (`RESEND_API_KEY` + `INQUIRY_TO_EMAIL` 또는 `SLACK_WEBHOOK_URL`)
 - [ ] `public/images/` 실사 사진 교체 및 `src/data/images.ts` 의 `alt` 갱신
 - [ ] (사진 교체 후 Cloudflare 배포 시) 이미지 최적화 방식 결정
-- [ ] GA4 / GTM 스크립트 삽입
+- [ ] 분석 도구 연결 (`NEXT_PUBLIC_CF_BEACON_TOKEN` 또는 `NEXT_PUBLIC_GA_ID`)

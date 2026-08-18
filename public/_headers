@@ -1,0 +1,9 @@
+# Cloudflare Workers 정적 자산용 보안 헤더
+# next.config.mjs 의 headers() 와 동일한 내용입니다.
+# (정적 자산은 Worker 를 거치지 않을 수 있어 여기에도 둡니다)
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
