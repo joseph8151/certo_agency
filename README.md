@@ -325,6 +325,8 @@ Cloudflare Workers / Vercel / Node 어디서든 동일하게 동작합니다.
 
 | 변수 | 도구 | 비고 |
 | --- | --- | --- |
+| `NEXT_PUBLIC_NAVER_SITE_VERIFICATION` | 네이버 서치어드바이저 소유 확인 코드 |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | 구글 서치콘솔 소유 확인 코드 |
 | `NEXT_PUBLIC_CF_BEACON_TOKEN` | Cloudflare Web Analytics | 무료 · 쿠키 미사용(동의 배너 불필요) · **페이지뷰 전용** |
 | `NEXT_PUBLIC_GA_ID` | GA4 | CTA 클릭 이벤트를 받으려면 이쪽이 필요합니다 |
 
@@ -377,6 +379,41 @@ CSP 는 넣지 않았습니다. 정적 프리렌더를 유지하면서 nonce 를
 **배포 전에 `NEXT_PUBLIC_SITE_URL` 환경 변수를 실제 도메인으로 설정하세요.**
 `metadataBase`, canonical, `sitemap.xml`, `robots.txt`, OG 태그, JSON-LD 가 모두 이 값을 씁니다.
 설정하지 않으면 `src/data/site.ts` 의 기본값이 사용됩니다.
+
+### 네이버 · 구글 검색 노출
+
+검색에 나오려면 **크롤러가 읽을 수 있는 것만으로는 부족하고, 각 검색엔진에 사이트를 등록**해야 합니다.
+특히 네이버는 등록하지 않으면 사실상 노출되지 않습니다.
+
+**1. 소유 확인 코드 발급**
+
+| 검색엔진 | 주소 | 환경 변수 |
+| --- | --- | --- |
+| 네이버 | [searchadvisor.naver.com](https://searchadvisor.naver.com) → 웹마스터도구 → 사이트 등록 → HTML 태그 | `NEXT_PUBLIC_NAVER_SITE_VERIFICATION` |
+| 구글 | [search.google.com/search-console](https://search.google.com/search-console) → 소유권 확인 → HTML 태그 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` |
+
+화면에 나오는 `<meta name="naver-site-verification" content="abc123...">` 에서
+**`content` 안의 값만** 환경 변수에 넣습니다. 태그 전체를 넣으면 안 됩니다.
+
+**2. 재배포** — `NEXT_PUBLIC_` 값은 빌드 시점에 박히므로 반드시 다시 배포해야 태그가 나옵니다.
+
+**3. 각 사이트에서 「소유확인」 버튼 클릭**
+
+**4. 사이트맵 · robots.txt 제출**
+
+네이버 웹마스터도구 → 요청 → 사이트맵 제출 → `sitemap.xml` 입력
+(구글 서치콘솔도 Sitemaps 메뉴에서 동일하게)
+
+> ⚠️ **먼저 `NEXT_PUBLIC_SITE_URL` 이 실제 도메인인지 확인하세요.**
+> 이 값이 틀리면 `sitemap.xml` 과 `robots.txt` 가 엉뚱한 주소를 가리켜 제출이 거부됩니다.
+> `사이트주소/robots.txt` 를 열어 `Host:` 와 `Sitemap:` 이 실제 주소와 같은지 확인하면 됩니다.
+
+**크롤러 허용** — `src/app/robots.ts` 에서 네이버(`Yeti`)와 다음(`Daumoa`)을 명시적으로 허용하고 있습니다.
+
+**키워드** — `src/data/seo.ts` 의 `siteKeywords` 한 곳에서 관리합니다.
+다만 네이버·구글 모두 `keywords` 메타태그를 순위에 거의 반영하지 않습니다.
+실제 노출을 만드는 것은 **title · description · 본문에 실제로 쓰인 말**이므로,
+키워드를 추가할 때는 그 표현이 페이지 본문에도 자연스럽게 등장하는지 함께 확인하세요.
 
 ### OG 이미지
 

@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import StickyCta from '@/components/StickyCta';
 import { allServicePages } from '@/data/services';
+import { siteKeywords, verification } from '@/data/seo';
 import { contactInfo, site } from '@/data/site';
 
 const inter = Inter({
@@ -30,24 +31,7 @@ export const metadata: Metadata = {
   },
   description:
     '국내 통역부터 해외 출장, 국제회의, 기업 미팅, 전문 번역까지. CERTO AGENCY가 프로젝트에 적합한 전문 통역사와 번역가를 선별하여 매칭합니다.',
-  keywords: [
-    '전문 통역',
-    '통역 에이전시',
-    '기업 통역',
-    '영어 통역',
-    '해외 통역',
-    '출장 통역',
-    '수행 통역',
-    '비즈니스 통역',
-    '국제회의 통역',
-    '전시회 통역',
-    '전문 번역',
-    '기업 번역',
-    '영어 번역',
-    '통역사 섭외',
-    '통역사 매칭',
-    '해외 통역사',
-  ],
+  keywords: [...siteKeywords],
   authors: [{ name: site.name }],
   creator: site.name,
   publisher: site.name,
@@ -71,6 +55,16 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
+  },
+  /*
+   * 사이트 소유 확인용 메타 태그.
+   * 값이 비어 있으면 태그 자체가 출력되지 않습니다. (src/data/seo.ts)
+   *   네이버 → 서치어드바이저 > 사이트 등록 > HTML 태그
+   *   구글   → 서치콘솔 > 소유권 확인 > HTML 태그
+   */
+  verification: {
+    ...(verification.google ? { google: verification.google } : {}),
+    ...(verification.naver ? { other: { 'naver-site-verification': verification.naver } } : {}),
   },
   formatDetection: { telephone: false, address: false, email: false },
 };
