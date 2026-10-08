@@ -1,13 +1,14 @@
 /**
  * 이미지 매니페스트
  * ─────────────────────────────────────────────
- * 현재는 브랜드 톤에 맞춘 라인 컴포지션 플레이트(SVG)를 사용합니다.
- * 실사 사진을 확보하면 아래 `src` 경로만 교체하면 됩니다.
+ * hero · interpretation · translation · domestic · business 는 실사 사진입니다.
+ * global 만 아직 플레이스홀더(SVG)이며, 해외 현장 사진을 확보하면 교체합니다.
  *
  * 교체 방법
  *   1) public/images/ 에 사진을 넣습니다. (예: hero.jpg)
  *   2) 아래 src 를 '/images/hero.jpg' 로 변경합니다.
- *   3) 외부 CDN을 쓰려면 next.config.mjs 의 images.remotePatterns 에 호스트를 추가합니다.
+ *   3) 원본 비율과 프레임 비율이 다르면 position 으로 잘리는 기준점을 잡습니다.
+ *   4) 외부 CDN을 쓰려면 next.config.mjs 의 images.remotePatterns 에 호스트를 추가합니다.
  *
  * 권장 촬영/선정 방향 (`subject` 참고)
  *   - 헤드셋을 낀 콜센터 이미지는 사용하지 않습니다.
@@ -24,38 +25,48 @@ export type ImageSlot = {
   alt: string;
   /** 어떤 사진이 들어가야 하는지에 대한 가이드 */
   subject: string;
+  /**
+   * object-position. 프레임 비율과 원본 비율이 다를 때 잘리는 기준점입니다.
+   * 인물이 한쪽에 몰린 사진은 이 값으로 잘리지 않게 잡아 줍니다. (기본 '50% 50%')
+   */
+  position?: string;
 };
 
 export const images = {
   hero: {
-    src: '/images/hero.svg',
-    ratio: '4 / 5',
-    alt: '국제 비즈니스 컨퍼런스 현장',
-    subject: '국제 컨퍼런스 · 고급 회의장 전경, 세로형 구도',
+    src: '/images/hero.jpg',
+    ratio: '4 / 3',
+    alt: '서울 도심이 보이는 회의실에서 진행되는 국제 비즈니스 미팅',
+    subject: '국제 컨퍼런스 · 고급 회의장 전경',
+    position: '54% 50%',
   },
   interpretation: {
-    src: '/images/interpretation.svg',
+    src: '/images/interpretation.jpg',
     ratio: '4 / 3',
-    alt: '국제회의에서 진행되는 전문 통역 현장',
+    alt: '창가 회의실에서 마주 앉아 진행되는 일대일 비즈니스 미팅',
     subject: '국제회의 · 통역 부스 · 비즈니스 미팅 현장',
+    position: '52% 50%',
   },
   translation: {
-    src: '/images/translation.svg',
+    src: '/images/translation.jpg',
     ratio: '4 / 3',
-    alt: '전문 번역 문서 작업 현장',
+    alt: '밝은 책상 위에서 검토 중인 문서',
     subject: '계약서·보고서 검토, 데스크 위 문서와 손, 차분한 톤',
+    position: '50% 46%',
   },
   domestic: {
-    src: '/images/domestic.svg',
+    src: '/images/domestic.jpg',
     ratio: '6 / 7',
-    alt: '서울에서 진행되는 기업 비즈니스 미팅',
+    alt: '기업 로비를 함께 걸어 들어오는 담당자와 파트너',
     subject: '서울 도심 · 기업 미팅 · 컨벤션 센터',
+    position: '31% 50%',
   },
   business: {
-    src: '/images/business.svg',
+    src: '/images/business.jpg',
     ratio: '16 / 9',
-    alt: '기업 글로벌 커뮤니케이션 현장',
+    alt: '회의실에서 진행되는 기업 대상 프레젠테이션',
     subject: '기업 임원 미팅 · 글로벌 오피스 · 파트너십 현장',
+    position: '50% 40%',
   },
   global: {
     src: '/images/global.svg',

@@ -150,22 +150,43 @@ export const contactInfo = {
 
 ---
 
-## 이미지 교체 (중요)
+## 이미지
 
-현재는 실사 사진 대신 **브랜드 톤에 맞춘 라인 컴포지션 플레이트(SVG)** 가 들어가 있습니다.
-`scripts/generate-placeholders.mjs` 로 생성되며, 실제 사진을 확보하면 교체해 주세요.
+6개 슬롯 중 **5개는 실사 사진**, `global` 하나만 아직 플레이스홀더(SVG)입니다.
 
-1. `public/images/` 에 사진을 넣습니다. (예: `hero.jpg`)
+| 슬롯 | 상태 | 프레임 비율 |
+| --- | --- | --- |
+| `hero` | 사진 — 회의실 국제 미팅 | 4 / 3 |
+| `interpretation` | 사진 — 일대일 비즈니스 미팅 | 4 / 3 |
+| `translation` | 사진 — 문서 검토 | 4 / 3 |
+| `domestic` | 사진 — 기업 로비 | 6 / 7 |
+| `business` | 사진 — 기업 프레젠테이션 | 16 / 9 |
+| `global` | **플레이스홀더** — 해외 현장 사진 필요 | 4 / 5 |
+
+교체 방법:
+
+1. `public/images/` 에 사진을 넣습니다. (예: `global.jpg`)
 2. `src/data/images.ts` 의 `src` 와 `alt` 를 수정합니다.
 
 ```ts
 hero: {
-  src: '/images/hero.jpg',        // ← 경로만 바꾸면 됩니다
-  ratio: '4 / 5',
-  alt: '국제 비즈니스 컨퍼런스 현장',
-  subject: '국제 컨퍼런스 · 고급 회의장 전경, 세로형 구도',
+  src: '/images/hero.jpg',
+  ratio: '4 / 3',
+  alt: '서울 도심이 보이는 회의실에서 진행되는 국제 비즈니스 미팅',
+  subject: '국제 컨퍼런스 · 고급 회의장 전경',
+  position: '54% 50%',   // ← 프레임 비율과 원본 비율이 다를 때 잘리는 기준점
 },
 ```
+
+> **`position` 이 필요한 이유** — 원본은 가로 사진인데 `domestic` 은 세로(6/7) 프레임입니다.
+> 기본값(가운데)으로 자르면 좌측에 있는 인물이 잘려 나갑니다. `position` 으로 기준점을
+> 옮겨 두었으니, 사진을 바꾸면 이 값도 함께 확인하세요.
+
+> ⚠️ **이미지 최적화는 기본으로 꺼져 있습니다.**
+> Cloudflare Workers 에는 Next.js 이미지 최적화 서버가 없어, 켜 두면 `/_next/image` 요청이
+> 전부 실패하고 사진이 모두 깨집니다. 대신 원본을 미리 압축해 두었습니다. (5장 합계 약 360KB)
+> 새 사진을 넣을 때도 **가로 1600px 이하, 200KB 내외**로 줄여서 넣으세요.
+> Vercel / Node 로 옮기면 `NEXT_IMAGE_UNOPTIMIZED=false` 로 최적화를 켜면 됩니다.
 
 각 슬롯의 `subject` 에 어떤 사진이 들어가야 하는지 적어두었습니다. 사진 선정 기준:
 
@@ -529,7 +550,7 @@ Cloudflare 는 Build 와 Deploy 를 별도 단계로 실행하는데, Deploy 단
 | `INQUIRY_DEBUG` | `1` 로 두면 `/api/contact` 가 발송 실패 원인을 보여줍니다 (진단용 · **Secret** · 끝나면 삭제) |
 | `NEXT_PUBLIC_CF_BEACON_TOKEN` | Cloudflare Web Analytics |
 | `NEXT_PUBLIC_GA_ID` | GA4 |
-| `NEXT_IMAGE_UNOPTIMIZED` | 실사 사진 사용 + Cloudflare Images 미사용 시 `true` |
+| `NEXT_IMAGE_UNOPTIMIZED` | 기본 꺼짐. Vercel/Node 로 옮겨 최적화를 켤 때만 `false` |
 
 Cloudflare 대시보드에서는 **모두 `Secret` 으로 등록하세요.** `Text` 로 넣은 값은
 `wrangler deploy` 때 삭제됩니다. (위 「문의 알림」 절의 경고 참고)
@@ -542,14 +563,15 @@ Cloudflare 대시보드에서는 **모두 `Secret` 으로 등록하세요.** `Te
 확인된 동작 범위 — 홈과 서비스 상세 페이지, `sitemap.xml`, `robots.txt`,
 OG 이미지, 문의 API(`/api/contact`)까지 Workers 런타임에서 정상 동작합니다.
 
-**이미지 최적화 주의.** 지금은 이미지가 SVG 라서 Next.js 가 최적화를 건너뛰고
-원본을 그대로 내보냅니다. 그래서 현재 상태로는 추가 설정이 필요 없습니다.
-하지만 실사 사진(.jpg/.png)으로 교체하면 `next/image` 가 최적화 경로를 타게 되고,
-Cloudflare 에서는 이때 둘 중 하나를 선택해야 합니다.
+**이미지 최적화는 기본으로 꺼져 있습니다.** 실사 사진(.jpg)을 쓰는데 Workers 에는
+Next.js 이미지 최적화 서버가 없어서, 켜 두면 `/_next/image` 요청이 전부 실패하고
+사이트의 모든 사진이 깨집니다. 그래서 `next.config.mjs` 에서 기본값을 끔으로 두었고,
+대신 원본을 미리 압축해 두었습니다. 추가 설정 없이 그대로 배포하면 됩니다.
+
+최적화를 다시 켜려면 둘 중 하나가 필요합니다.
 
 - Cloudflare Images 바인딩을 붙인다 (유료, 변환 단위 과금)
-- 최적화를 끈다 → `NEXT_IMAGE_UNOPTIMIZED=true`
-  (이 경우 사진을 업로드 전에 미리 리사이즈·압축해 두세요)
+- Vercel / Node 서버로 옮긴 뒤 `NEXT_IMAGE_UNOPTIMIZED=false`
 
 ### 배포 전 체크리스트
 

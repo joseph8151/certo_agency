@@ -44,6 +44,7 @@ export default function Figure({
         priority={priority}
         loading={priority ? undefined : 'lazy'}
         className="object-cover"
+        style={image.position ? { objectPosition: image.position } : undefined}
       />
     </div>
   );
