@@ -1,4 +1,17 @@
 <!doctype html>
+<!--
+  체르토 리크루팅 — 사내 교육 의뢰 페이지
+  ─────────────────────────────────────────────
+  주소: /recruiting.html
+  사진 5슬롯 (순서 고정, 교체 시 파일명 유지):
+    01-hero-interview     창가 면담          히어로 오른쪽
+    02-onsite-whiteboard  화이트보드         기업 출강 왼쪽
+    03-first-visit-lobby  로비               첫 방문 · 12칸 중 7칸
+    04-request-desk       책상               의뢰 폼 왼쪽 고정
+    05-weekly-class       테이블 수업        마지막에서 두 번째 섹션 상단
+  원본 1168x784(3:2)를 4:3 으로 cover 크롭하므로 좌우가 약 10% 잘립니다.
+  인물이 한쪽에 몰린 컷은 각 img 의 style="--pos:…" 로 기준점을 옮겨 두었습니다.
+-->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -284,7 +297,7 @@ h2{font-size:var(--t-head)}
   <section class="hero" aria-labelledby="hero-h">
     <div class="shell split split--image-right">
       <figure class="split__media">
-        <img class="plate" src="images/01-hero-interview.jpg" style="--pos:55% 50%"
+        <img class="plate" src="/recruiting/images/01-hero-interview.jpg" style="--pos:55% 50%"
              alt="창가 회의실에서 담당자가 폴더를 살펴보고 맞은편에 강사 후보가 앉아 있다."
              width="1168" height="784">
       </figure>
@@ -304,7 +317,7 @@ h2{font-size:var(--t-head)}
   <section id="onsite" aria-labelledby="onsite-h">
     <div class="shell split split--image-left">
       <figure class="split__media">
-        <img class="plate" src="images/02-onsite-whiteboard.jpg" style="--pos:56% 50%"
+        <img class="plate" src="/recruiting/images/02-onsite-whiteboard.jpg" style="--pos:56% 50%"
              alt="화이트보드 앞에 선 강사가 회의실에 앉은 직원 세 명에게 설명하고 있다."
              width="1168" height="784" loading="lazy">
       </figure>
@@ -335,7 +348,7 @@ h2{font-size:var(--t-head)}
   <section id="visit" aria-labelledby="visit-h">
     <div class="shell visit">
       <figure class="visit__media">
-        <img class="plate" src="images/03-first-visit-lobby.jpg" style="--pos:42% 50%"
+        <img class="plate" src="/recruiting/images/03-first-visit-lobby.jpg" style="--pos:42% 50%"
              alt="사옥 로비에서 담당자와 강사가 나란히 걸어 들어오고 있다."
              width="1168" height="784" loading="lazy">
       </figure>
@@ -351,7 +364,7 @@ h2{font-size:var(--t-head)}
   <section id="request" aria-labelledby="request-h">
     <div class="shell request">
       <figure class="request__media">
-        <img class="plate" src="images/04-request-desk.jpg" style="--pos:50% 50%"
+        <img class="plate" src="/recruiting/images/04-request-desk.jpg" style="--pos:50% 50%"
              alt="밝은 책상 위에 서류 묶음과 컵, 노트가 놓여 있다."
              width="1168" height="784" loading="lazy">
       </figure>
@@ -425,7 +438,7 @@ h2{font-size:var(--t-head)}
   <section id="class" aria-label="수업 모습">
     <div class="shell">
       <figure class="case">
-        <img class="plate" src="images/05-weekly-class.jpg" style="--pos:58% 50%"
+        <img class="plate" src="/recruiting/images/05-weekly-class.jpg" style="--pos:58% 50%"
              alt="회의실 테이블에 직원 네 명과 강사가 함께 앉아 수업하고 있다."
              width="1168" height="784" loading="lazy">
         <figcaption>사내 영어, 주 2회.</figcaption>
