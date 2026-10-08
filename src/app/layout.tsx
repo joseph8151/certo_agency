@@ -7,7 +7,7 @@ import Header from '@/components/Header';
 import StickyCta from '@/components/StickyCta';
 import { allServicePages } from '@/data/services';
 import { siteKeywords, verification } from '@/data/seo';
-import { contactInfo, site } from '@/data/site';
+import { contactInfo, postalAddress, site } from '@/data/site';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -94,6 +94,7 @@ function OrganizationSchema() {
     slogan: site.promise,
     areaServed: ['KR', 'North America', 'Europe', 'Asia', 'Middle East', 'Oceania'],
     knowsLanguage: ['ko', 'en', 'ja', 'zh'],
+    address: { '@type': 'PostalAddress', ...postalAddress },
     ...(contactInfo.email ? { email: contactInfo.email } : {}),
     ...(contactInfo.phone ? { telephone: contactInfo.phone } : {}),
     makesOffer: allServicePages.map((page) => ({

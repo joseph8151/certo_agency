@@ -437,6 +437,26 @@ CSP 는 넣지 않았습니다. 정적 프리렌더를 유지하면서 nonce 를
 
 **크롤러 허용** — `src/app/robots.ts` 에서 네이버(`Yeti`)와 다음(`Daumoa`)을 명시적으로 허용하고 있습니다.
 
+### 도시별 현지 통역 페이지
+
+"도쿄 현지 통역" 같은 검색어는 **그 문구가 제목인 페이지**가 있어야 잡힙니다.
+`/global` 의 도시 목록만으로는 부족해서, 주요 12개 도시에 상세 페이지를 두었습니다.
+
+```
+/global/tokyo  /global/osaka   /global/shanghai   /global/beijing
+/global/guangzhou  /global/hochiminh  /global/hanoi  /global/singapore
+/global/newyork  /global/losangeles  /global/frankfurt  /global/dubai
+```
+
+- 데이터: `src/data/city-pages.ts` — 여기에 항목을 추가하면 라우트·사이트맵·
+  `/global` 내부 링크가 전부 자동으로 따라옵니다.
+- 목록에 없는 도시는 **404** 입니다. (`dynamicParams = false`)
+  임의의 주소로 빈 페이지가 생기지 않게 막아 둔 것입니다.
+
+> ⚠️ **도시를 추가할 때** — 내용이 다른 도시와 구분되지 않으면 추가하지 마세요.
+> 제목만 바꾼 비슷한 페이지를 양산하면 검색엔진이 품질 낮은 사이트로 판단해
+> 사이트 전체 순위가 떨어집니다. 그 도시에서만 할 수 있는 이야기가 있을 때만 만드세요.
+
 **키워드** — `src/data/seo.ts` 의 `siteKeywords` 한 곳에서 관리합니다.
 다만 네이버·구글 모두 `keywords` 메타태그를 순위에 거의 반영하지 않습니다.
 실제 노출을 만드는 것은 **title · description · 본문에 실제로 쓰인 말**이므로,

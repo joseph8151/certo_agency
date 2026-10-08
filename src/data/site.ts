@@ -76,6 +76,18 @@ export const hasPublicContact = Boolean(
  * 법정 표기는 등록 상호를 따르고, 브랜드명은 그대로 사용합니다.
  * 생년월일 등 개인정보는 웹사이트에 표기하지 않습니다.
  */
+/**
+ * 구조화 데이터용 주소.
+ * 사업자등록증의 주소와 같아야 합니다. (businessInfo 의 '주소' 항목)
+ * 검색엔진이 "체르토 에이전시" 같은 브랜드 검색에서 업체 정보를 묶는 근거가 됩니다.
+ */
+export const postalAddress = {
+  streetAddress: '강남대로8길 39-26, 2층 A9호',
+  addressLocality: '서초구',
+  addressRegion: '서울특별시',
+  addressCountry: 'KR',
+} as const;
+
 export const businessInfo: { label: string; value: string }[] = [
   { label: '상호', value: '체르토 드라이브' },
   { label: '대표', value: '김형기' },

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { cityPages } from '@/data/city-pages';
 import Cta from './ui/Button';
 import Figure from './ui/Figure';
 import Reveal from './ui/Reveal';
@@ -186,11 +187,24 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
 
                     <div className="sm:col-span-9">
                       <ul className="flex flex-wrap gap-x-5 gap-y-2.5">
-                        {region.cities.map((city) => (
-                          <li key={city} className="text-[0.9375rem] leading-relaxed text-navy">
-                            {city}
-                          </li>
-                        ))}
+                        {region.cities.map((city) => {
+                          // 상세 페이지가 있는 도시는 링크로 연결합니다.
+                          const detail = cityPages.find((entry) => entry.city === city);
+                          return (
+                            <li key={city} className="text-[0.9375rem] leading-relaxed">
+                              {detail ? (
+                                <Link
+                                  href={`/global/${detail.slug}`}
+                                  className="text-navy underline decoration-line-strong underline-offset-4 transition-colors hover:text-brand hover:decoration-brand"
+                                >
+                                  {city}
+                                </Link>
+                              ) : (
+                                <span className="text-navy">{city}</span>
+                              )}
+                            </li>
+                          );
+                        })}
                       </ul>
                       <p className="mt-5 text-[0.875rem] leading-[1.85] text-pretty text-navy/65">
                         {region.note}
