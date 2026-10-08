@@ -582,7 +582,7 @@ Next.js 이미지 최적화 서버가 없어서, 켜 두면 `/_next/image` 요�
 ### 배포 전 체크리스트
 
 - [ ] `NEXT_PUBLIC_SITE_URL` 환경 변수를 실제 도메인으로 설정
-      (미설정 시 `src/data/site.ts` 의 기본값 `https://www.certoagency.com` 사용)
+      (미설정 시 `src/data/site.ts` 의 기본값 `https://www.certo-agency.com` 사용)
 - [ ] `contactInfo` / `businessInfo` 실제 정보 입력
 - [ ] `RESEND_API_KEY` + `INQUIRY_TO_EMAIL` 등록 후 `npm run check:email` 로 발송 확인
 - [ ] `public/images/` 실사 사진 교체 및 `src/data/images.ts` 의 `alt` 갱신

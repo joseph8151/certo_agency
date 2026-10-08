@@ -13,8 +13,13 @@
  *   로컬        → .env.local  (`.env.example` 참고)
  *
  * 빌드 시점에 인라인되므로, 값을 바꾼 뒤에는 반드시 재배포해야 반영됩니다.
+ *
+ * 이 값이 틀리면 canonical 이 존재하지 않는 도메인을 가리키게 되고,
+ * 검색엔진이 실제 페이지를 "다른 주소의 복사본" 으로 취급합니다.
+ * sitemap.xml · robots.txt 의 주소도 함께 어긋나 제출이 거부됩니다.
+ * 도메인을 바꿀 때는 이 줄부터 확인하세요.
  */
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.certoagency.com').replace(
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.certo-agency.com').replace(
   /\/+$/,
   '',
 );
