@@ -85,6 +85,9 @@ section{padding-block:var(--section)}
   height:auto;
   aspect-ratio:4/3;
   object-fit:cover;
+  /* 원본은 3:2 라 4:3 상자 안에서 좌우가 약 10% 잘립니다.
+     인물이 한쪽에 몰린 컷은 --pos 로 기준점을 옮겨 잘리지 않게 합니다. */
+  object-position:var(--pos,50% 50%);
   border-radius:var(--radius-image);
   background:var(--rule);
 }
@@ -281,9 +284,9 @@ h2{font-size:var(--t-head)}
   <section class="hero" aria-labelledby="hero-h">
     <div class="shell split split--image-right">
       <figure class="split__media">
-        <img class="plate" src="images/01-hero-interview.jpg"
+        <img class="plate" src="images/01-hero-interview.jpg" style="--pos:55% 50%"
              alt="창가 회의실에서 담당자가 폴더를 살펴보고 맞은편에 강사 후보가 앉아 있다."
-             width="1600" height="1200">
+             width="1168" height="784">
       </figure>
 
       <div class="split__copy">
@@ -301,9 +304,9 @@ h2{font-size:var(--t-head)}
   <section id="onsite" aria-labelledby="onsite-h">
     <div class="shell split split--image-left">
       <figure class="split__media">
-        <img class="plate" src="images/02-onsite-whiteboard.jpg"
+        <img class="plate" src="images/02-onsite-whiteboard.jpg" style="--pos:56% 50%"
              alt="화이트보드 앞에 선 강사가 회의실에 앉은 직원 세 명에게 설명하고 있다."
-             width="1600" height="1200" loading="lazy">
+             width="1168" height="784" loading="lazy">
       </figure>
 
       <div class="split__copy">
@@ -332,9 +335,9 @@ h2{font-size:var(--t-head)}
   <section id="visit" aria-labelledby="visit-h">
     <div class="shell visit">
       <figure class="visit__media">
-        <img class="plate" src="images/03-first-visit-lobby.jpg"
+        <img class="plate" src="images/03-first-visit-lobby.jpg" style="--pos:42% 50%"
              alt="사옥 로비에서 담당자와 강사가 나란히 걸어 들어오고 있다."
-             width="1600" height="1200" loading="lazy">
+             width="1168" height="784" loading="lazy">
       </figure>
 
       <div class="visit__copy">
@@ -348,9 +351,9 @@ h2{font-size:var(--t-head)}
   <section id="request" aria-labelledby="request-h">
     <div class="shell request">
       <figure class="request__media">
-        <img class="plate" src="images/04-request-desk.jpg"
+        <img class="plate" src="images/04-request-desk.jpg" style="--pos:50% 50%"
              alt="밝은 책상 위에 서류 묶음과 컵, 노트가 놓여 있다."
-             width="1600" height="1200" loading="lazy">
+             width="1168" height="784" loading="lazy">
       </figure>
 
       <div class="request__copy">
@@ -422,9 +425,9 @@ h2{font-size:var(--t-head)}
   <section id="class" aria-label="수업 모습">
     <div class="shell">
       <figure class="case">
-        <img class="plate" src="images/05-weekly-class.jpg"
+        <img class="plate" src="images/05-weekly-class.jpg" style="--pos:58% 50%"
              alt="회의실 테이블에 직원 네 명과 강사가 함께 앉아 수업하고 있다."
-             width="1600" height="1200" loading="lazy">
+             width="1168" height="784" loading="lazy">
         <figcaption>사내 영어, 주 2회.</figcaption>
       </figure>
     </div>
