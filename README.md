@@ -410,13 +410,19 @@ CSP 는 넣지 않았습니다. 정적 프리렌더를 유지하면서 nonce 를
 
 | 검색엔진 | 주소 | 환경 변수 |
 | --- | --- | --- |
-| 네이버 | [searchadvisor.naver.com](https://searchadvisor.naver.com) → 웹마스터도구 → 사이트 등록 → HTML 태그 | `NEXT_PUBLIC_NAVER_SITE_VERIFICATION` |
+| 네이버 | [searchadvisor.naver.com](https://searchadvisor.naver.com) → 웹마스터도구 → 사이트 등록 → HTML 태그 | **등록 완료** (`src/data/seo.ts` 에 코드 보관) |
 | 구글 | [search.google.com/search-console](https://search.google.com/search-console) → 소유권 확인 → HTML 태그 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` |
 
 화면에 나오는 `<meta name="naver-site-verification" content="abc123...">` 에서
-**`content` 안의 값만** 환경 변수에 넣습니다. 태그 전체를 넣으면 안 됩니다.
+**`content` 안의 값만** 씁니다. 태그 전체를 넣으면 안 됩니다.
 
-**2. 재배포** — `NEXT_PUBLIC_` 값은 빌드 시점에 박히므로 반드시 다시 배포해야 태그가 나옵니다.
+> **소유 확인 코드를 소스에 둔 이유** — 이 값은 비밀이 아닙니다. 사이트 HTML 의 `<head>` 에
+> 그대로 노출되는 공개 태그이고, 그게 용도입니다.
+> 환경 변수로 빼면 오히려 함정이 있습니다. `NEXT_PUBLIC_` 값은 **빌드 시점**에 박히는데
+> Cloudflare 의 런타임 Secret 은 빌드 단계에 전달되지 않습니다. 런타임 변수로 넣으면
+> 태그가 빈 채로 배포됩니다. (굳이 환경 변수를 쓰려면 **Build variables** 에 넣어야 합니다)
+
+**2. 재배포** — 코드가 빌드 결과물에 포함되어야 하므로 푸시 후 배포가 끝나야 확인됩니다.
 
 **3. 각 사이트에서 「소유확인」 버튼 클릭**
 

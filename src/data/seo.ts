@@ -17,8 +17,22 @@ function code(value: string | undefined) {
   return trimmed ? trimmed : undefined;
 }
 
+/*
+ * 네이버 서치어드바이저 소유 확인 코드.
+ *
+ * 비밀값이 아닙니다 — 발급된 코드는 사이트 HTML 의 <head> 에 그대로 노출되는
+ * 공개 태그이고, 그게 이 코드의 용도입니다. 그래서 소스에 직접 둡니다.
+ *
+ * 환경 변수로 빼지 않은 이유 —
+ * NEXT_PUBLIC_ 값은 "빌드 시점"에 코드에 박힙니다. Cloudflare 에서는 런타임
+ * Secret 이 빌드 단계에 전달되지 않으므로, 런타임 변수로 넣으면 태그가 비어서
+ * 나옵니다. 매번 Build variables 에 따로 넣어야 하는 함정을 피합니다.
+ * (환경 변수를 지정하면 그 값이 우선합니다)
+ */
+const NAVER_VERIFICATION = '7f9760711d15baf3d1423eeb28d780745df3b142';
+
 export const verification = {
-  naver: code(process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION),
+  naver: code(process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION) ?? NAVER_VERIFICATION,
   google: code(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION),
 };
 
