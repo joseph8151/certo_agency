@@ -15,7 +15,13 @@ export default function Footer() {
             <p className="mt-1 text-[0.6875rem] font-medium tracking-[0.42em] text-brand/80">
               AGENCY
             </p>
-            <p className="mt-6 max-w-sm text-[0.875rem] leading-relaxed text-navy/70">
+            {/*
+              한글 브랜드명을 본문에 노출합니다.
+              "체르토 에이전시" 로 검색했을 때 잡히려면 메타태그만으로는 부족하고
+              실제 화면에 그 글자가 있어야 합니다.
+            */}
+            <p className="mt-5 text-[0.8125rem] tracking-[0.02em] text-navy/70">{site.nameKo}</p>
+            <p className="mt-5 max-w-sm text-[0.875rem] leading-relaxed text-navy/70">
               {site.tagline}
             </p>
             <p className="mt-4 max-w-sm font-serif text-[0.9375rem] italic leading-relaxed text-brand">
@@ -106,7 +112,7 @@ export default function Footer() {
 
         <div className="mt-10 flex flex-col gap-3 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[0.75rem] tracking-wide text-navy/65">
-            CERTO AGENCY · Interpretation · Translation · Global Language Support
+            체르토 에이전시 CERTO AGENCY · Interpretation · Translation · Global Language Support
           </p>
           <p className="text-[0.75rem] tracking-wide text-navy/65">
             © {year} CERTO AGENCY. All rights reserved.

@@ -159,6 +159,58 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
         </div>
       </section>
 
+      {/* ── 현지 통역 가능 도시 (해외 통역 페이지 전용) ─── */}
+      {page.regions ? (
+        <section
+          id="cities"
+          aria-labelledby="cities-heading"
+          className="scroll-mt-28 border-t border-line bg-white py-section"
+        >
+          <div className="shell">
+            <SectionHeading
+              eyebrow="Coverage"
+              title={<span id="cities-heading">현지 통역사 매칭이 가능한 도시</span>}
+              lead="아래 도시에서 현지 통역을 진행해 왔습니다. 목록에 없는 도시도 문의해 주시면 확인해 드립니다."
+            />
+
+            <div className="mt-16 border-t border-line lg:mt-20">
+              {page.regions.map((region, i) => (
+                <Reveal key={region.en} delay={i * 70}>
+                  <div className="grid gap-5 border-b border-line py-9 sm:grid-cols-12 sm:gap-8">
+                    <div className="sm:col-span-3">
+                      <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
+                        {region.en}
+                      </p>
+                      <h3 className="mt-3 text-[1.0625rem] font-medium text-navy">{region.name}</h3>
+                    </div>
+
+                    <div className="sm:col-span-9">
+                      <ul className="flex flex-wrap gap-x-5 gap-y-2.5">
+                        {region.cities.map((city) => (
+                          <li key={city} className="text-[0.9375rem] leading-relaxed text-navy">
+                            {city}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-5 text-[0.875rem] leading-[1.85] text-pretty text-navy/65">
+                        {region.note}
+                      </p>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+
+            <Reveal delay={120}>
+              <p className="mt-10 max-w-3xl text-[0.875rem] leading-[1.9] text-navy/65">
+                도시별 가용 인력은 날짜와 일정에 따라 달라집니다. 출장 일정과 미팅 성격을 알려주시면
+                해당 날짜 기준으로 배정 가능 여부를 확인해 회신드립니다.
+              </p>
+            </Reveal>
+          </div>
+        </section>
+      ) : null}
+
       {/* ── Flow ──────────────────────────────────── */}
       <section
         id="flow"
@@ -375,7 +427,12 @@ function StructuredData({ page }: { page: ServicePageData }) {
     description: page.seo.description,
     url: `${site.url}/${page.slug}`,
     provider: { '@id': `${site.url}#organization` },
-    areaServed: ['KR', 'North America', 'Europe', 'Asia', 'Middle East', 'Oceania'],
+    // 도시 목록이 있는 페이지는 지역명 대신 실제 도시를 싣습니다.
+    areaServed: page.regions
+      ? page.regions.flatMap((region) =>
+          region.cities.map((city) => ({ '@type': 'City', name: city })),
+        )
+      : ['KR', 'North America', 'Europe', 'Asia', 'Middle East', 'Oceania'],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: page.offeringsHeading,

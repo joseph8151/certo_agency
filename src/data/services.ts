@@ -7,6 +7,7 @@
  *   2) src/app/<slug>/page.tsx 를 기존 파일과 동일한 형태로 만들면 됩니다.
  */
 import { businessPage } from './business';
+import { cityRegions, type CityRegion } from './cities';
 import type { ImageKey } from './images';
 
 export type ServiceOffering = {
@@ -49,6 +50,12 @@ export type ServicePage = {
   factorsHeading: string;
   factorsLead: string;
   factors: string[];
+
+  /**
+   * 현지 통역 가능 도시 — 해외 통역 페이지에서만 사용합니다.
+   * 도시명이 본문에 실제로 보여야 "도쿄 현지 통역" 같은 검색어로 노출됩니다.
+   */
+  regions?: CityRegion[];
 
   faqs: { q: string; a: string }[];
 
@@ -351,20 +358,28 @@ export const servicePages: Record<string, ServicePage> = {
     lead: '해외 출장, 현지 미팅, 전시회, 기업 방문, 바이어 상담. 낯선 도시에서 통역사를 처음부터 찾아야 하는 부담을 CERTO가 대신 맡습니다.',
     imageKey: 'global',
     seo: {
-      title: '해외 통역 서비스 | 출장 통역·해외 전시회·현지 미팅',
+      title: '현지 통역 · 해외 통역 | 도쿄·상하이·뉴욕·프랑크푸르트 출장 통역',
       description:
-        '북미, 유럽, 아시아, 중동, 오세아니아. 해외 출장과 현지 미팅, 전시회 통역을 현지 전문가 매칭 또는 동행 통역으로 지원하는 CERTO AGENCY 해외 통역 서비스.',
+        '도쿄, 상하이, 뉴욕, 런던, 프랑크푸르트, 두바이 등 42개 도시. 해외 출장과 현지 미팅, 전시회 통역을 현지 통역사 매칭 또는 동행 통역으로 지원하는 체르토 에이전시(CERTO AGENCY) 해외 통역 서비스.',
+      /*
+       * 도시 키워드는 cityRegions 에서 자동 생성합니다. (src/data/cities.ts)
+       * 목록을 고치면 키워드도 같이 따라오므로 두 곳이 어긋나지 않습니다.
+       */
       keywords: [
+        '현지 통역',
         '해외 통역',
         '출장 통역',
         '해외 통역사',
-        '현지 통역',
+        '현지 통역사',
         '해외 전시회 통역',
         '바이어 상담 통역',
         '동행 통역',
         '해외 비즈니스 통역',
+        '체르토 에이전시',
+        ...cityRegions.flatMap((region) => region.cities.map((city) => `${city} 현지 통역`)),
       ],
     },
+    regions: cityRegions,
     intro: {
       heading: '해외 프로젝트의 어려움은 언어가 아니라 검증입니다.',
       paragraphs: [
