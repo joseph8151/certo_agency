@@ -41,7 +41,10 @@ export default function CityPage({ page }: { page: CityPageData }) {
           </Reveal>
 
           <Reveal delay={140}>
-            <h1 id="city-heading" className="mt-6 text-display font-semibold tracking-tight text-navy">
+            <h1
+              id="city-heading"
+              className="mt-6 text-display font-semibold tracking-tight text-navy"
+            >
               {page.city} 현지 통역
             </h1>
           </Reveal>
@@ -58,13 +61,17 @@ export default function CityPage({ page }: { page: CityPageData }) {
                 <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
                   Time Difference
                 </dt>
-                <dd className="mt-3 text-[0.9375rem] leading-[1.8] text-navy/70">{page.timeDiff}</dd>
+                <dd className="mt-3 text-[0.9375rem] leading-[1.8] text-navy/70">
+                  {page.timeDiff}
+                </dd>
               </div>
               <div className="bg-white py-6 sm:pl-8">
                 <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
                   Language
                 </dt>
-                <dd className="mt-3 text-[0.9375rem] leading-[1.8] text-navy/70">{page.language}</dd>
+                <dd className="mt-3 text-[0.9375rem] leading-[1.8] text-navy/70">
+                  {page.language}
+                </dd>
               </div>
             </dl>
           </Reveal>
@@ -80,7 +87,10 @@ export default function CityPage({ page }: { page: CityPageData }) {
       </section>
 
       {/* ── 어떤 자리가 많은가 ────────────────────── */}
-      <section aria-labelledby="scenes-heading" className="border-y border-line bg-ivory py-section">
+      <section
+        aria-labelledby="scenes-heading"
+        className="border-y border-line bg-ivory py-section"
+      >
         <div className="shell">
           <SectionHeading
             eyebrow="On Site"

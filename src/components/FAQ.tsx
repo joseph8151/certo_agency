@@ -31,10 +31,7 @@ export default function FAQ() {
                       </span>
                       <span>{faq.q}</span>
                     </span>
-                    <span
-                      aria-hidden="true"
-                      className="relative mt-2 block h-3 w-3 shrink-0"
-                    >
+                    <span aria-hidden="true" className="relative mt-2 block h-3 w-3 shrink-0">
                       <span className="absolute left-0 top-1/2 h-px w-3 -translate-y-1/2 bg-current" />
                       <span className="absolute left-1/2 top-0 h-3 w-px -translate-x-1/2 bg-current transition-transform duration-500 ease-certo group-open:rotate-90 group-open:opacity-0" />
                     </span>
