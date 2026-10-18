@@ -27,7 +27,7 @@ const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.certo-agency.
 export const site = {
   name: 'CERTO AGENCY',
   nameKo: '체르토 에이전시',
-  tagline: 'Global Interpretation & Translation Agency',
+  tagline: '해외 비즈니스 지원 에이전시',
   taglineKo: '해외 통번역 · 국내 통번역 · 기업 전문 통번역 · 고품격 전문가 매칭',
   promise: '필요한 언어만 연결하는 것이 아니라, 프로젝트에 적합한 전문가를 연결합니다.',
   url: SITE_URL,
@@ -104,25 +104,25 @@ export type NavItem = { label: string; href: string };
  * 서비스 항목은 상세 페이지로 연결됩니다.
  */
 export const navigation: NavItem[] = [
-  { label: 'About', href: '/#about' },
-  { label: 'Interpretation', href: '/interpretation' },
-  { label: 'Translation', href: '/translation' },
-  { label: 'Global Service', href: '/global' },
-  { label: 'For Business', href: '/business' },
-  { label: 'Process', href: '/#process' },
-  { label: 'Contact', href: '/#contact' },
+  { label: '소개', href: '/#about' },
+  { label: '통역', href: '/interpretation' },
+  { label: '문서 지원', href: '/translation' },
+  { label: '해외 지원', href: '/global' },
+  { label: '기업 서비스', href: '/business' },
+  { label: '상담 절차', href: '/#process' },
+  { label: '문의', href: '/#contact' },
 ];
 
 export const footerNavigation: NavItem[] = [
-  { label: 'About', href: '/#about' },
-  { label: 'Interpretation', href: '/interpretation' },
-  { label: 'Translation', href: '/translation' },
-  { label: 'Global', href: '/global' },
-  { label: 'Business', href: '/business' },
-  { label: 'Contact', href: '/#contact' },
+  { label: '소개', href: '/#about' },
+  { label: '통역', href: '/interpretation' },
+  { label: '문서 지원', href: '/translation' },
+  { label: '해외 지원', href: '/global' },
+  { label: '기업 서비스', href: '/business' },
+  { label: '문의', href: '/#contact' },
 ];
 
 export const cta = {
-  primary: '프로젝트 문의하기',
+  primary: '서비스 상담하기',
   href: '/#contact',
 } as const;

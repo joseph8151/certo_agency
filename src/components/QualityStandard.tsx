@@ -8,7 +8,7 @@ export default function QualityStandard() {
       <div className="shell grid gap-14 lg:grid-cols-12 lg:gap-gutter">
         <div className="lg:col-span-5">
           <SectionHeading
-            eyebrow="The CERTO Standard"
+            eyebrow="품질 기준"
             title={
               <span id="standard-heading">
                 통번역의 품질은
@@ -23,7 +23,7 @@ export default function QualityStandard() {
           <Reveal delay={200}>
             <div className="mt-12 border-l-2 border-brand/25 pl-6">
               <h3 className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
-                Confidentiality
+                기밀 유지
               </h3>
               <p className="mt-4 text-[0.9375rem] leading-[1.85] text-pretty text-navy/70">
                 프로젝트 과정에서 공유되는 자료, 일정, 기업 정보는 업무 목적 외에 사용하지 않으며,

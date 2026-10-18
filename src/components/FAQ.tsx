@@ -13,7 +13,7 @@ export default function FAQ() {
       <div className="shell grid gap-12 lg:grid-cols-12 lg:gap-gutter">
         <div className="lg:col-span-4">
           <SectionHeading
-            eyebrow="FAQ"
+            eyebrow="자주 묻는 질문"
             title={<span id="faq-heading">자주 묻는 질문</span>}
             lead="찾으시는 답변이 없다면 문의 폼으로 알려주세요. 담당자가 직접 안내드립니다."
           />

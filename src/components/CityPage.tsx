@@ -93,7 +93,7 @@ export default function CityPage({ page }: { page: CityPageData }) {
       >
         <div className="shell">
           <SectionHeading
-            eyebrow="On Site"
+            eyebrow="현장"
             title={<span id="scenes-heading">{page.city}에서 많은 자리</span>}
           />
           <div className="mt-16 grid gap-px border-t border-line bg-line lg:mt-20 lg:grid-cols-3">
@@ -119,7 +119,7 @@ export default function CityPage({ page }: { page: CityPageData }) {
         <div className="shell grid gap-16 lg:grid-cols-12 lg:gap-gutter">
           <div className="lg:col-span-5">
             <SectionHeading
-              eyebrow="Venues"
+              eyebrow="주요 전시장"
               title={<span id="notes-heading">주요 전시장 · 행사장</span>}
             />
             <ul className="mt-10 border-t border-line">
@@ -154,7 +154,7 @@ export default function CityPage({ page }: { page: CityPageData }) {
       <section aria-labelledby="city-faq-heading" className="bg-ivory py-section">
         <div className="shell">
           <SectionHeading
-            eyebrow="FAQ"
+            eyebrow="자주 묻는 질문"
             title={<span id="city-faq-heading">{page.city} 통역, 자주 묻는 질문</span>}
           />
           <div className="mt-14 border-t border-line">

@@ -8,7 +8,7 @@ export default function MatchingProcess() {
     <section id="matching" aria-labelledby="matching-heading" className="bg-ivory-light py-section">
       <div className="shell">
         <SectionHeading
-          eyebrow="CERTO Matching Standard"
+          eyebrow="배정 기준"
           title={
             <span id="matching-heading">
               프로젝트마다
@@ -29,9 +29,7 @@ export default function MatchingProcess() {
                   </span>
                   <span aria-hidden="true" className="h-px flex-1 bg-line" />
                 </div>
-                <h3 className="text-[0.9375rem] font-semibold uppercase tracking-[0.14em] text-navy">
-                  {step.titleEn}
-                </h3>
+                <h3 className="text-[1.0625rem] font-medium text-navy">{step.title}</h3>
                 <p className="text-[0.9375rem] leading-[1.85] text-pretty text-navy/65">
                   {step.body}
                 </p>
@@ -42,10 +40,10 @@ export default function MatchingProcess() {
 
         <Reveal delay={120}>
           <div className="mt-20 border-t border-line pt-12 lg:mt-28">
-            <p className="font-serif text-headline italic leading-[1.25] text-navy">
-              We Don&apos;t Simply Find a Translator.
+            <p className="text-headline font-semibold leading-[1.3] tracking-tight text-navy">
+              가능한 사람을 찾는 것이 아니라,
               <br />
-              <span className="text-brand">We Find the Right Professional.</span>
+              <span className="text-brand">그 자리에 맞는 사람을 찾습니다.</span>
             </p>
           </div>
         </Reveal>

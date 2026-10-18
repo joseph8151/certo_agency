@@ -10,12 +10,12 @@ export default function Services() {
     <section aria-labelledby="services-heading" className="bg-ivory-light py-section">
       <div className="shell">
         <SectionHeading
-          eyebrow="Services"
-          title={<span id="services-heading">Interpretation &amp; Translation</span>}
+          eyebrow="서비스"
+          title={<span id="services-heading">세 가지 범위로 지원합니다</span>}
           lead={
             <>
-              국내 프로젝트부터 해외 현장까지
-              <br className="hidden sm:block" /> 다양한 환경에 대응합니다.
+              통역, 문서, 해외 현장.
+              <br className="hidden sm:block" /> 하나만 필요하셔도 되고, 묶어서 맡기셔도 됩니다.
             </>
           }
         />

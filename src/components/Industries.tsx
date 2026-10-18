@@ -7,7 +7,7 @@ export default function Industries() {
     <section id="industries" aria-labelledby="industries-heading" className="bg-white py-section">
       <div className="shell">
         <SectionHeading
-          eyebrow="Industry Expertise"
+          eyebrow="대응 산업"
           title={
             <span id="industries-heading">
               전문 분야에 따라
@@ -26,8 +26,9 @@ export default function Industries() {
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div>
-                  <h3 className="text-lg font-medium tracking-tight text-navy">{industry.en}</h3>
-                  <p className="mt-2 text-[0.8125rem] text-navy/70">{industry.ko}</p>
+                  <h3 className="text-[1.0625rem] font-medium tracking-tight text-navy">
+                    {industry.ko}
+                  </h3>
                 </div>
               </div>
             </Reveal>

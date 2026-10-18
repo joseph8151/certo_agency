@@ -9,8 +9,8 @@ export default function UseCases() {
     <section id="usecases" aria-labelledby="usecases-heading" className="bg-brand-soft/50 py-section">
       <div className="shell">
         <SectionHeading
-          eyebrow="Use Cases"
-          title={<span id="usecases-heading">What Can We Help You With?</span>}
+          eyebrow="활용 사례"
+          title={<span id="usecases-heading">이런 상황이신가요?</span>}
           lead="아래와 같은 상황이라면, 프로젝트 내용을 알려주시는 것만으로 충분합니다."
         />
 

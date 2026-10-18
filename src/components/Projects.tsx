@@ -12,7 +12,7 @@ export default function Projects() {
     <section id="projects" aria-labelledby="projects-heading" className="bg-ivory py-section">
       <div className="shell">
         <SectionHeading
-          eyebrow="Selected Projects"
+          eyebrow="진행 사례"
           title={<span id="projects-heading">진행 사례</span>}
           lead="고객사 정보는 공개하지 않으며, 프로젝트 유형으로만 안내드립니다."
         />
@@ -22,7 +22,7 @@ export default function Projects() {
           {projects.map((project, i) => (
             <Reveal
               as="li"
-              key={project.titleEn}
+              key={project.category}
               delay={i * 90}
               className="swipe-item w-[80vw] max-w-sm lg:w-auto lg:max-w-none"
             >
@@ -33,8 +33,8 @@ export default function Projects() {
                   </span>
                 </div>
 
-                <h3 className="text-[0.9375rem] font-semibold uppercase tracking-[0.14em] text-navy lg:col-span-4">
-                  {project.titleEn}
+                <h3 className="text-[1rem] font-medium text-navy lg:col-span-4">
+                  {project.category}
                 </h3>
 
                 <p className="text-[0.875rem] text-brand lg:col-span-3">{project.languagePair}</p>

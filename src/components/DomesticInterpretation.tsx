@@ -22,7 +22,7 @@ export default function DomesticInterpretation() {
 
         <div className="lg:col-span-6 lg:col-start-7">
           <SectionHeading
-            eyebrow="Domestic Interpretation"
+            eyebrow="국내 통역"
             title={
               <span id="domestic-heading">
                 국내에서 진행되는

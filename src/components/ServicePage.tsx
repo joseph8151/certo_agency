@@ -129,7 +129,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
       <section id="offerings" aria-labelledby="offerings-heading" className="bg-white py-section">
         <div className="shell">
           <SectionHeading
-            eyebrow="What We Do"
+            eyebrow="제공 범위"
             title={<span id="offerings-heading">{page.offeringsHeading}</span>}
             lead={page.offeringsLead}
           />
@@ -169,7 +169,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
         >
           <div className="shell">
             <SectionHeading
-              eyebrow="Coverage"
+              eyebrow="대응 도시"
               title={<span id="cities-heading">현지 통역사 매칭이 가능한 도시</span>}
               lead="아래 도시에서 현지 통역을 진행해 왔습니다. 목록에 없는 도시도 문의해 주시면 확인해 드립니다."
             />
@@ -233,7 +233,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
       >
         <div className="shell">
           <SectionHeading
-            eyebrow="Process"
+            eyebrow="진행 방식"
             title={<span id="flow-heading">{page.flowHeading}</span>}
           />
 
@@ -262,7 +262,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
         <div className="shell grid gap-16 lg:grid-cols-12 lg:gap-gutter">
           <div className="lg:col-span-7">
             <SectionHeading
-              eyebrow="Project Brief"
+              eyebrow="문의 시 알려주실 내용"
               title={<span id="brief-heading">{page.briefHeading}</span>}
               lead={page.briefLead}
             />
@@ -312,7 +312,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
         <div className="shell grid gap-12 lg:grid-cols-12 lg:gap-gutter">
           <div className="lg:col-span-4">
             <SectionHeading
-              eyebrow="FAQ"
+              eyebrow="자주 묻는 질문"
               title={<span id="page-faq-heading">자주 묻는 질문</span>}
               lead="더 알고 싶은 내용이 있으시면 문의 폼으로 남겨주세요. 담당자가 직접 안내드립니다."
             />

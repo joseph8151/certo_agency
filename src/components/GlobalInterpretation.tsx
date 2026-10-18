@@ -24,7 +24,7 @@ export default function GlobalInterpretation() {
           <div className="lg:col-span-6">
             <SectionHeading
               invert
-              eyebrow="Global Interpretation"
+              eyebrow="해외 통역"
               title={
                 <span id="global-heading">
                   해외에서도
@@ -67,9 +67,9 @@ export default function GlobalInterpretation() {
         <div className="mt-20 grid items-center gap-12 border-t border-line-invert pt-14 lg:mt-28 lg:grid-cols-12 lg:gap-gutter">
           <Reveal className="lg:col-span-4">
             <p className="font-serif text-headline italic leading-[1.3] text-white/95">
-              Where Business Takes You,
+              비즈니스가 향하는 곳으로,
               <br />
-              CERTO Connects You.
+              체르토가 연결합니다.
             </p>
             <p className="mt-7 max-w-sm text-[0.875rem] leading-relaxed text-white/55">
               현지 전문가 매칭과 동행 통역 중 프로젝트에 적합한 방식을 제안드립니다.

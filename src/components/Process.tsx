@@ -8,7 +8,7 @@ export default function Process() {
     <section id="process" aria-labelledby="process-heading" className="bg-white py-section">
       <div className="shell">
         <SectionHeading
-          eyebrow="Simple Process"
+          eyebrow="상담 절차"
           title={
             <span id="process-heading">
               복잡한 절차 없이

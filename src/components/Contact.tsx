@@ -86,7 +86,7 @@ export default function Contact() {
         {/* 좌: 안내 */}
         <div className="lg:col-span-4">
           <SectionHeading
-            eyebrow="Contact"
+            eyebrow="문의"
             title={<span id="contact-heading">CERTO에 문의하기</span>}
             lead="프로젝트 내용을 남겨주시면 담당자가 확인 후 적합한 전문가와 견적을 안내드립니다."
           />
@@ -149,7 +149,7 @@ export default function Contact() {
               </dl>
             ) : (
               <div className="mt-12 border-t border-line pt-8">
-                <p className="eyebrow">Before You Send</p>
+                <p className="eyebrow">문의 전에</p>
                 <p className="mt-4 text-[0.9375rem] leading-[1.85] text-pretty text-navy/70">
                   확정된 정보가 없어도 괜찮습니다. 언어와 대략적인 일정만 알려주셔도 가능 여부를 먼저
                   확인해 드립니다.

@@ -1,7 +1,14 @@
 import Cta from './ui/Button';
 import Reveal from './ui/Reveal';
 import SectionHeading from './ui/SectionHeading';
-import { pricingCta, pricingFaqs, pricingIntro, pricingNotes, pricingPlans } from '@/data/pricing';
+import {
+  pricingCta,
+  pricingFaqs,
+  pricingIntro,
+  pricingNotes,
+  pricingPlans,
+  pricingScope,
+} from '@/data/pricing';
 
 /**
  * 프리미엄 통역 서비스 — 업무 범위별 요금 안내.
@@ -85,6 +92,13 @@ export default function PremiumService() {
             </Reveal>
           ))}
         </div>
+
+        {/* ── 업무 범위 ── */}
+        <Reveal delay={100}>
+          <p className="mt-12 max-w-2xl border-l-2 border-brand/25 pl-6 text-[0.9375rem] leading-[1.9] text-pretty text-navy/75">
+            {pricingScope}
+          </p>
+        </Reveal>
 
         {/* ── 고지 ── */}
         <Reveal delay={120}>

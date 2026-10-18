@@ -20,7 +20,7 @@ export default function Hero() {
         {/* 좌: 카피 */}
         <div className="lg:col-span-6 lg:pr-8 xl:col-span-6">
           <Reveal>
-            <p className="eyebrow">Global Language Partner</p>
+            <p className="eyebrow">해외 비즈니스 지원 에이전시</p>
           </Reveal>
 
           <Reveal delay={90}>
@@ -28,33 +28,31 @@ export default function Hero() {
               id="hero-heading"
               className="mt-7 text-display font-semibold tracking-tight text-navy"
             >
-              언어가 필요한 순간,
+              해외 비즈니스 현장을
               <br />
-              <span className="text-brand">가장 적합한 전문가</span>를
-              <br />
-              연결합니다.
+              <span className="text-brand">함께 준비</span>합니다
             </h1>
           </Reveal>
 
           <Reveal delay={180}>
             <p className="mt-9 max-w-xl text-[1.0625rem] leading-[1.9] text-pretty text-navy/70">
-              국내부터 해외까지. 기업 미팅, 국제회의, 전시회, 비즈니스 협상, 전문 문서까지 CERTO
-              AGENCY가 프로젝트에 맞는 통역사와 번역가를 선별하여 연결합니다.
+              통역부터 계약서 검토, 회의록, 해외 출장 지원까지. 중요한 비즈니스 일정에 필요한
+              업무를 한 곳에서 연결합니다.
             </p>
           </Reveal>
 
           <Reveal delay={260}>
             <div className="mt-11 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
               <Cta href="#contact" track="hero-primary" className="w-full sm:w-auto">
-                통번역 문의하기
+                서비스 상담하기
               </Cta>
               <Cta
-                href="#about"
+                href="#contact"
                 variant="outline"
-                track="hero-secondary"
+                track="hero-quote"
                 className="w-full sm:w-auto"
               >
-                서비스 알아보기
+                견적 문의하기
               </Cta>
             </div>
           </Reveal>
@@ -63,7 +61,7 @@ export default function Hero() {
             <div className="mt-14 lg:mt-20">
               <div className="rule" />
               <p className="mt-5 text-[0.6875rem] font-medium uppercase leading-relaxed tracking-[0.16em] text-navy/65">
-                Interpretation · Translation · Global Projects · Corporate Language Support
+                비즈니스 통역 · 문서 번역 · 해외 출장 지원 · 기업 전담 서비스
               </p>
             </div>
           </Reveal>
@@ -83,10 +81,10 @@ export default function Hero() {
 
             {/* 이미지 위 캡션 — editorial 디테일 */}
             <div className="pointer-events-none absolute bottom-0 left-0 z-10 p-6 sm:p-8 lg:translate-y-4">
-              <p className="font-serif text-2xl italic leading-snug text-white sm:text-[1.75rem]">
-                Beyond Language.
+              <p className="text-[1.0625rem] font-medium leading-snug text-white sm:text-xl">
+                언어가 아니라
                 <br />
-                The Right Professional.
+                비즈니스를 준비합니다
               </p>
             </div>
           </Reveal>

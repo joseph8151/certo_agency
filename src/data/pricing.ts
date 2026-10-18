@@ -13,7 +13,7 @@
 
 export type PricingPlan = {
   id: string;
-  /** 영문 라벨 — 카드 상단에 작게 표기 */
+  /** 카드 상단에 작게 표기되는 구분 라벨 */
   en: string;
   name: string;
   /** 화면에 그대로 출력되는 금액 문자열 */
@@ -36,7 +36,7 @@ export type PricingPlan = {
 };
 
 export const pricingIntro = {
-  eyebrow: 'Premium Service',
+  eyebrow: '프리미엄 통역',
   title: '프리미엄 통역 서비스',
   lead: '중요한 미팅은 통역 시간만으로 견적을 내지 않습니다. 사전 자료 검토부터 현장 통역, 필요 시 사후 정리까지 업무 범위에 맞춰 안내합니다.',
 } as const;
@@ -44,7 +44,7 @@ export const pricingIntro = {
 export const pricingPlans: PricingPlan[] = [
   {
     id: 'standard',
-    en: 'Standard',
+    en: '일반',
     name: '일반 통역',
     price: '80만~120만',
     unit: '원 / 1일',
@@ -55,7 +55,7 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     id: 'business',
-    en: 'Business Premium',
+    en: '프리미엄',
     name: '비즈니스 프리미엄 통역',
     price: '150만~200만',
     unit: '원 / 1일',
@@ -73,7 +73,7 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     id: 'executive',
-    en: 'Executive',
+    en: '전문',
     name: 'Executive / 전문 통역',
     price: '200만~300만',
     unit: '원 / 1일 (이상)',
@@ -89,6 +89,10 @@ export const pricingPlans: PricingPlan[] = [
     ],
   },
 ];
+
+/** 요금표 바로 아래 한 문단 */
+export const pricingScope =
+  '프리미엄 통역은 현장 통역뿐 아니라 사전 자료 검토, 전문용어 준비, 미팅 진행, 필요 시 회의 내용 정리와 후속 이메일 지원까지 포함할 수 있습니다.';
 
 /** 요금표 아래 고지 */
 export const pricingNotes: string[] = [
@@ -110,6 +114,67 @@ export const pricingFaqs: { q: string; a: string }[] = [
     a: '일정 내용을 보내주시면 미팅 목적, 업종, 참석자, 전문성, 사전 자료 여부를 확인한 뒤 적합한 범위로 안내합니다.',
   },
 ];
+
+/* ── 기업 전담 통역 서비스 ───────────────────────────
+ * 해외 거래가 반복되는 기업을 위한 월 단위 지원입니다.
+ * 금액은 시작가이며, 실제 견적은 업무 범위에 따라 달라집니다.
+ * ─────────────────────────────────────────────────── */
+
+export type RetainerPlan = {
+  id: string;
+  name: string;
+  /** 화면에 그대로 출력되는 금액 문자열 */
+  price: string;
+  unit: string;
+  /** 구조화 데이터용 (원 단위). 시작가이므로 상한은 두지 않습니다. */
+  priceMin: number;
+  fit: string;
+};
+
+export const retainerIntro = {
+  eyebrow: '기업 전담',
+  title: '기업 전담 통역 서비스',
+  lead: '해외 거래가 반복되는 기업을 위한 정기 지원 서비스입니다. 매번 처음부터 설명하지 않아도 되도록, 지난 미팅의 용어와 맥락을 이어서 관리합니다.',
+} as const;
+
+/** 모든 구간에 공통으로 포함되는 구성 */
+export const retainerIncludes: string[] = [
+  '월 정기 온라인 미팅 통역',
+  '번역 지원',
+  '긴급 미팅 우선 배정',
+  '전담 통역사 우선 배정',
+  '기존 미팅 용어 및 히스토리 관리',
+];
+
+export const retainerPlans: RetainerPlan[] = [
+  {
+    id: 'light',
+    name: '정기 온라인 미팅 중심',
+    price: '50만',
+    unit: '원 / 월 ~',
+    priceMin: 500_000,
+    fit: '월 단위 화상 미팅과 간단한 문서 지원이 필요한 경우',
+  },
+  {
+    id: 'standard',
+    name: '미팅 + 문서 지원',
+    price: '100만',
+    unit: '원 / 월 ~',
+    priceMin: 1_000_000,
+    fit: '미팅 횟수가 늘고 계약·제안 문서가 함께 오가는 경우',
+  },
+  {
+    id: 'extended',
+    name: '전담 운영',
+    price: '200만',
+    unit: '원 / 월 ~',
+    priceMin: 2_000_000,
+    fit: '현장 통역과 출장이 정기적으로 발생하는 경우',
+  },
+];
+
+export const retainerNote =
+  '위 금액은 시작 기준입니다. 미팅 횟수, 언어, 문서 분량, 현장 통역 포함 여부에 따라 업무 범위를 정리한 뒤 별도 견적으로 안내드립니다.';
 
 export const pricingCta = {
   title: '중요한 미팅일수록 준비부터 다르게',

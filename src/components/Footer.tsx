@@ -32,7 +32,7 @@ export default function Footer() {
           {/* 메뉴 */}
           <nav aria-label="푸터 메뉴" className="lg:col-span-3">
             <h2 className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/65">
-              Menu
+              메뉴
             </h2>
             <ul className="mt-5 space-y-3">
               {footerNavigation.map((item) => (
@@ -51,7 +51,7 @@ export default function Footer() {
           {/* 연락처 — 공개 연락처가 없으면 문의 폼으로만 안내합니다. */}
           <div className="lg:col-span-3 lg:col-start-10">
             <h2 className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/65">
-              Contact
+              문의
             </h2>
 
             {hasPublicContact ? (
@@ -93,7 +93,7 @@ export default function Footer() {
               data-cta="footer-primary"
               className="mt-7 inline-block border-b border-brand pb-1 text-[0.875rem] font-medium text-brand"
             >
-              프로젝트 문의하기
+              서비스 상담하기
             </Link>
           </div>
         </div>
@@ -112,7 +112,7 @@ export default function Footer() {
 
         <div className="mt-10 flex flex-col gap-3 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[0.75rem] tracking-wide text-navy/65">
-            체르토 에이전시 CERTO AGENCY · Interpretation · Translation · Global Language Support
+            체르토 에이전시 CERTO AGENCY · 비즈니스 통역 · 문서 지원 · 해외 출장 지원
           </p>
           <p className="text-[0.75rem] tracking-wide text-navy/65">
             © {year} CERTO AGENCY. All rights reserved.

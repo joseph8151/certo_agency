@@ -14,7 +14,7 @@ export default function Clients() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-gutter">
           <div className="lg:col-span-4">
             <SectionHeading
-              eyebrow="Our Clients"
+              eyebrow="함께한 고객"
               title={<span id="clients-heading">함께해 온 고객</span>}
               lead="기업부터 공공기관, 학계, 행사 주최사까지. 프로젝트의 성격에 따라 대응 방식이 달라집니다."
             />

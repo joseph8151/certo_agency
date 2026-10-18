@@ -12,7 +12,7 @@ export default function Business() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-gutter">
           <div className="lg:col-span-6">
             <SectionHeading
-              eyebrow="CERTO for Business"
+              eyebrow="기업 서비스"
               title={
                 <span id="business-heading">
                   기업의 글로벌 커뮤니케이션을
@@ -26,12 +26,12 @@ export default function Business() {
 
           <div className="lg:col-span-5 lg:col-start-8 lg:self-end">
             <Reveal delay={120}>
-              <p className="font-serif text-title italic leading-[1.35] text-brand">
-                One Partner.
+              <p className="text-title font-medium leading-[1.45] tracking-tight text-brand">
+                창구는 하나,
                 <br />
-                Multiple Languages.
+                언어는 여럿,
                 <br />
-                One Standard.
+                기준은 같게.
               </p>
             </Reveal>
           </div>

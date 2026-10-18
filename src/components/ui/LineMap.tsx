@@ -16,14 +16,14 @@ const project = (lat: number, lon: number) => ({
   y: ((90 - lat) / 180) * H,
 });
 
-const HUB = { lat: 37.55, lon: 126.98, label: 'Seoul' };
+const HUB = { lat: 37.55, lon: 126.98, label: '서울' };
 
 const NODES: { lat: number; lon: number; label: string }[] = [
-  { lat: 40.7, lon: -74.0, label: 'North America' },
-  { lat: 50.1, lon: 8.68, label: 'Europe' },
-  { lat: 25.2, lon: 55.27, label: 'Middle East' },
-  { lat: 1.35, lon: 103.8, label: 'Asia' },
-  { lat: -33.87, lon: 151.2, label: 'Oceania' },
+  { lat: 40.7, lon: -74.0, label: '북미' },
+  { lat: 50.1, lon: 8.68, label: '유럽' },
+  { lat: 25.2, lon: 55.27, label: '중동' },
+  { lat: 1.35, lon: 103.8, label: '아시아' },
+  { lat: -33.87, lon: 151.2, label: '오세아니아' },
 ];
 
 /** 두 지점을 잇는 완만한 호 */
@@ -115,7 +115,7 @@ export default function LineMap({ className = '', showLabels = true }: Props) {
                   fill="currentColor"
                   opacity="0.75"
                 >
-                  {n.label.toUpperCase()}
+                  {n.label}
                 </text>
               ) : null}
             </g>
@@ -136,7 +136,7 @@ export default function LineMap({ className = '', showLabels = true }: Props) {
             letterSpacing="0.14em"
             fill="currentColor"
           >
-            SEOUL
+            서울
           </text>
         ) : null}
       </g>

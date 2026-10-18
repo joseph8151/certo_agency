@@ -1,6 +1,7 @@
 import Business from '@/components/Business';
 import Clients from '@/components/Clients';
 import Contact from '@/components/Contact';
+import CorporateRetainer from '@/components/CorporateRetainer';
 import DomesticInterpretation from '@/components/DomesticInterpretation';
 import FAQ from '@/components/FAQ';
 import FinalCta from '@/components/FinalCta';
@@ -98,6 +99,7 @@ export default function HomePage() {
       <MatchingProcess />
       <QualityStandard />
       <PremiumService />
+      <CorporateRetainer />
       <UseCases />
       <Clients />
       <Projects />

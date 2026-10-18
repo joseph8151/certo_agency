@@ -137,9 +137,9 @@ export default function Header() {
           </Link>
 
           <p className="mt-6 pb-4 text-center text-xs leading-relaxed tracking-wide text-navy/65">
-            Interpretation · Translation
+            비즈니스 통역 · 문서 지원
             <br />
-            Global Language Support
+            해외 출장 지원
           </p>
         </nav>
       </div>
