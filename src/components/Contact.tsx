@@ -96,8 +96,8 @@ export default function Contact() {
               <dl className="mt-12 space-y-6 border-t border-line pt-8">
                 {contactInfo.email ? (
                   <div>
-                    <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
-                      Email
+                    <dt className="text-[0.6875rem] font-semibold tracking-[0.2em] text-brand">
+                      이메일
                     </dt>
                     <dd className="mt-2">
                       <a
@@ -113,8 +113,8 @@ export default function Contact() {
 
                 {contactInfo.phone ? (
                   <div>
-                    <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
-                      Phone
+                    <dt className="text-[0.6875rem] font-semibold tracking-[0.2em] text-brand">
+                      전화
                     </dt>
                     <dd className="mt-2">
                       <a
@@ -135,8 +135,8 @@ export default function Contact() {
 
                 {contactInfo.address ? (
                   <div>
-                    <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
-                      Office
+                    <dt className="text-[0.6875rem] font-semibold tracking-[0.2em] text-brand">
+                      주소
                     </dt>
                     <dd className="mt-2 text-[0.9375rem] leading-relaxed text-navy/75">
                       {contactInfo.address}

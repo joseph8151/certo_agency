@@ -41,9 +41,10 @@ export const site = {
  * 세 항목이 모두 비어 있으면 문의 폼만 노출되고, 문의 섹션/푸터가
  * 그에 맞게 자동으로 정리됩니다.
  *
- * 현재는 회사 도메인 이메일이 확정되기 전이라 비워둔 상태입니다.
- * (문의는 폼 → 담당자 이메일로 전달됩니다. src/lib/notify.ts 참고)
- * 회사 주소가 준비되면 email 에 넣기만 하면 다시 노출됩니다.
+ * 여기 값을 채우면 푸터와 문의 섹션에 연락처가 노출되고,
+ * 구조화 데이터(ProfessionalService)에도 email · telephone 이 함께 실립니다.
+ * 문의 폼 전송이 실패했을 때 안내하는 대체 연락처로도 쓰입니다.
+ * (폼 → 담당자 이메일 전달 경로는 별개입니다. src/lib/notify.ts 참고)
  */
 export type ContactInfo = {
   email: string;
@@ -55,8 +56,8 @@ export type ContactInfo = {
 };
 
 export const contactInfo: ContactInfo = {
-  email: '',
-  phone: '',
+  email: 'certo@certo.kr',
+  phone: '010-7748-4644',
   phoneHours: '평일 09:00 – 18:00',
   kakao: '',
   address: '',
