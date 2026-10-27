@@ -47,7 +47,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
             <Reveal delay={140}>
               <h1
                 id="page-heading"
-                className="mt-3 text-display font-semibold tracking-tight text-navy"
+                className="mt-3 text-display font-medium tracking-tight text-navy"
               >
                 {titleLines.map((line) => (
                   <span key={line} className="block">
@@ -104,7 +104,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
         <div className="shell grid gap-12 lg:grid-cols-12 lg:gap-gutter">
           <div className="lg:col-span-5">
             <Reveal>
-              <h2 id="intro-heading" className="text-title font-semibold text-navy">
+              <h2 id="intro-heading" className="text-title font-medium text-navy">
                 {page.intro.heading}
               </h2>
             </Reveal>
@@ -356,7 +356,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
             <p className="eyebrow-invert">Start Your Project</p>
           </Reveal>
           <Reveal delay={90}>
-            <h2 id="page-cta-heading" className="mt-7 text-headline font-semibold text-white">
+            <h2 id="page-cta-heading" className="mt-7 text-headline font-medium text-white">
               {page.ctaTitle}
             </h2>
           </Reveal>

@@ -57,7 +57,7 @@ export function MultilineHeading({
   return (
     <h2
       id={id}
-      className={`text-headline font-semibold ${invert ? 'text-white' : 'text-navy'} ${className}`}
+      className={`text-headline font-medium ${invert ? 'text-white' : 'text-navy'} ${className}`}
     >
       {text.split('\n').map((line) => (
         <span key={line} className="block">

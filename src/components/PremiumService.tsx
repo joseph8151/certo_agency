@@ -43,11 +43,11 @@ export default function PremiumService() {
                     : 'border border-line bg-transparent'
                 }`}
               >
-                <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
+                <p className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
                   {plan.en}
                 </p>
 
-                <h3 className="mt-4 text-title font-semibold tracking-tight text-navy">
+                <h3 className="mt-4 text-title font-medium tracking-tight text-navy">
                   {plan.name}
                 </h3>
 
@@ -73,7 +73,7 @@ export default function PremiumService() {
                 </p>
 
                 <div className="mt-8 border-t border-line pt-7">
-                  <h4 className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/65">
+                  <h4 className="text-[0.75rem] font-semibold tracking-[0.04em] text-navy/65">
                     포함 범위
                   </h4>
                   <ul className="mt-5 flex flex-col gap-3.5">
@@ -120,7 +120,7 @@ export default function PremiumService() {
         {/* ── 설명 + CTA ── */}
         <div className="mt-20 grid gap-14 lg:mt-24 lg:grid-cols-12 lg:gap-gutter">
           <div className="lg:col-span-7">
-            <h3 className="text-title font-semibold tracking-tight text-navy">
+            <h3 className="text-title font-medium tracking-tight text-navy">
               비용이 달라지는 이유
             </h3>
 
@@ -147,7 +147,7 @@ export default function PremiumService() {
           <div className="lg:col-span-4 lg:col-start-9">
             <Reveal delay={120}>
               <div className="border-l-2 border-brand/25 pl-7">
-                <h3 className="text-title font-semibold tracking-tight text-navy">
+                <h3 className="text-title font-medium tracking-tight text-navy">
                   {pricingCta.title}
                 </h3>
                 <p className="mt-6 text-[0.9375rem] leading-[1.9] text-pretty text-navy/70">

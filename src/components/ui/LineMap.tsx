@@ -111,7 +111,7 @@ export default function LineMap({ className = '', showLabels = true }: Props) {
                   y={p.y - 26}
                   textAnchor="middle"
                   fontSize="24"
-                  letterSpacing="0.12em"
+                  letterSpacing="0.02em"
                   fill="currentColor"
                   opacity="0.75"
                 >
@@ -133,7 +133,7 @@ export default function LineMap({ className = '', showLabels = true }: Props) {
             y={hub.y + 52}
             textAnchor="middle"
             fontSize="27"
-            letterSpacing="0.14em"
+            letterSpacing="0.04em"
             fill="currentColor"
           >
             서울

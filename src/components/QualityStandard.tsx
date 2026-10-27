@@ -22,7 +22,7 @@ export default function QualityStandard() {
 
           <Reveal delay={200}>
             <div className="mt-12 border-l-2 border-brand/25 pl-6">
-              <h3 className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
+              <h3 className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
                 기밀 유지
               </h3>
               <p className="mt-4 text-[0.9375rem] leading-[1.85] text-pretty text-navy/70">

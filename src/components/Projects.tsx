@@ -12,7 +12,7 @@ export default function Projects() {
     <section id="projects" aria-labelledby="projects-heading" className="bg-ivory py-section">
       <div className="shell">
         <SectionHeading
-          eyebrow="진행 사례"
+          eyebrow="프로젝트 유형"
           title={<span id="projects-heading">진행 사례</span>}
           lead="고객사 정보는 공개하지 않으며, 프로젝트 유형으로만 안내드립니다."
         />
@@ -39,7 +39,7 @@ export default function Projects() {
 
                 <p className="text-[0.875rem] text-brand lg:col-span-3">{project.languagePair}</p>
 
-                <p className="text-[0.8125rem] uppercase tracking-[0.14em] text-navy/65 lg:col-span-2">
+                <p className="text-[0.8125rem] tracking-[0.04em] text-navy/65 lg:col-span-2">
                   {project.location}
                 </p>
 

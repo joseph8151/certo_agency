@@ -32,7 +32,8 @@ const config: Config = {
       },
       fontSize: {
         // Editorial display scale — fluid, clamped
-        eyebrow: ['0.6875rem', { lineHeight: '1.2', letterSpacing: '0.22em' }],
+        // 한글 라벨 기준. 영문 대문자용 넓은 자간(0.22em)을 그대로 쓰면 글자가 벌어져 보입니다.
+        eyebrow: ['0.75rem', { lineHeight: '1.2', letterSpacing: '0.06em' }],
         display: ['clamp(2.125rem, 4.6vw, 3.625rem)', { lineHeight: '1.22', letterSpacing: '-0.025em' }],
         headline: ['clamp(1.625rem, 3.1vw, 2.5rem)', { lineHeight: '1.32', letterSpacing: '-0.02em' }],
         title: ['clamp(1.375rem, 2.1vw, 1.75rem)', { lineHeight: '1.4', letterSpacing: '-0.015em' }],

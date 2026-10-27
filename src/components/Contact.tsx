@@ -86,7 +86,7 @@ export default function Contact() {
         {/* 좌: 안내 */}
         <div className="lg:col-span-4">
           <SectionHeading
-            eyebrow="문의"
+            eyebrow="상담 신청"
             title={<span id="contact-heading">CERTO에 문의하기</span>}
             lead="프로젝트 내용을 남겨주시면 담당자가 확인 후 적합한 전문가와 견적을 안내드립니다."
           />
@@ -96,7 +96,7 @@ export default function Contact() {
               <dl className="mt-12 space-y-6 border-t border-line pt-8">
                 {contactInfo.email ? (
                   <div>
-                    <dt className="text-[0.6875rem] font-semibold tracking-[0.2em] text-brand">
+                    <dt className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
                       이메일
                     </dt>
                     <dd className="mt-2">
@@ -113,7 +113,7 @@ export default function Contact() {
 
                 {contactInfo.phone ? (
                   <div>
-                    <dt className="text-[0.6875rem] font-semibold tracking-[0.2em] text-brand">
+                    <dt className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
                       전화
                     </dt>
                     <dd className="mt-2">
@@ -135,7 +135,7 @@ export default function Contact() {
 
                 {contactInfo.address ? (
                   <div>
-                    <dt className="text-[0.6875rem] font-semibold tracking-[0.2em] text-brand">
+                    <dt className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
                       주소
                     </dt>
                     <dd className="mt-2 text-[0.9375rem] leading-relaxed text-navy/75">
@@ -170,7 +170,7 @@ export default function Contact() {
               className="flex h-full min-h-[340px] flex-col items-start justify-center border border-line bg-ivory-light p-10 sm:p-14"
             >
               <p className="eyebrow">Received</p>
-              <h3 className="mt-6 text-title font-semibold text-navy">문의가 접수되었습니다.</h3>
+              <h3 className="mt-6 text-title font-medium text-navy">문의가 접수되었습니다.</h3>
               <p className="mt-5 max-w-md text-[0.9375rem] leading-[1.9] text-navy/65">
                 담당자가 프로젝트 내용을 확인한 후 안내드립니다.
               </p>
@@ -468,7 +468,7 @@ function FieldGroup({
   return (
     <fieldset className="mt-12 first:mt-0">
       <legend className="mb-1 flex flex-wrap items-baseline gap-x-4 gap-y-1">
-        <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
+        <span className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
           {label}
         </span>
         {hint ? <span className="text-[0.75rem] text-navy/65">{hint}</span> : null}
@@ -497,7 +497,7 @@ function Field({
     <div className={className}>
       <label
         htmlFor={id}
-        className="mb-1 block text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-navy/70"
+        className="mb-1 block text-[0.75rem] font-semibold tracking-[0.04em] text-navy/70"
       >
         {label}
         {required ? <span className="ml-1 text-brand">*</span> : null}

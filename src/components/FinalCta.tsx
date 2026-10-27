@@ -10,7 +10,7 @@ export default function FinalCta() {
         </Reveal>
 
         <Reveal delay={90}>
-          <h2 id="final-cta-heading" className="mt-7 text-headline font-semibold text-white">
+          <h2 id="final-cta-heading" className="mt-7 text-headline font-medium text-white">
             중요한 미팅일수록 준비부터 다르게
           </h2>
         </Reveal>

@@ -43,7 +43,7 @@ export default function CityPage({ page }: { page: CityPageData }) {
           <Reveal delay={140}>
             <h1
               id="city-heading"
-              className="mt-6 text-display font-semibold tracking-tight text-navy"
+              className="mt-6 text-display font-medium tracking-tight text-navy"
             >
               {page.city} 현지 통역
             </h1>
@@ -59,7 +59,7 @@ export default function CityPage({ page }: { page: CityPageData }) {
             <dl className="mt-12 grid gap-px border-t border-line bg-line sm:grid-cols-2">
               <div className="bg-white py-6 sm:pr-8">
                 <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
-                  Time Difference
+                  시차
                 </dt>
                 <dd className="mt-3 text-[0.9375rem] leading-[1.8] text-navy/70">
                   {page.timeDiff}
@@ -67,7 +67,7 @@ export default function CityPage({ page }: { page: CityPageData }) {
               </div>
               <div className="bg-white py-6 sm:pl-8">
                 <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
-                  Language
+                  언어
                 </dt>
                 <dd className="mt-3 text-[0.9375rem] leading-[1.8] text-navy/70">
                   {page.language}
@@ -132,8 +132,8 @@ export default function CityPage({ page }: { page: CityPageData }) {
           </div>
 
           <div className="lg:col-span-7">
-            <p className="eyebrow">Before You Go</p>
-            <h2 className="mt-6 text-title font-semibold tracking-tight text-navy">
+            <p className="eyebrow">사전 확인</p>
+            <h2 className="mt-6 text-title font-medium tracking-tight text-navy">
               일정을 잡기 전에
             </h2>
             <dl className="mt-10 border-t border-line">
@@ -181,7 +181,7 @@ export default function CityPage({ page }: { page: CityPageData }) {
       {/* ── CTA ───────────────────────────────────── */}
       <section className="bg-brand-deep py-section text-white">
         <div className="shell">
-          <h2 className="max-w-2xl text-title font-semibold tracking-tight">
+          <h2 className="max-w-2xl text-title font-medium tracking-tight">
             {page.city} 일정이 정해지셨나요?
           </h2>
           <p className="mt-6 max-w-2xl text-[1.0625rem] leading-[1.9] text-white/80">

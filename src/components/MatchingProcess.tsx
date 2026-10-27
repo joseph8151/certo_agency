@@ -40,7 +40,7 @@ export default function MatchingProcess() {
 
         <Reveal delay={120}>
           <div className="mt-20 border-t border-line pt-12 lg:mt-28">
-            <p className="text-headline font-semibold leading-[1.3] tracking-tight text-navy">
+            <p className="text-headline font-medium leading-[1.3] tracking-tight text-navy">
               가능한 사람을 찾는 것이 아니라,
               <br />
               <span className="text-brand">그 자리에 맞는 사람을 찾습니다.</span>

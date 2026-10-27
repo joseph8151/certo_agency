@@ -24,14 +24,14 @@ export default function Footer() {
             <p className="mt-5 max-w-sm text-[0.875rem] leading-relaxed text-navy/70">
               {site.tagline}
             </p>
-            <p className="mt-4 max-w-sm font-serif text-[0.9375rem] italic leading-relaxed text-brand">
+            <p className="mt-4 max-w-sm text-[0.9375rem] font-medium leading-relaxed text-brand">
               {site.promise}
             </p>
           </div>
 
           {/* 메뉴 */}
           <nav aria-label="푸터 메뉴" className="lg:col-span-3">
-            <h2 className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/65">
+            <h2 className="text-[0.75rem] font-semibold tracking-[0.04em] text-navy/65">
               메뉴
             </h2>
             <ul className="mt-5 space-y-3">
@@ -50,7 +50,7 @@ export default function Footer() {
 
           {/* 연락처 — 공개 연락처가 없으면 문의 폼으로만 안내합니다. */}
           <div className="lg:col-span-3 lg:col-start-10">
-            <h2 className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/65">
+            <h2 className="text-[0.75rem] font-semibold tracking-[0.04em] text-navy/65">
               문의
             </h2>
 

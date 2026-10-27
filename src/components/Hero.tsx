@@ -26,7 +26,7 @@ export default function Hero() {
           <Reveal delay={90}>
             <h1
               id="hero-heading"
-              className="mt-7 text-display font-semibold tracking-tight text-navy"
+              className="mt-7 text-display font-medium tracking-tight text-navy"
             >
               해외 비즈니스 현장을
               <br />
@@ -60,7 +60,7 @@ export default function Hero() {
           <Reveal delay={340}>
             <div className="mt-14 lg:mt-20">
               <div className="rule" />
-              <p className="mt-5 text-[0.6875rem] font-medium uppercase leading-relaxed tracking-[0.16em] text-navy/65">
+              <p className="mt-5 text-[0.75rem] font-medium leading-relaxed tracking-[0.04em] text-navy/65">
                 비즈니스 통역 · 문서 번역 · 해외 출장 지원 · 기업 전담 서비스
               </p>
             </div>

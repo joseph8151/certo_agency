@@ -28,7 +28,7 @@ export default function CorporateRetainer() {
 
           <Reveal delay={180}>
             <div className="mt-12 border-t border-line pt-8">
-              <h3 className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/65">
+              <h3 className="text-[0.75rem] font-semibold tracking-[0.04em] text-navy/65">
                 공통 구성
               </h3>
               <ul className="mt-6 flex flex-col gap-3.5">

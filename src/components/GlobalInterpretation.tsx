@@ -66,7 +66,7 @@ export default function GlobalInterpretation() {
         {/* 하단: 카피 + Line Map */}
         <div className="mt-20 grid items-center gap-12 border-t border-line-invert pt-14 lg:mt-28 lg:grid-cols-12 lg:gap-gutter">
           <Reveal className="lg:col-span-4">
-            <p className="font-serif text-headline italic leading-[1.3] text-white/95">
+            <p className="text-headline font-light leading-[1.4] tracking-tight text-white/95">
               비즈니스가 향하는 곳으로,
               <br />
               체르토가 연결합니다.

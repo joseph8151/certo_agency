@@ -43,7 +43,7 @@ export default function SectionHeading({
 
       <Reveal delay={serifTitle ? 120 : 80}>
         <h2
-          className={`${serifTitle ? 'mt-3' : 'mt-6'} text-headline font-semibold ${
+          className={`${serifTitle ? 'mt-3' : 'mt-6'} text-headline font-medium ${
             invert ? 'text-white' : 'text-navy'
           }`}
         >

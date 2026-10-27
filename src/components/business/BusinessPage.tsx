@@ -53,7 +53,7 @@ export default function BusinessPage() {
             <Reveal delay={140}>
               <h1
                 id="business-heading"
-                className="mt-3 text-display font-semibold tracking-tight text-navy"
+                className="mt-3 text-display font-medium tracking-tight text-navy"
               >
                 {page.hero.title.split('\n').map((line) => (
                   <span key={line} className="block">

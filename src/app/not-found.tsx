@@ -12,7 +12,7 @@ export default function NotFound() {
     <main id="main" className="bg-white">
       <section className="shell flex min-h-[70vh] flex-col justify-center py-section pt-[calc(var(--header-height)+4rem)]">
         <p className="eyebrow">404</p>
-        <h1 className="mt-6 max-w-2xl text-headline font-semibold text-navy">
+        <h1 className="mt-6 max-w-2xl text-headline font-medium text-navy">
           요청하신 페이지를 찾을 수 없습니다.
         </h1>
         <p className="mt-6 max-w-prose text-[1.0625rem] leading-[1.9] text-navy/70">

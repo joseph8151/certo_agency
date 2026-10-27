@@ -35,6 +35,7 @@ export default function Services() {
                   <Reveal>
                     <Figure
                       image={images[area.imageKey]}
+                      ratio="4 / 3"
                       tone="none"
                       sizes="(max-width: 1024px) 100vw, 46vw"
                     />
@@ -48,7 +49,7 @@ export default function Services() {
                     <p className="eyebrow">{area.eyebrow}</p>
                   </Reveal>
                   <Reveal delay={80}>
-                    <h3 className="mt-5 text-title font-semibold text-navy">{area.title}</h3>
+                    <h3 className="mt-5 text-title font-medium text-navy">{area.title}</h3>
                   </Reveal>
                   <Reveal delay={130}>
                     <p className="mt-5 text-[0.9375rem] leading-[1.85] text-pretty text-navy/65">

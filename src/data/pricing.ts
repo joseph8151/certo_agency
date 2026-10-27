@@ -36,7 +36,7 @@ export type PricingPlan = {
 };
 
 export const pricingIntro = {
-  eyebrow: '프리미엄 통역',
+  eyebrow: '요금 안내',
   title: '프리미엄 통역 서비스',
   lead: '중요한 미팅은 통역 시간만으로 견적을 내지 않습니다. 사전 자료 검토부터 현장 통역, 필요 시 사후 정리까지 업무 범위에 맞춰 안내합니다.',
 } as const;
@@ -132,7 +132,7 @@ export type RetainerPlan = {
 };
 
 export const retainerIntro = {
-  eyebrow: '기업 전담',
+  eyebrow: '정기 지원',
   title: '기업 전담 통역 서비스',
   lead: '해외 거래가 반복되는 기업을 위한 정기 지원 서비스입니다. 매번 처음부터 설명하지 않아도 되도록, 지난 미팅의 용어와 맥락을 이어서 관리합니다.',
 } as const;
