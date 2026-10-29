@@ -18,6 +18,7 @@ import { cityPages } from './city-pages';
 import { languageData } from './language-data';
 import { countryData } from './country-data';
 import { countryCities, type CityGroup } from './country-cities';
+import { koreaRegions, type KoreaRegion } from './korea-regions';
 
 export type SeoItem = { title: string; body: string };
 export type SeoLink = { label: string; href: string; note?: string };
@@ -83,6 +84,7 @@ export type CountryData = {
 };
 
 export const languages: LanguageData[] = languageData;
+export const regions: KoreaRegion[] = koreaRegions;
 export const countries: CountryData[] = countryData;
 
 export const languageBySlug = Object.fromEntries(languages.map((l) => [l.slug, l]));
@@ -233,5 +235,82 @@ export function buildCountryPage(country: CountryData): SeoPageData {
       '체르토 에이전시',
     ],
     serviceName: `${n} 현지 통역`,
+  };
+}
+
+/* ── 조립: 국내 지역 페이지 ──────────────────────────── */
+const inPersonRegions = ['seoul', 'gyeonggi', 'incheon'];
+
+export function buildKoreaPage(region: KoreaRegion): SeoPageData {
+  const n = region.name;
+  const groups = region.places.map((g) => ({ label: g.group, cities: g.names }));
+  const all = groups.flatMap((g) => g.cities);
+  const [p1, p2] = all.length > 2 ? [all[1], all[2]] : [all[0], all[0]];
+  const inPerson = inPersonRegions.includes(region.slug);
+
+  return {
+    path: `/korea/${region.slug}`,
+    breadcrumb: [
+      { label: '홈', href: '/' },
+      { label: '비즈니스 통역', href: '/interpretation' },
+      { label: `${n} 통역` },
+    ],
+    eyebrow: '국내 지역별 통역',
+    h1: `${n} 통역과 ${n} 통역사`,
+    lead: region.lead,
+    facts: [
+      { label: '지역', value: region.formal },
+      {
+        label: '진행 방식',
+        value: inPerson
+          ? '현장 동행 통역 · 문서 번역 · 회의록 정리'
+          : '지역과 일정에 따라 가능 여부와 이동 조건을 확인해 안내',
+      },
+    ],
+    sections: [
+      {
+        eyebrow: '지역별 통역 수요',
+        heading: `${n} 통역이 필요한 자리`,
+        items: region.areas.map((a) => ({ title: a.title, body: a.body })),
+      },
+    ],
+    notesHeading: `${n} 일정을 잡기 전에`,
+    notes: region.notes,
+    cityBlock: {
+      heading: `${n} 지역별 통역 · 통번역`,
+      intro: `${n}에서는 ${p1} 통역사, ${p2} 통번역처럼 지역을 지정해 문의하시는 경우가 많습니다. 아래 지역은 언어와 분야, 날짜를 알려주시면 통역사 섭외 가능 여부를 확인해 안내드립니다. 목록에 없는 지역도 문의해 주세요.`,
+      groups,
+      linked: {},
+    },
+    linkGroups: [
+      {
+        heading: '함께 보실 서비스',
+        links: [
+          { label: '비즈니스 통역', href: '/interpretation' },
+          { label: '비즈니스 문서 지원', href: '/translation' },
+          { label: '해외 출장 · 비즈니스 지원', href: '/global' },
+        ],
+      },
+      {
+        heading: '다른 지역',
+        links: koreaRegions
+          .filter((r) => r.slug !== region.slug)
+          .map((r) => ({ label: `${r.name} 통역`, href: `/korea/${r.slug}` })),
+      },
+    ],
+    faqs: region.faqs,
+    ctaTitle: `${n} 일정이 정해지셨나요?`,
+    ctaLabel: `${n} 통역 문의하기`,
+    seoTitle: `${n} 통역 · ${n} 통역사 · 통번역 | ${n} 통역사 섭외`,
+    seoDescription: `${n} 통역과 ${n} 통역사 섭외, 통번역. ${region.lead}`.slice(0, 150),
+    keywords: [
+      `${n} 통역`,
+      `${n} 통역사`,
+      `${n} 통번역`,
+      `${n} 통역사 섭외`,
+      ...all.slice(0, 6).map((c) => `${c} 통역`),
+      '체르토 에이전시',
+    ],
+    serviceName: `${n} 통역 · 통번역`,
   };
 }

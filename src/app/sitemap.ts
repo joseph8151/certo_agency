@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { cityPages } from '@/data/city-pages';
-import { countries, languages } from '@/data/seo-pages';
+import { countries, languages, regions } from '@/data/seo-pages';
 import { allServicePages } from '@/data/services';
 import { site } from '@/data/site';
 
@@ -27,6 +27,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...countries.map((c) => ({
       url: `${site.url}/country/${c.slug}`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
+    ...regions.map((r) => ({
+      url: `${site.url}/korea/${r.slug}`,
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),

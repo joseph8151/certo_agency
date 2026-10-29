@@ -33,6 +33,7 @@ const { cityPages } = load('city-pages');
 const { languageData } = load('language-data');
 const { countryData } = load('country-data');
 const { cityRegions } = load('cities');
+const { koreaRegions } = load('korea-regions');
 
 const problems = [];
 const check = (label, bad) => {
@@ -56,6 +57,7 @@ check('언어가 가리키는 없는 국가', languageData.flatMap((l) => l.coun
 const slugDup = (arr) => arr.filter((s, i) => arr.indexOf(s) !== i);
 check('중복 slug (도시)', slugDup(cityPages.map((c) => c.slug)));
 check('중복 slug (국가)', slugDup(countryData.map((c) => c.slug)));
+check('국내 지역 지명 중복', (() => { const seen = new Set(); const d = []; for (const r of koreaRegions) for (const g of r.places) for (const n of g.names) { if (seen.has(n)) d.push(n); seen.add(n); } return d; })());
 check('중복 slug (언어)', slugDup(languageData.map((l) => l.slug)));
 
 // 문장 중복: 같은 문장이 서로 다른 페이지에 나오면 양산 페이지입니다.
@@ -84,6 +86,12 @@ for (const l of languageData) {
   add(l.translation.lead, `언어:${l.name}`);
   l.notes.forEach((n) => add(n.body, `언어:${l.name}`));
   l.faqs.forEach((f) => { add(f.q, `언어:${l.name}`); add(f.a, `언어:${l.name}`); });
+}
+for (const r of koreaRegions) {
+  add(r.lead, `지역:${r.name}`);
+  r.areas.forEach((a) => add(a.body, `지역:${r.name}`));
+  r.notes.forEach((n) => add(n.body, `지역:${r.name}`));
+  r.faqs.forEach((f) => { add(f.q, `지역:${r.name}`); add(f.a, `지역:${r.name}`); });
 }
 const dup = [...sentences.entries()].filter(([, w]) => new Set(w).size > 1).map(([t, w]) => `${[...new Set(w)].join(' = ')}: "${t.slice(0, 40)}…"`);
 check('페이지 사이에 중복된 문장', dup);

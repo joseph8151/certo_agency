@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { cityPages } from '@/data/city-pages';
-import { countries, languages } from '@/data/seo-pages';
+import { countries, languages, regions } from '@/data/seo-pages';
 import Cta from './ui/Button';
 import Figure from './ui/Figure';
 import Reveal from './ui/Reveal';
@@ -248,6 +248,25 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
                 ))}
               </ul>
             </div>
+
+            {page.slug === 'interpretation' ? (
+              <div className="lg:col-span-12">
+                <p className="eyebrow">국내 지역별</p>
+                <h2 className="mt-6 text-headline font-medium text-navy">국내 지역별 통역</h2>
+                <ul className="mt-12 grid grid-cols-2 gap-x-8 border-t border-line sm:grid-cols-3 lg:grid-cols-4">
+                  {regions.map((region) => (
+                    <li key={region.slug} className="border-b border-line">
+                      <Link
+                        href={`/korea/${region.slug}`}
+                        className="block py-4 text-[0.9375rem] text-navy transition-colors duration-300 hover:text-brand"
+                      >
+                        {region.name} 통역
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
 
             {page.slug === 'global' ? (
               <div className="lg:col-span-6 lg:col-start-7">
