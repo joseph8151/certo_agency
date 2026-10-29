@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { cityPages } from '@/data/city-pages';
-import { countries, languages, regions } from '@/data/seo-pages';
+import { countries, languages, regions, topicGroupLabels, topics } from '@/data/seo-pages';
+import type { TopicGroup } from '@/data/topic-data-types';
 import Cta from './ui/Button';
 import Figure from './ui/Figure';
 import Reveal from './ui/Reveal';
@@ -213,6 +214,58 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
                 해당 날짜 기준으로 배정 가능 여부를 확인해 회신드립니다.
               </p>
             </Reveal>
+          </div>
+        </section>
+      ) : null}
+
+      {/* ── 주제별 색인 (상황 · 분야 · 문서 · 비용) ─────────────────── */}
+      {page.slug === 'interpretation' || page.slug === 'translation' ? (
+        <section
+          id="by-topic"
+          aria-labelledby="by-topic-heading"
+          className="border-t border-line bg-ivory-light py-section"
+        >
+          <div className="shell">
+            <SectionHeading
+              eyebrow="주제별"
+              title={
+                <span id="by-topic-heading">
+                  {page.slug === 'translation' ? '문서별 번역 안내' : '상황 · 분야별 통역 안내'}
+                </span>
+              }
+              lead="필요한 상황이나 분야를 선택하시면 그 자리에서 자주 있는 일과 준비할 점을 안내합니다."
+            />
+            <div className="mt-12 grid gap-x-10 gap-y-12 lg:grid-cols-2">
+              {(
+                (page.slug === 'translation'
+                  ? ['document', 'cost']
+                  : ['mode', 'situation', 'field', 'cost']) as TopicGroup[]
+              ).map((group) => {
+                const list = topics.filter(
+                  (t) => t.group === group && (group !== 'cost' || t.parent === page.slug),
+                );
+                if (!list.length) return null;
+                return (
+                  <div key={group}>
+                    <h3 className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
+                      {topicGroupLabels[group]}
+                    </h3>
+                    <ul className="mt-4 grid grid-cols-1 gap-x-8 border-t border-line sm:grid-cols-2">
+                      {list.map((t) => (
+                        <li key={t.slug} className="border-b border-line">
+                          <Link
+                            href={`/topic/${t.slug}`}
+                            className="block py-3.5 text-[0.9375rem] text-navy transition-colors duration-300 hover:text-brand"
+                          >
+                            {t.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </section>
       ) : null}

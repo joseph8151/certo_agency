@@ -19,6 +19,10 @@ import { languageData } from './language-data';
 import { countryData } from './country-data';
 import { countryCities, type CityGroup } from './country-cities';
 import { koreaRegions, type KoreaRegion } from './korea-regions';
+import { modeTopics } from './topic-data-modes';
+import { fieldTopics } from './topic-data-fields';
+import { docTopics, costTopics } from './topic-data-docs';
+import type { TopicData, TopicGroup } from './topic-data-types';
 
 export type SeoItem = { title: string; body: string };
 export type SeoLink = { label: string; href: string; note?: string };
@@ -89,6 +93,16 @@ export type CountryData = {
 
 export const languages: LanguageData[] = languageData;
 export const regions: KoreaRegion[] = koreaRegions;
+export const topics: TopicData[] = [...modeTopics, ...fieldTopics, ...docTopics, ...costTopics];
+export const topicBySlug = Object.fromEntries(topics.map((t) => [t.slug, t]));
+
+export const topicGroupLabels: Record<TopicGroup, string> = {
+  mode: '통역 방식',
+  situation: '상황별',
+  field: '분야별',
+  document: '문서 번역',
+  cost: '비용 · 업체 선택',
+};
 export const countries: CountryData[] = countryData;
 
 export const languageBySlug = Object.fromEntries(languages.map((l) => [l.slug, l]));
@@ -328,5 +342,66 @@ export function buildKoreaPage(region: KoreaRegion): SeoPageData {
       '체르토 에이전시',
     ],
     serviceName: `${n} 통역 · 통번역`,
+  };
+}
+
+/* ── 조립: 주제 페이지 ──────────────────────────────── */
+export function buildTopicPage(topic: TopicData): SeoPageData {
+  const isTranslation = topic.parent === 'translation';
+  const parentLabel = isTranslation ? '비즈니스 문서 지원' : '비즈니스 통역';
+  const related = topic.related.map((slug) => topicBySlug[slug]).filter(Boolean);
+
+  return {
+    path: `/topic/${topic.slug}`,
+    breadcrumb: [
+      { label: '홈', href: '/' },
+      { label: parentLabel, href: `/${topic.parent}` },
+      { label: topic.name },
+    ],
+    eyebrow: topicGroupLabels[topic.group],
+    h1: topic.h1 ?? topic.name,
+    lead: topic.lead,
+    facts: [
+      { label: '함께 찾으시는 표현', value: [topic.name, ...topic.alsoSearched].slice(0, 6).join(' · ') },
+      {
+        label: '진행 방식',
+        value: isTranslation
+          ? '파일 접수 · 분량과 용도 확인 · 번역 · 검수'
+          : '일정 접수 · 분야 확인 · 통역사 배정 · 현장 또는 화상 진행',
+      },
+    ],
+    sections: [
+      {
+        eyebrow: topicGroupLabels[topic.group],
+        heading: topic.itemsHeading ?? `${topic.name}에서 맡는 일`,
+        items: topic.items,
+      },
+    ],
+    notesHeading: `${topic.name} 전에 확인하실 것`,
+    notes: topic.notes,
+    linkGroups: [
+      ...(related.length
+        ? [
+            {
+              heading: '함께 보실 내용',
+              links: related.map((t) => ({ label: t.name, href: `/topic/${t.slug}` })),
+            },
+          ]
+        : []),
+      {
+        heading: '서비스 안내',
+        links: [
+          { label: parentLabel, href: `/${topic.parent}` },
+          { label: '요금 안내', href: '/interpretation#premium' },
+        ],
+      },
+    ],
+    faqs: topic.faqs,
+    ctaTitle: `${topic.name} 일정이 있으신가요?`,
+    ctaLabel: `${topic.name} 문의하기`,
+    seoTitle: `${topic.name} | ${topic.alsoSearched.slice(0, 2).join(' · ')}`,
+    seoDescription: topic.lead.slice(0, 150),
+    keywords: [topic.name, ...topic.alsoSearched, '체르토 에이전시'],
+    serviceName: topic.name,
   };
 }

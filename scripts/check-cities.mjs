@@ -34,6 +34,10 @@ const { languageData } = load('language-data');
 const { countryData } = load('country-data');
 const { cityRegions } = load('cities');
 const { koreaRegions } = load('korea-regions');
+const { modeTopics } = load('topic-data-modes');
+const { fieldTopics } = load('topic-data-fields');
+const { docTopics, costTopics } = load('topic-data-docs');
+const topics = [...modeTopics, ...fieldTopics, ...docTopics, ...costTopics];
 
 const problems = [];
 const check = (label, bad) => {
@@ -93,6 +97,15 @@ for (const r of koreaRegions) {
   r.notes.forEach((n) => add(n.body, `지역:${r.name}`));
   r.faqs.forEach((f) => { add(f.q, `지역:${r.name}`); add(f.a, `지역:${r.name}`); });
 }
+for (const t of topics) {
+  add(t.lead, `주제:${t.name}`);
+  t.items.forEach((i) => add(i.body, `주제:${t.name}`));
+  t.notes.forEach((n) => add(n.body, `주제:${t.name}`));
+  t.faqs.forEach((f) => { add(f.q, `주제:${t.name}`); add(f.a, `주제:${t.name}`); });
+}
+check('주제 slug 중복', slugDup(topics.map((t) => t.slug)));
+check('주제 related 가 가리키는 없는 slug', topics.flatMap((t) => t.related.filter((r) => !topics.some((x) => x.slug === r)).map((r) => `${t.slug}→${r}`)));
+check('주제 title 중복', slugDup(topics.map((t) => `${t.name} | ${t.alsoSearched.slice(0, 2).join(' · ')}`)));
 const dup = [...sentences.entries()].filter(([, w]) => new Set(w).size > 1).map(([t, w]) => `${[...new Set(w)].join(' = ')}: "${t.slice(0, 40)}…"`);
 check('페이지 사이에 중복된 문장', dup);
 
