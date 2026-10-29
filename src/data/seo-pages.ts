@@ -17,6 +17,7 @@
 import { cityPages } from './city-pages';
 import { languageData } from './language-data';
 import { countryData } from './country-data';
+import { countryCities, type CityGroup } from './country-cities';
 
 export type SeoItem = { title: string; body: string };
 export type SeoLink = { label: string; href: string; note?: string };
@@ -35,6 +36,8 @@ export type SeoPageData = {
   notes: { label: string; body: string }[];
   linkGroups: { heading: string; links: SeoLink[] }[];
   faqs: { q: string; a: string }[];
+  /** 국가 페이지의 주요 도시 목록 — 도시별 페이지를 만들지 않고 한 장에서 안내합니다 */
+  cityBlock?: { heading: string; intro: string; groups: CityGroup[]; linked: Record<string, string> };
   ctaTitle: string;
   ctaLabel: string;
   /* 메타 · 구조화 데이터 */
@@ -160,6 +163,9 @@ export function buildLanguagePage(lang: LanguageData): SeoPageData {
 export function buildCountryPage(country: CountryData): SeoPageData {
   const n = country.name;
   const cities = citiesOf(n);
+  const groups = (countryCities[n] ?? []).filter((g) => g.cities.length);
+  const allCities = groups.flatMap((g) => g.cities);
+  const [c1, c2] = allCities;
   const langLinks = country.languages
     .map((slug) => languageBySlug[slug])
     .filter(Boolean)
@@ -203,6 +209,16 @@ export function buildCountryPage(country: CountryData): SeoPageData {
       ...(langLinks.length ? [{ heading: `${n}에서 필요한 언어`, links: langLinks }] : []),
     ],
     faqs: country.faqs,
+    cityBlock: allCities.length
+      ? {
+          heading: `${n} 도시별 통역 · 현지 통역사`,
+          intro: c2
+            ? `${n}에서는 ${c1} 통역, ${c2} 현지 통역사처럼 도시를 지정해 문의하시는 경우가 많습니다. 아래 도시는 일정과 분야를 알려주시면 현지 통역사 섭외 가능 여부를 확인해 안내드립니다. 목록에 없는 도시도 문의해 주세요.`
+            : `${n}에서는 ${c1} 통역과 ${c1} 현지 통역사 섭외 문의를 받습니다. 일정과 분야를 알려주시면 가능 여부를 확인해 안내드립니다.`,
+          groups,
+          linked: Object.fromEntries(cities.map((c) => [c.city, `/global/${c.slug}`])),
+        }
+      : undefined,
     ctaTitle: `${n} 일정이 정해지셨나요?`,
     ctaLabel: `${n} 통역 문의하기`,
     seoTitle: `${n} 통역 · ${n} 현지 통역 | ${n} 출장 통역사 섭외`,
@@ -213,7 +229,7 @@ export function buildCountryPage(country: CountryData): SeoPageData {
       `${n} 통역사`,
       `${n} 출장 통역`,
       `${n} 통역사 섭외`,
-      ...cities.map((c) => `${c.city} 현지 통역`),
+      ...allCities.slice(0, 8).map((c) => `${c} 통역`),
       '체르토 에이전시',
     ],
     serviceName: `${n} 현지 통역`,

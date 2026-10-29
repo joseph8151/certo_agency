@@ -7,8 +7,11 @@
  * 시차는 한국(KST) 기준이고, 서머타임이 있는 나라는 두 값을 함께 적습니다.
  */
 import type { CountryData } from './seo-pages';
+import { europeCountries } from './country-data-europe';
+import { asiaCountries } from './country-data-asia';
+import { worldCountries } from './country-data-world';
 
-export const countryData: CountryData[] = [
+const coreCountries: CountryData[] = [
   {
     slug: 'usa',
     name: '미국',
@@ -952,4 +955,11 @@ export const countryData: CountryData[] = [
       },
     ],
   },
+];
+
+export const countryData: CountryData[] = [
+  ...coreCountries,
+  ...europeCountries,
+  ...asiaCountries,
+  ...worldCountries,
 ];

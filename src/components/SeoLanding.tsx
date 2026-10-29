@@ -141,6 +141,47 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
                 </div>
               ))}
             </dl>
+
+            {page.cityBlock ? (
+              <div className="mt-16">
+                <h2 className="text-title font-medium tracking-tight text-navy">
+                  {page.cityBlock.heading}
+                </h2>
+                <p className="mt-5 max-w-2xl text-[0.9375rem] leading-[1.9] text-pretty text-navy/70">
+                  {page.cityBlock.intro}
+                </p>
+                {page.cityBlock.groups.map((group) => (
+                  <div key={group.label ?? 'all'} className="mt-8">
+                    {group.label ? (
+                      <h3 className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
+                        {group.label}
+                      </h3>
+                    ) : null}
+                    <ul className="mt-4 flex flex-wrap gap-x-2 gap-y-2">
+                      {group.cities.map((city) => {
+                        const href = page.cityBlock?.linked[city];
+                        const cls =
+                          'inline-block border border-line px-3.5 py-1.5 text-[0.875rem] text-navy/80';
+                        return (
+                          <li key={city}>
+                            {href ? (
+                              <Link
+                                href={href}
+                                className={`${cls} border-brand/40 text-brand transition-colors duration-300 hover:bg-brand hover:text-white`}
+                              >
+                                {city} 통역
+                              </Link>
+                            ) : (
+                              <span className={cls}>{city} 통역</span>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
 
           <div className="lg:col-span-4 lg:col-start-9">
