@@ -33,7 +33,7 @@ export default function Figure({
 
   return (
     <div
-      className={`relative isolate overflow-hidden bg-ivory ${toneClass} ${zoom ? 'zoom-slow' : ''} ${className}`}
+      className={`relative isolate overflow-hidden bg-ivory-light ${toneClass} ${zoom ? 'zoom-slow' : ''} ${className}`}
       style={{ aspectRatio: ratio ?? image.ratio }}
     >
       <Image
@@ -43,7 +43,7 @@ export default function Figure({
         sizes={sizes}
         priority={priority}
         loading={priority ? undefined : 'lazy'}
-        className="object-cover"
+        className="object-cover saturate-[0.9]"
         style={image.position ? { objectPosition: image.position } : undefined}
       />
     </div>

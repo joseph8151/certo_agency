@@ -10,12 +10,6 @@ export default function Hero() {
       aria-labelledby="hero-heading"
       className="relative overflow-hidden bg-white pt-[calc(var(--header-height)+2.5rem)] lg:pt-[calc(var(--header-height)+4.5rem)]"
     >
-      {/* 배경: 아이보리 필드 — 오른쪽 이미지를 감싸는 편집 레이아웃 */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-y-0 right-0 hidden w-[42%] bg-ivory-light lg:block"
-      />
-
       <div className="shell relative grid items-center gap-14 pb-16 lg:grid-cols-12 lg:gap-gutter lg:pb-24">
         {/* 좌: 카피 */}
         <div className="lg:col-span-6 lg:pr-8 xl:col-span-6">
@@ -70,6 +64,11 @@ export default function Hero() {
         {/* 우: 이미지 */}
         <div className="lg:col-span-6 xl:col-span-6">
           <Reveal delay={140} className="relative">
+            {/* 사진 뒤로 살짝 어긋난 헤어라인 프레임 — 면 대신 선으로 깊이를 줍니다 */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 hidden translate-x-5 translate-y-9 border border-line-strong lg:block"
+            />
             <Figure
               image={images.hero}
               tone="blue"

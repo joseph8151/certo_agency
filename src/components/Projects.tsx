@@ -9,7 +9,7 @@ import { projects } from '@/data/content';
  */
 export default function Projects() {
   return (
-    <section id="projects" aria-labelledby="projects-heading" className="bg-ivory py-section">
+    <section id="projects" aria-labelledby="projects-heading" className="bg-ivory-light py-section">
       <div className="shell">
         <SectionHeading
           eyebrow="프로젝트 유형"

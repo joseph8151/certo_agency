@@ -26,7 +26,6 @@ export type ServicePage = {
   navLabel: string;
   eyebrow: string;
   title: string;
-  titleSerif?: string;
   lead: string;
   imageKey: ImageKey;
   seo: { title: string; description: string; keywords: string[] };
@@ -71,10 +70,9 @@ export const servicePages: Record<string, ServicePage> = {
   interpretation: {
     slug: 'interpretation',
     serviceName: '전문 통역 서비스',
-    navLabel: 'Interpretation',
-    eyebrow: 'Interpretation',
+    navLabel: '통역',
+    eyebrow: '비즈니스 통역',
     title: '현장의 언어를\n정확하게 전달합니다.',
-    titleSerif: 'Interpretation',
     lead: '비즈니스 미팅부터 국제회의까지, 통역 방식과 현장 성격에 따라 필요한 역량은 달라집니다. CERTO AGENCY는 프로젝트를 먼저 확인한 뒤 해당 환경에 익숙한 통역사를 매칭합니다.',
     imageKey: 'interpretation',
     seo: {
@@ -211,10 +209,9 @@ export const servicePages: Record<string, ServicePage> = {
   translation: {
     slug: 'translation',
     serviceName: '전문 번역 서비스',
-    navLabel: 'Translation',
-    eyebrow: 'Translation',
+    navLabel: '문서 지원',
+    eyebrow: '비즈니스 문서',
     title: '문서의 목적과 독자를\n이해하는 번역.',
-    titleSerif: 'Translation',
     lead: '계약서와 마케팅 자료는 같은 방식으로 번역될 수 없습니다. 문서의 용도, 읽는 사람, 요구되는 정확도를 확인한 뒤 해당 분야 경험을 가진 번역가에게 배정합니다.',
     imageKey: 'translation',
     seo: {
@@ -351,10 +348,9 @@ export const servicePages: Record<string, ServicePage> = {
   global: {
     slug: 'global',
     serviceName: '해외 통역 서비스',
-    navLabel: 'Global Service',
-    eyebrow: 'Global Interpretation',
+    navLabel: '해외 지원',
+    eyebrow: '해외 출장 · 비즈니스 지원',
     title: '해외에서도\nCERTO의 매칭은 계속됩니다.',
-    titleSerif: 'Global',
     lead: '해외 출장, 현지 미팅, 전시회, 기업 방문, 바이어 상담. 낯선 도시에서 통역사를 처음부터 찾아야 하는 부담을 CERTO가 대신 맡습니다.',
     imageKey: 'global',
     seo: {

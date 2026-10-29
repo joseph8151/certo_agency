@@ -6,7 +6,7 @@ import { useCases } from '@/data/content';
 /** 고객이 자신의 상황을 바로 발견하고 상담으로 연결되도록 하는 섹션 */
 export default function UseCases() {
   return (
-    <section id="usecases" aria-labelledby="usecases-heading" className="bg-brand-soft/50 py-section">
+    <section id="usecases" aria-labelledby="usecases-heading" className="bg-ivory-light py-section">
       <div className="shell">
         <SectionHeading
           eyebrow="활용 사례"

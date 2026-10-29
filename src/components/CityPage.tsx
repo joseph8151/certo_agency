@@ -89,7 +89,7 @@ export default function CityPage({ page }: { page: CityPageData }) {
       {/* ── 어떤 자리가 많은가 ────────────────────── */}
       <section
         aria-labelledby="scenes-heading"
-        className="border-y border-line bg-ivory py-section"
+        className="border-y border-line bg-ivory-light py-section"
       >
         <div className="shell">
           <SectionHeading
@@ -98,7 +98,7 @@ export default function CityPage({ page }: { page: CityPageData }) {
           />
           <div className="mt-16 grid gap-px border-t border-line bg-line lg:mt-20 lg:grid-cols-3">
             {page.scenes.map((scene, i) => (
-              <Reveal key={scene.title} delay={(i % 3) * 90} className="bg-ivory">
+              <Reveal key={scene.title} delay={(i % 3) * 90} className="bg-ivory-light">
                 <article className="flex h-full flex-col gap-4 py-9 lg:px-8 lg:py-11">
                   <h2 className="text-[1.0625rem] font-medium text-navy">{scene.title}</h2>
                   <p className="text-[0.9375rem] leading-[1.85] text-pretty text-navy/70">
@@ -108,7 +108,7 @@ export default function CityPage({ page }: { page: CityPageData }) {
               </Reveal>
             ))}
             {Array.from({ length: (3 - (page.scenes.length % 3)) % 3 }).map((_, i) => (
-              <div key={`filler-${i}`} aria-hidden="true" className="hidden bg-ivory lg:block" />
+              <div key={`filler-${i}`} aria-hidden="true" className="hidden bg-ivory-light lg:block" />
             ))}
           </div>
         </div>
@@ -151,7 +151,7 @@ export default function CityPage({ page }: { page: CityPageData }) {
       </section>
 
       {/* ── FAQ ───────────────────────────────────── */}
-      <section aria-labelledby="city-faq-heading" className="bg-ivory py-section">
+      <section aria-labelledby="city-faq-heading" className="bg-ivory-light py-section">
         <div className="shell">
           <SectionHeading
             eyebrow="자주 묻는 질문"

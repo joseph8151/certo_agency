@@ -7,7 +7,7 @@ import { images } from '@/data/images';
 
 export default function Business() {
   return (
-    <section id="business" aria-labelledby="business-heading" className="bg-ivory py-section">
+    <section id="business" aria-labelledby="business-heading" className="bg-ivory-light py-section">
       <div className="shell">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-gutter">
           <div className="lg:col-span-6">
@@ -40,7 +40,7 @@ export default function Business() {
         {/* 기업 서비스 목록 */}
         <div className="mt-20 grid gap-px border-t border-line bg-line sm:grid-cols-2 lg:mt-24 lg:grid-cols-4">
           {businessServices.map((service, i) => (
-            <Reveal key={service} delay={(i % 4) * 80} className="bg-ivory">
+            <Reveal key={service} delay={(i % 4) * 80} className="bg-ivory-light">
               <div className="flex h-full items-start gap-4 px-0 py-7 sm:px-6 lg:py-9">
                 <span className="mt-1 font-serif text-sm text-brand/45">
                   {String(i + 1).padStart(2, '0')}

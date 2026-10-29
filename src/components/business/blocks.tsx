@@ -12,7 +12,7 @@ export type Tone = 'white' | 'ivory' | 'ivoryLight' | 'soft' | 'deep';
 
 const TONE_CLASS: Record<Tone, string> = {
   white: 'bg-white',
-  ivory: 'bg-ivory',
+  ivory: 'bg-ivory-light',
   ivoryLight: 'bg-ivory-light',
   soft: 'bg-brand-soft/50',
   deep: 'on-dark bg-brand-deep text-white',
@@ -139,7 +139,7 @@ export function HairlineGrid({
 
   const fillerBg = {
     white: 'bg-white',
-    ivory: 'bg-ivory',
+    ivory: 'bg-ivory-light',
     ivoryLight: 'bg-ivory-light',
     soft: 'bg-[#F4F8FC]',
   }[tone];
@@ -174,7 +174,7 @@ export function LabelCard({
 }) {
   const bg = {
     white: 'bg-white',
-    ivory: 'bg-ivory',
+    ivory: 'bg-ivory-light',
     ivoryLight: 'bg-ivory-light',
     soft: 'bg-[#F4F8FC]',
   }[tone];
@@ -203,7 +203,7 @@ export function CheckList({
 }) {
   const bg = {
     white: 'bg-white',
-    ivory: 'bg-ivory',
+    ivory: 'bg-ivory-light',
     ivoryLight: 'bg-ivory-light',
     soft: 'bg-[#F4F8FC]',
   }[tone];

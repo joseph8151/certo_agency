@@ -76,7 +76,7 @@ export default function Header() {
           <Link
             href={cta.href}
             data-cta="header-primary"
-            className="hidden rounded-xs bg-brand px-6 py-3 text-[0.8125rem] font-medium text-white transition-colors duration-500 ease-certo hover:bg-brand-deep md:inline-block"
+            className="hidden rounded-xs bg-brand-deep px-6 py-3 text-[0.8125rem] font-medium text-white transition-colors duration-500 ease-certo hover:bg-brand md:inline-block"
           >
             {cta.primary}
           </Link>
@@ -131,7 +131,7 @@ export default function Header() {
             href={cta.href}
             data-cta="mobile-menu-primary"
             onClick={() => setOpen(false)}
-            className="mt-8 rounded-xs bg-brand px-6 py-5 text-center text-base font-medium text-white"
+            className="mt-8 rounded-xs bg-brand-deep px-6 py-5 text-center text-base font-medium text-white"
           >
             {cta.primary}
           </Link>

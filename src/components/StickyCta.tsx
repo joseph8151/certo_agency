@@ -42,7 +42,7 @@ export default function StickyCta() {
         href={cta.href}
         data-cta="sticky-mobile"
         tabIndex={visible ? 0 : -1}
-        className="flex w-full items-center justify-center gap-2 rounded-xs bg-brand px-6 py-4 text-[0.9375rem] font-medium text-white"
+        className="flex w-full items-center justify-center gap-2 rounded-xs bg-brand-deep px-6 py-4 text-[0.9375rem] font-medium text-white"
       >
         {cta.primary}
         <span aria-hidden="true">→</span>

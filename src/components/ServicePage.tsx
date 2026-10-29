@@ -25,11 +25,6 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
         aria-labelledby="page-heading"
         className="relative overflow-hidden bg-white pt-[calc(var(--header-height)+2.5rem)] lg:pt-[calc(var(--header-height)+4rem)]"
       >
-        <div
-          aria-hidden="true"
-          className="absolute inset-y-0 right-0 hidden w-[38%] bg-ivory-light lg:block"
-        />
-
         <div className="shell relative grid items-center gap-12 pb-16 lg:grid-cols-12 lg:gap-gutter lg:pb-24">
           <div className="lg:col-span-6">
             <Breadcrumb current={page.navLabel} />
@@ -38,16 +33,10 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
               <p className="eyebrow mt-8">{page.eyebrow}</p>
             </Reveal>
 
-            {page.titleSerif ? (
-              <Reveal delay={100}>
-                <p className="mt-5 font-serif text-headline italic text-brand">{page.titleSerif}</p>
-              </Reveal>
-            ) : null}
-
             <Reveal delay={140}>
               <h1
                 id="page-heading"
-                className="mt-3 text-display font-medium tracking-tight text-navy"
+                className="mt-6 text-display font-medium tracking-tight text-navy"
               >
                 {titleLines.map((line) => (
                   <span key={line} className="block">
@@ -84,15 +73,20 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
             </Reveal>
           </div>
 
-          <div className="lg:col-span-5 lg:col-start-8">
-            <Reveal delay={120}>
+          <div className="lg:col-span-6">
+            <Reveal delay={120} className="relative">
+              {/* 홈 히어로와 같은 헤어라인 프레임 */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 hidden translate-x-5 translate-y-5 border border-line-strong lg:block"
+              />
               <Figure
                 image={images[page.imageKey]}
-                ratio="4 / 5"
+                ratio="5 / 4"
                 tone="none"
                 priority
                 zoom={false}
-                sizes="(max-width: 1024px) 100vw, 40vw"
+                sizes="(max-width: 1024px) 100vw, 46vw"
               />
             </Reveal>
           </div>
@@ -100,7 +94,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
       </section>
 
       {/* ── Intro ─────────────────────────────────── */}
-      <section aria-labelledby="intro-heading" className="border-y border-line bg-ivory py-section">
+      <section aria-labelledby="intro-heading" className="border-y border-line bg-ivory-light py-section">
         <div className="shell grid gap-12 lg:grid-cols-12 lg:gap-gutter">
           <div className="lg:col-span-5">
             <Reveal>
@@ -139,7 +133,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
               <Reveal key={offering.en} delay={(i % 3) * 90} className="bg-white">
                 <article className="flex h-full flex-col gap-5 py-9 lg:px-8 lg:py-11">
                   <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
-                    {offering.en}
+                    {String(i + 1).padStart(2, '0')}
                   </p>
                   <h3 className="text-[1.125rem] font-medium text-navy">{offering.title}</h3>
                   <p className="text-[0.9375rem] leading-[1.85] text-pretty text-navy/70">
@@ -179,10 +173,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
                 <Reveal key={region.en} delay={i * 70}>
                   <div className="grid gap-5 border-b border-line py-9 sm:grid-cols-12 sm:gap-8">
                     <div className="sm:col-span-3">
-                      <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
-                        {region.en}
-                      </p>
-                      <h3 className="mt-3 text-[1.0625rem] font-medium text-navy">{region.name}</h3>
+                      <h3 className="text-[1.0625rem] font-medium text-navy">{region.name}</h3>
                     </div>
 
                     <div className="sm:col-span-9">
@@ -308,7 +299,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
       </section>
 
       {/* ── FAQ ───────────────────────────────────── */}
-      <section aria-labelledby="page-faq-heading" className="bg-ivory py-section">
+      <section aria-labelledby="page-faq-heading" className="bg-ivory-light py-section">
         <div className="shell grid gap-12 lg:grid-cols-12 lg:gap-gutter">
           <div className="lg:col-span-4">
             <SectionHeading
@@ -420,7 +411,7 @@ function Breadcrumb({ current }: { current: string }) {
       <ol className="flex items-center gap-2 text-[0.75rem] tracking-wide text-navy/65">
         <li>
           <Link href="/" className="link-underline">
-            Home
+            홈
           </Link>
         </li>
         <li aria-hidden="true">/</li>

@@ -6,7 +6,7 @@ import { trustBarItems } from '@/data/content';
  */
 export default function TrustBar() {
   return (
-    <section aria-label="CERTO AGENCY 주요 서비스 영역" className="border-y border-line bg-ivory">
+    <section aria-label="CERTO AGENCY 주요 서비스 영역" className="border-y border-line bg-ivory-light">
       <div className="shell">
         <ul className="swipe-row items-center py-6 lg:justify-between lg:gap-8 lg:overflow-visible lg:py-7">
           {trustBarItems.map((item, i) => (

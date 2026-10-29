@@ -13,7 +13,7 @@
 export const businessPage = {
   slug: 'business',
   serviceName: '기업 전담 통번역',
-  navLabel: 'For Business',
+  navLabel: '기업 서비스',
 
   seo: {
     title: '기업 전담 통번역 | 기업 미팅·국제회의·해외 출장·다국어 프로젝트',

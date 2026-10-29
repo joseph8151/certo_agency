@@ -20,7 +20,7 @@ const base =
   'group inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-xs px-7 py-4 text-[0.9375rem] font-medium tracking-tight transition-all duration-500 ease-certo';
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-brand text-white hover:bg-brand-deep',
+  primary: 'bg-brand-deep text-white hover:bg-brand',
   outline: 'border border-line-strong text-navy hover:border-brand hover:text-brand',
   ghost: 'px-0 py-2 text-navy hover:text-brand',
   invert: 'bg-white text-brand-deep hover:bg-ivory',

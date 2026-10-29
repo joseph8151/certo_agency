@@ -24,7 +24,7 @@ export default function Clients() {
             <ul className="flex flex-wrap gap-x-2.5 gap-y-3">
               {clientTypes.map((client, i) => (
                 <Reveal as="li" key={client} delay={i * 40}>
-                  <span className="inline-block border border-line-strong px-5 py-3 text-[0.8125rem] tracking-wide text-navy/75">
+                  <span className="inline-block border border-line px-5 py-3 text-[0.8125rem] tracking-wide text-navy/75">
                     {client}
                   </span>
                 </Reveal>
