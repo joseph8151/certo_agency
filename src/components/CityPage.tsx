@@ -3,6 +3,7 @@ import Cta from './ui/Button';
 import Reveal from './ui/Reveal';
 import SectionHeading from './ui/SectionHeading';
 import type { CityPage as CityPageData } from '@/data/city-pages';
+import { countries } from '@/data/seo-pages';
 import { site } from '@/data/site';
 
 /**
@@ -10,6 +11,8 @@ import { site } from '@/data/site';
  * src/data/city-pages.ts 의 데이터만 추가하면 페이지가 생깁니다.
  */
 export default function CityPage({ page }: { page: CityPageData }) {
+  /** 이 도시가 속한 나라의 상세 페이지 — 위로 올라가는 내부 링크가 됩니다. */
+  const country = countries.find((item) => item.name === page.country);
   return (
     <>
       <StructuredData page={page} />
@@ -23,14 +26,24 @@ export default function CityPage({ page }: { page: CityPageData }) {
           <Reveal>
             <nav aria-label="Breadcrumb" className="text-[0.75rem] tracking-wide text-navy/65">
               <Link href="/" className="hover:text-brand">
-                Home
+                홈
               </Link>
               <span className="mx-2 text-navy/40">/</span>
               <Link href="/global" className="hover:text-brand">
-                해외 통역
+                해외 지원
               </Link>
+              {country ? (
+                <>
+                  <span className="mx-2 text-navy/40">/</span>
+                  <Link href={`/country/${country.slug}`} className="hover:text-brand">
+                    {country.name} 통역
+                  </Link>
+                </>
+              ) : null}
               <span className="mx-2 text-navy/40">/</span>
-              <span className="text-navy">{page.city}</span>
+              <span className="text-navy" aria-current="page">
+                {page.city}
+              </span>
             </nav>
           </Reveal>
 
@@ -203,6 +216,7 @@ export default function CityPage({ page }: { page: CityPageData }) {
 }
 
 function StructuredData({ page }: { page: CityPageData }) {
+  const country = countries.find((item) => item.name === page.country);
   const url = `${site.url}/global/${page.slug}`;
 
   const service = {
@@ -220,9 +234,24 @@ function StructuredData({ page }: { page: CityPageData }) {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: site.url },
-      { '@type': 'ListItem', position: 2, name: '해외 통역', item: `${site.url}/global` },
-      { '@type': 'ListItem', position: 3, name: `${page.city} 현지 통역`, item: url },
+      { '@type': 'ListItem', position: 1, name: '홈', item: site.url },
+      { '@type': 'ListItem', position: 2, name: '해외 지원', item: `${site.url}/global` },
+      ...(country
+        ? [
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: `${country.name} 통역`,
+              item: `${site.url}/country/${country.slug}`,
+            },
+          ]
+        : []),
+      {
+        '@type': 'ListItem',
+        position: country ? 4 : 3,
+        name: `${page.city} 현지 통역`,
+        item: url,
+      },
     ],
   };
 

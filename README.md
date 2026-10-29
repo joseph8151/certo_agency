@@ -437,6 +437,27 @@ CSP 는 넣지 않았습니다. 정적 프리렌더를 유지하면서 nonce 를
 
 **크롤러 허용** — `src/app/robots.ts` 에서 네이버(`Yeti`)와 다음(`Daumoa`)을 명시적으로 허용하고 있습니다.
 
+### 언어별 · 국가별 · 도시별 검색 랜딩 페이지
+
+| 검색 패턴 | 주소 | 개수 | 데이터 |
+| --- | --- | --- | --- |
+| 영어 통역 · 영어 번역 | `/language/english` | 14 | `src/data/language-data.ts` |
+| 일본 통역 · 일본 현지 통역 | `/country/japan` | 26 | `src/data/country-data.ts` |
+| 도쿄 현지 통역 | `/global/tokyo` | 42 | `src/data/city-pages.ts` |
+
+세 종류가 **언어 ↔ 국가 ↔ 도시** 로 서로 링크됩니다. 도시 페이지의 빵부스러기가
+홈 › 해외 지원 › 국가 › 도시 이고, 통역·문서 지원·해외 지원 페이지 하단에 언어별·국가별
+색인이 있어 검색 로봇이 따라 내려갈 수 있습니다. 조립 로직은 `src/data/seo-pages.ts` 입니다.
+
+```bash
+npm run check:cities      # 데이터 정합성 · 페이지 사이 문장 중복 검사
+npm run build && npx next start -p 3000 &
+npm run audit:seo         # 사이트맵 전체 URL 을 열어 h1 · title · description · canonical · 링크 점검
+```
+
+> 사이트맵의 `lastModified` 는 일부러 넣지 않았습니다. 빌드할 때마다 "지금" 으로 찍으면
+> 모든 페이지가 항상 방금 수정된 것처럼 보여 검색엔진이 이 값을 무시하게 됩니다.
+
 ### 도시별 현지 통역 페이지
 
 "도쿄 현지 통역" 같은 검색어는 **그 문구가 제목인 페이지**가 있어야 잡힙니다.

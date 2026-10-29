@@ -14,7 +14,8 @@
     "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "check:email": "node scripts/check-email.mjs",
     "check:cities": "node scripts/check-cities.mjs",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"scripts/*.mjs\""
+    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"scripts/*.mjs\"",
+    "audit:seo": "node scripts/audit-seo.mjs"
   },
   "dependencies": {
     "next": "^16.3.1",

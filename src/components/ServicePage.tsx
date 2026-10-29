@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { cityPages } from '@/data/city-pages';
+import { countries, languages } from '@/data/seo-pages';
 import Cta from './ui/Button';
 import Figure from './ui/Figure';
 import Reveal from './ui/Reveal';
@@ -212,6 +213,60 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
                 해당 날짜 기준으로 배정 가능 여부를 확인해 회신드립니다.
               </p>
             </Reveal>
+          </div>
+        </section>
+      ) : null}
+
+      {/* ── 언어별 · 국가별 색인 (검색 로봇과 방문자 모두 따라 내려갈 수 있는 길) ─── */}
+      {page.slug === 'interpretation' || page.slug === 'translation' || page.slug === 'global' ? (
+        <section
+          id="by-language"
+          aria-labelledby="by-language-heading"
+          className="border-t border-line bg-white py-section"
+        >
+          <div className="shell grid gap-14 lg:grid-cols-12 lg:gap-gutter">
+            <div className={page.slug === 'global' ? 'lg:col-span-5' : 'lg:col-span-12'}>
+              <SectionHeading
+                eyebrow="언어별"
+                title={
+                  <span id="by-language-heading">
+                    {page.slug === 'translation' ? '언어별 번역' : '언어별 통역'}
+                  </span>
+                }
+                lead="필요한 언어를 선택하시면 그 언어에서 자주 있는 자리와 유의할 점을 안내합니다."
+              />
+              <ul className="mt-12 grid grid-cols-2 gap-x-8 border-t border-line sm:grid-cols-3">
+                {languages.map((lang) => (
+                  <li key={lang.slug} className="border-b border-line">
+                    <Link
+                      href={`/language/${lang.slug}`}
+                      className="block py-4 text-[0.9375rem] text-navy transition-colors duration-300 hover:text-brand"
+                    >
+                      {lang.name} {page.slug === 'translation' ? '번역' : '통역'}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {page.slug === 'global' ? (
+              <div className="lg:col-span-6 lg:col-start-7">
+                <p className="eyebrow">국가별</p>
+                <h2 className="mt-6 text-headline font-medium text-navy">국가별 현지 통역</h2>
+                <ul className="mt-12 grid grid-cols-2 gap-x-8 border-t border-line sm:grid-cols-3">
+                  {countries.map((country) => (
+                    <li key={country.slug} className="border-b border-line">
+                      <Link
+                        href={`/country/${country.slug}`}
+                        className="block py-4 text-[0.9375rem] text-navy transition-colors duration-300 hover:text-brand"
+                      >
+                        {country.name} 통역
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
           </div>
         </section>
       ) : null}
