@@ -404,7 +404,7 @@ const coreCountries: CountryData[] = [
     name: '네덜란드',
     timeDiff: '한국보다 8시간 느림 (서머타임 7시간)',
     language: '네덜란드어. 영어가 매우 잘 통합니다.',
-    languages: ['english'],
+    languages: ['english', 'dutch'],
     lead: '네덜란드는 유럽 물류의 관문으로, 항만과 농식품 거래가 많고 영어로 소통할 수 있어 통역의 역할이 정보 전달보다 협상 지원에 가깝습니다.',
     scenes: [
       {
@@ -690,7 +690,7 @@ const coreCountries: CountryData[] = [
     timeDiff: '한국보다 1시간 느림',
     language:
       '말레이어가 공용어이며 비즈니스는 영어로 진행됩니다. 중국계 기업과는 중국어도 쓰입니다.',
-    languages: ['english', 'chinese'],
+    languages: ['english', 'chinese', 'malay'],
     lead: '말레이시아는 말레이계, 중국계, 인도계가 섞여 있어 상대 기업에 따라 쓰는 언어가 달라지고, 할랄 인증 같은 종교 관련 요건이 거래 조건이 되는 품목이 있습니다.',
     scenes: [
       {
@@ -726,7 +726,7 @@ const coreCountries: CountryData[] = [
     name: '필리핀',
     timeDiff: '한국보다 1시간 느림',
     language: '영어가 널리 통하며 타갈로그어도 쓰입니다.',
-    languages: ['english'],
+    languages: ['english', 'filipino'],
     lead: '필리핀은 영어 사용 인구가 많아 진입 장벽이 낮은 편이고, 아웃소싱과 생산, 내수 유통 관련 협의가 많아 현장 방문 일정에서만 현지어 통역이 필요해집니다.',
     scenes: [
       { title: '아웃소싱 · 서비스 센터 협의', body: '인력 운영과 품질 지표를 영어로 논의합니다.' },
@@ -756,7 +756,7 @@ const coreCountries: CountryData[] = [
     name: '인도',
     timeDiff: '한국보다 3시간 30분 느림',
     language: '힌디어와 영어가 쓰이며, 비즈니스는 영어가 기본입니다.',
-    languages: ['english'],
+    languages: ['english', 'hindi'],
     lead: '인도는 시장이 크지만 절차가 복잡하고 지역별로 유통 구조가 다릅니다. 영어로 진행되더라도 억양 때문에 조건을 놓치는 일이 생겨 통역이 간극을 줄여 줍니다.',
     scenes: [
       {

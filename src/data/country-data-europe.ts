@@ -34,7 +34,7 @@ export const europeCountries: CountryData[] = [
     name: '벨기에',
     timeDiff: '8시간 느림 (서머타임 시 7시간)',
     language: '네덜란드어, 프랑스어, 독일어가 공용어입니다. 지역마다 쓰는 언어가 다릅니다.',
-    languages: ['french', 'english', 'german'],
+    languages: ['french', 'english', 'german', 'dutch'],
     lead: '벨기에는 EU 기관이 있는 브뤼셀과 항만 도시 앤트워프를 중심으로 물류, 화학, 제약, 규제 대응 업무가 이어지는 나라입니다.',
     scenes: [
       { title: 'EU 규제 · 인증 상담', body: '브뤼셀에서 제품 규제와 인증 요건을 확인하는 미팅이 열리며 법률·행정 용어가 많이 나옵니다.' },
@@ -118,7 +118,7 @@ export const europeCountries: CountryData[] = [
     name: '스웨덴',
     timeDiff: '8시간 느림 (서머타임 시 7시간)',
     language: '스웨덴어. 영어 사용 수준이 높아 대부분의 비즈니스는 영어로 진행됩니다.',
-    languages: ['english'],
+    languages: ['english', 'swedish'],
     lead: '스웨덴은 자동차, 통신장비, 배터리, 가구와 게임 산업이 강하고, 합의를 중시하는 회의 문화가 특징입니다.',
     scenes: [
       { title: '배터리 · 모빌리티 기업 방문', body: '스톡홀름과 예테보리 일대에서 기술 설명과 품질 기준을 확인하는 일정입니다.' },
@@ -139,7 +139,7 @@ export const europeCountries: CountryData[] = [
     name: '덴마크',
     timeDiff: '8시간 느림 (서머타임 시 7시간)',
     language: '덴마크어. 영어 구사 수준이 높습니다.',
-    languages: ['english'],
+    languages: ['english', 'danish'],
     lead: '덴마크는 풍력과 해운, 식품, 제약(인슐린·바이오), 물류와 가구 디자인 분야에서 세계적인 기업이 많은 나라입니다.',
     scenes: [
       { title: '풍력 · 에너지 설비 상담', body: '코펜하겐과 오르후스 인근 기업과 부품 공급과 서비스 조건을 협의합니다.' },
@@ -160,7 +160,7 @@ export const europeCountries: CountryData[] = [
     name: '노르웨이',
     timeDiff: '8시간 느림 (서머타임 시 7시간)',
     language: '노르웨이어. 영어 소통이 원활합니다.',
-    languages: ['english'],
+    languages: ['english', 'norwegian'],
     lead: '노르웨이는 해양, 조선, 수산, 에너지, 해상풍력 분야의 거래가 중심이며, 스타방에르와 베르겐에 관련 기업이 모여 있습니다.',
     scenes: [
       { title: '조선 · 해양 설비 상담', body: '베르겐과 스타방에르 일대에서 선박과 해양 장비의 사양과 납기를 협의합니다.' },
@@ -181,7 +181,7 @@ export const europeCountries: CountryData[] = [
     name: '핀란드',
     timeDiff: '7시간 느림 (서머타임 시 6시간)',
     language: '핀란드어와 스웨덴어가 공용어이며 영어 소통이 원활합니다.',
-    languages: ['english'],
+    languages: ['english', 'finnish'],
     lead: '핀란드는 통신장비, 제지·펄프, 산업기계, 게임과 교육 분야에 강점이 있고 헬싱키에 기업과 기관이 집중되어 있습니다.',
     scenes: [
       { title: '통신 · 네트워크 장비 상담', body: '헬싱키와 에스포의 기업과 기술 사양과 공급 일정을 확인합니다.' },
@@ -223,7 +223,7 @@ export const europeCountries: CountryData[] = [
     name: '체코',
     timeDiff: '8시간 느림 (서머타임 시 7시간)',
     language: '체코어. 대도시 기업에서는 영어와 독일어도 통합니다.',
-    languages: ['english', 'german'],
+    languages: ['english', 'german', 'czech'],
     lead: '체코는 한국 자동차 부품·배터리 기업의 유럽 생산 거점이 많은 나라로, 오스트라바와 브르노, 프라하를 잇는 제조업 일정이 중심입니다.',
     scenes: [
       { title: '자동차 부품 공장 실사', body: '현지 공장의 공정과 품질 기록을 확인하고 협력사와 납기를 조율합니다.' },
@@ -244,7 +244,7 @@ export const europeCountries: CountryData[] = [
     name: '헝가리',
     timeDiff: '8시간 느림 (서머타임 시 7시간)',
     language: '헝가리어. 영어와 독일어가 쓰입니다.',
-    languages: ['english', 'german'],
+    languages: ['english', 'german', 'hungarian'],
     lead: '헝가리는 전기차 배터리, 자동차 부품, 전자 분야의 한국 기업 생산 거점이 많은 나라로 부다페스트 외곽 공업지대의 일정이 중심입니다.',
     scenes: [
       { title: '배터리 · 부품 공장 미팅', body: '현지 생산 라인 점검과 협력사 품질 회의를 지원합니다.' },
@@ -286,7 +286,7 @@ export const europeCountries: CountryData[] = [
     name: '루마니아',
     timeDiff: '7시간 느림 (서머타임 시 6시간)',
     language: '루마니아어. 대도시에서는 영어와 프랑스어도 통합니다.',
-    languages: ['english', 'french'],
+    languages: ['english', 'french', 'romanian'],
     lead: '루마니아는 IT 아웃소싱, 자동차 부품, 소프트웨어 개발과 에너지 분야에서 거래가 늘고 있는 나라이며 부쿠레슈티와 클루지나포카가 거점입니다.',
     scenes: [
       { title: 'IT · 소프트웨어 개발 협력', body: '개발 인력과 외주 계약 조건을 협의하는 미팅입니다.' },
@@ -328,7 +328,7 @@ export const europeCountries: CountryData[] = [
     name: '그리스',
     timeDiff: '7시간 느림 (서머타임 시 6시간)',
     language: '그리스어. 관광·해운 업계에서는 영어가 널리 쓰입니다.',
-    languages: ['english'],
+    languages: ['english', 'greek'],
     lead: '그리스는 해운과 조선, 올리브·식품, 관광 산업이 중심이며 아테네 인근 피레우스항을 중심으로 한 해운 업무가 많습니다.',
     scenes: [
       { title: '해운 · 선박 거래', body: '아테네의 선주와 선박 금융, 용선 조건을 논의하는 자리입니다.' },
@@ -475,7 +475,7 @@ export const europeCountries: CountryData[] = [
     name: '튀르키예',
     timeDiff: '6시간 느림 (서머타임 없음)',
     language: '튀르키예어. 기업에서는 영어가 쓰이지만 현장은 튀르키예어가 필요합니다.',
-    languages: ['english', 'arabic'],
+    languages: ['english', 'arabic', 'turkish'],
     lead: '튀르키예는 건설, 섬유, 자동차 부품, 식품 분야 거래가 활발하고 이스탄불을 중심으로 중동과 유럽을 잇는 상담이 많은 나라입니다.',
     scenes: [
       { title: '건설 · 인프라 사업 협의', body: '수주와 협력사 구성, 현장 일정을 논의합니다.' },
@@ -496,7 +496,7 @@ export const europeCountries: CountryData[] = [
     name: '우크라이나',
     timeDiff: '7시간 느림 (서머타임 시 6시간)',
     language: '우크라이나어. 러시아어와 영어도 쓰입니다.',
-    languages: ['english', 'russian'],
+    languages: ['english', 'russian', 'ukrainian'],
     lead: '우크라이나는 현재 정세에 따라 방문과 일정 가능 여부가 크게 달라지는 지역으로, 상담 전에 안전과 가능 여부를 먼저 확인해야 합니다.',
     scenes: [
       { title: '인접국에서의 상담', body: '폴란드나 루마니아 등 인접국에서 만나 진행하는 방식이 일반적입니다.' },

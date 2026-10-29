@@ -6,13 +6,19 @@
  * countries 는 country-data.ts 의 name 과 같아야 국가 페이지로 링크됩니다.
  */
 import type { LanguageData } from './seo-pages';
+import { moreLanguages } from './language-data-more';
 
-export const languageData: LanguageData[] = [
+const coreLanguages: LanguageData[] = [
   {
     slug: 'english',
     name: '영어',
     region: '미국 · 영국 · 캐나다 · 호주 · 싱가포르 등 비즈니스 공용어',
     countries: ['미국', '영국', '캐나다', '호주', '뉴질랜드', '싱가포르', '인도', '필리핀'],
+    aliases: ['한영 통역', '영한 통역'],
+    aliasFaq: {
+      q: '한영 통역과 영한 통역은 어떻게 다른가요?',
+      a: '한영 통역은 한국어를 영어로, 영한 통역은 영어를 한국어로 옮기는 방향을 말합니다. 비즈니스 자리에서는 양방향을 모두 맡는 것이 일반적이어서 한 명의 통역사가 양쪽을 함께 진행합니다.',
+    },
     lead: '영어는 요청이 가장 많은 언어지만, 같은 영어라도 미국·영국·인도·싱가포르의 억양과 표현이 달라 자리에 맞는 사람을 배정하는 것이 중요합니다.',
     interpretation: {
       lead: '영어 통역은 쉬워 보여서 오히려 준비가 소홀해지기 쉽습니다. 약어와 업계 표현이 빠르게 오가는 자리일수록 사전 공유가 결과를 가릅니다.',
@@ -76,6 +82,11 @@ export const languageData: LanguageData[] = [
     name: '일본어',
     region: '일본 전역, 특히 도쿄와 간사이 지역 기업',
     countries: ['일본'],
+    aliases: ['한일 통역', '일한 통역'],
+    aliasFaq: {
+      q: '한일 통역과 일한 통역은 어떻게 다른가요?',
+      a: '한일 통역은 한국어를 일본어로, 일한 통역은 일본어를 한국어로 옮기는 방향을 말합니다. 실제 미팅에서는 양방향을 모두 통역사 한 명이 맡습니다.',
+    },
     lead: '일본어는 단어를 옮기는 것보다 존경 표현과 완곡한 화법을 어떻게 다루느냐가 결과를 좌우합니다. 거절이 "검토해 보겠습니다"로 나오는 자리가 많습니다.',
     interpretation: {
       lead: '일본어 통역은 말의 수위를 읽는 일입니다. 직역하면 단호해지는 말과 부드러워 보이지만 거절인 말을 구분해야 합니다.',
@@ -139,6 +150,11 @@ export const languageData: LanguageData[] = [
     name: '중국어',
     region: '중국 본토 · 대만 · 홍콩 · 싱가포르',
     countries: ['중국', '대만', '홍콩', '싱가포르'],
+    aliases: ['한중 통역', '중한 통역'],
+    aliasFaq: {
+      q: '한중 통역과 중한 통역은 어떻게 다른가요?',
+      a: '한중 통역은 한국어를 중국어로, 중한 통역은 중국어를 한국어로 옮기는 방향을 말합니다. 실제 미팅에서는 양방향을 한 명의 통역사가 함께 맡습니다.',
+    },
     lead: '중국어는 중국 본토의 간체·표준어, 대만의 번체, 홍콩의 광둥어가 서로 다릅니다. 어느 지역 상대인지에 따라 필요한 통역사와 번역 표기가 달라집니다.',
     interpretation: {
       lead: '중국어 통역은 지역부터 정해야 합니다. 같은 중국어라도 현장에서 쓰는 표현과 숫자 읽는 방식, 협상의 속도가 다릅니다.',
@@ -822,3 +838,5 @@ export const languageData: LanguageData[] = [
       '폴란드어는 인력이 한정적이라 가능한 한 일찍 문의하시면 가능 여부를 빨리 확인해 드립니다.',
   },
 ];
+
+export const languageData: LanguageData[] = [...coreLanguages, ...moreLanguages];

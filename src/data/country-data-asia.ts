@@ -34,7 +34,7 @@ export const asiaCountries: CountryData[] = [
     name: '몽골',
     timeDiff: '1시간 느림',
     language: '몽골어. 러시아어와 영어, 한국어를 구사하는 사람도 있습니다.',
-    languages: ['english', 'russian'],
+    languages: ['english', 'russian', 'mongolian'],
     lead: '몽골은 광물 자원, 건설, 신재생에너지, 유통 분야에서 한국과 교류가 이어지며 울란바토르가 사실상 모든 업무의 중심입니다.',
     scenes: [
       { title: '광물 · 자원 개발 협의', body: '현지 기업과 광산 개발 조건, 설비 공급을 논의합니다.' },
@@ -55,7 +55,7 @@ export const asiaCountries: CountryData[] = [
     name: '캄보디아',
     timeDiff: '2시간 느림',
     language: '크메르어. 영어와 중국어도 쓰입니다.',
-    languages: ['english', 'chinese'],
+    languages: ['english', 'chinese', 'khmer'],
     lead: '캄보디아는 봉제, 신발, 건설, 부동산, 금융 분야에서 한국 기업의 진출이 늘어난 나라이며 프놈펜과 시아누크빌에 거점이 있습니다.',
     scenes: [
       { title: '봉제 · 제조 공장 방문', body: '프놈펜 외곽 공장에서 생산 현황과 노무 이슈를 협의합니다.' },
@@ -76,7 +76,7 @@ export const asiaCountries: CountryData[] = [
     name: '라오스',
     timeDiff: '2시간 느림',
     language: '라오어. 태국어와 영어도 통합니다.',
-    languages: ['english', 'thai'],
+    languages: ['english', 'thai', 'lao'],
     lead: '라오스는 수력발전과 건설, 농업, 관광 개발이 중심이며 비엔티안에서 정부 기관과 협의하는 사업이 많습니다.',
     scenes: [
       { title: '에너지 · 인프라 사업 협의', body: '정부 기관 및 발주처와 사업 조건을 논의합니다.' },
@@ -97,7 +97,7 @@ export const asiaCountries: CountryData[] = [
     name: '미얀마',
     timeDiff: '2시간 30분 느림',
     language: '미얀마어(버마어). 영어는 일부 기업에서 쓰입니다.',
-    languages: ['english'],
+    languages: ['english', 'burmese'],
     lead: '미얀마는 정세가 변동적인 지역으로, 방문과 거래 가능 여부를 먼저 확인한 뒤에 통역과 문서 지원 범위를 정해야 합니다.',
     scenes: [
       { title: '화상 미팅 통역', body: '양곤의 거래처와 화상으로 만나 조건을 협의하는 상담에 통역을 연결합니다.' },
@@ -118,7 +118,7 @@ export const asiaCountries: CountryData[] = [
     name: '브루나이',
     timeDiff: '1시간 느림',
     language: '말레이어와 영어가 쓰입니다.',
-    languages: ['english'],
+    languages: ['english', 'malay'],
     lead: '브루나이는 석유·가스와 건설 분야가 중심인 작은 시장으로, 반다르스리브가완에서 정부 및 에너지 기업과 협의하는 일정이 대부분입니다.',
     scenes: [
       { title: '에너지 · 플랜트 상담', body: '발주 기관과 사업 조건을 협의하는 미팅입니다.' },
@@ -139,7 +139,7 @@ export const asiaCountries: CountryData[] = [
     name: '방글라데시',
     timeDiff: '3시간 느림',
     language: '벵골어. 비즈니스에서는 영어가 쓰입니다.',
-    languages: ['english'],
+    languages: ['english', 'bengali'],
     lead: '방글라데시는 세계적인 의류 봉제 생산국으로 다카와 치타공을 중심으로 섬유, 인프라, 에너지 분야 상담이 이루어집니다.',
     scenes: [
       { title: '봉제 공장 실사', body: '다카 인근 공장에서 생산 능력과 컴플라이언스를 확인합니다.' },
@@ -160,7 +160,7 @@ export const asiaCountries: CountryData[] = [
     name: '파키스탄',
     timeDiff: '4시간 느림',
     language: '우르두어와 영어가 공용어입니다.',
-    languages: ['english'],
+    languages: ['english', 'urdu'],
     lead: '파키스탄은 섬유, 농업, 건설, IT 분야에서 거래가 이루어지며 카라치, 라호르, 이슬라마바드에 거점이 있고 여행경보 확인이 중요한 시장입니다.',
     scenes: [
       { title: '섬유 · 의류 공급처 상담', body: '라호르와 카라치의 공장과 상담합니다.' },
@@ -223,7 +223,7 @@ export const asiaCountries: CountryData[] = [
     name: '카자흐스탄',
     timeDiff: '4시간 느림',
     language: '카자흐어와 러시아어가 공용어이며 비즈니스는 러시아어 중심입니다.',
-    languages: ['russian', 'english'],
+    languages: ['russian', 'english', 'kazakh'],
     lead: '카자흐스탄은 자원, 건설, 에너지, 농업 분야 협력이 있고 알마티와 아스타나에서 정부 및 기업과 만나는 일정이 중심입니다.',
     scenes: [
       { title: '에너지 · 자원 사업 협의', body: '카스피해 연안 개발과 알마티 금융권의 현지 기업을 만나 조건을 논의합니다.' },
@@ -244,7 +244,7 @@ export const asiaCountries: CountryData[] = [
     name: '우즈베키스탄',
     timeDiff: '4시간 느림',
     language: '우즈베크어. 러시아어도 널리 쓰입니다.',
-    languages: ['russian', 'english'],
+    languages: ['russian', 'english', 'uzbek'],
     lead: '우즈베키스탄은 한국과 교류가 활발한 중앙아시아 국가로 섬유, 건설, 자동차, 농업 분야 협력이 이어지며 타슈켄트가 중심입니다.',
     scenes: [
       { title: '섬유 · 제조 합작 상담', body: '현지 기업과 합작 조건과 생산 구조를 협의합니다.' },
@@ -391,7 +391,7 @@ export const asiaCountries: CountryData[] = [
     name: '이스라엘',
     timeDiff: '7시간 느림 (서머타임 시 6시간)',
     language: '히브리어. 영어가 널리 쓰이고 아랍어도 공용어입니다.',
-    languages: ['english'],
+    languages: ['english', 'hebrew'],
     lead: '이스라엘은 사이버 보안, 농업 기술, 의료 기기, 방산 분야의 스타트업과 기술 기업이 모인 나라로 텔아비브가 중심입니다.',
     scenes: [
       { title: '스타트업 · 기술 투자 미팅', body: '텔아비브에서 기술 검증과 투자 조건을 협의합니다.' },
@@ -475,7 +475,7 @@ export const asiaCountries: CountryData[] = [
     name: '이란',
     timeDiff: '5시간 30분 느림 (서머타임 없음)',
     language: '페르시아어(파르시). 영어는 제한적으로 통합니다.',
-    languages: ['english'],
+    languages: ['english', 'persian'],
     lead: '이란은 제재와 규제, 외교부 여행경보가 거래와 방문의 전제가 되는 지역으로, 통역 이전에 거래의 적법성과 안전 확인이 먼저입니다.',
     scenes: [
       { title: '화상 미팅 통역', body: '현지 방문이 어려운 경우 화상으로 진행하는 상담을 지원합니다.' },

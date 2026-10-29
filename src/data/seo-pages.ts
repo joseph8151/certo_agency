@@ -65,6 +65,10 @@ export type LanguageData = {
   faqs: { q: string; a: string }[];
   /** 가용 인력에 대한 정직한 안내 */
   availability: string;
+  /** 같은 언어를 부르는 다른 이름 — 타갈로그어, 터키어, 크메르어, 버마어 */
+  aliases?: string[];
+  /** aliases 가 있을 때 FAQ 맨 앞에 넣는 질문 */
+  aliasFaq?: { q: string; a: string };
 };
 
 /* ── 국가 ──────────────────────────────────────────── */
@@ -116,7 +120,17 @@ export function buildLanguagePage(lang: LanguageData): SeoPageData {
     lead: lang.lead,
     facts: [
       { label: '주로 쓰이는 곳', value: lang.region },
-      { label: '지원 범위', value: `${n} 통역 · ${n} 번역 · 문서 검수` },
+      { label: '지원 범위', value: `${n} 통역 · ${n} 통역사 섭외 · ${n} 번역 · 문서 검수` },
+      ...(lang.aliases?.length
+        ? [
+            {
+              label: '함께 찾으시는 표현',
+              value: lang.aliases
+                .map((a) => (a.includes(' ') ? a : `${a} 통역 · ${a} 번역`))
+                .join(' · '),
+            },
+          ]
+        : []),
     ],
     sections: [
       {
@@ -138,6 +152,7 @@ export function buildLanguagePage(lang: LanguageData): SeoPageData {
       ? [{ heading: `${n}가 쓰이는 나라`, links: countryLinks }]
       : [],
     faqs: [
+      ...(lang.aliasFaq ? [lang.aliasFaq] : []),
       ...lang.faqs,
       {
         q: `${n} 통역은 언제 요청해야 하나요?`,
@@ -153,6 +168,7 @@ export function buildLanguagePage(lang: LanguageData): SeoPageData {
       `${n} 번역`,
       `${n} 통역사`,
       `${n} 통역사 섭외`,
+      ...(lang.aliases ?? []).map((a) => (a.includes(' ') ? a : `${a} 통역`)),
       `${n} 계약서 번역`,
       `비즈니스 ${n} 통역`,
       '체르토 에이전시',

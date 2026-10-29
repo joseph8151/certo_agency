@@ -369,7 +369,7 @@ export const worldCountries: CountryData[] = [
     name: '케냐',
     timeDiff: '6시간 느림 (서머타임 없음)',
     language: '영어와 스와힐리어가 공용어입니다.',
-    languages: ['english'],
+    languages: ['english', 'swahili'],
     lead: '케냐는 동아프리카 허브로 인프라, IT, 농업, 에너지 분야 협력이 있으며 나이로비가 업무 중심입니다.',
     scenes: [
       { title: '인프라 · 건설 사업', body: '정부 기관과 발주처와 사업 조건을 협의합니다.' },
@@ -453,7 +453,7 @@ export const worldCountries: CountryData[] = [
     name: '탄자니아',
     timeDiff: '6시간 느림 (서머타임 없음)',
     language: '스와힐리어와 영어가 공용어입니다.',
-    languages: ['english'],
+    languages: ['english', 'swahili'],
     lead: '탄자니아는 에너지, 인프라, 광업, 관광 분야 협력이 있으며 다르에스살람이 경제 중심입니다.',
     scenes: [
       { title: '인프라 · 철도 사업', body: '정부 기관과 사업 조건을 협의합니다.' },
@@ -474,7 +474,7 @@ export const worldCountries: CountryData[] = [
     name: '우간다',
     timeDiff: '6시간 느림 (서머타임 없음)',
     language: '영어와 스와힐리어가 공용어이며 루간다어 등이 쓰입니다.',
-    languages: ['english'],
+    languages: ['english', 'swahili'],
     lead: '우간다는 농업, 보건, 인프라 개발 협력이 있는 내륙국으로 캄팔라가 업무 중심입니다.',
     scenes: [
       { title: '농업 · 개발 협력', body: '농업 프로젝트 현장을 방문하고 협력 조건을 협의합니다.' },
