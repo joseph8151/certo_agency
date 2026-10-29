@@ -437,23 +437,33 @@ CSP 는 넣지 않았습니다. 정적 프리렌더를 유지하면서 nonce 를
 
 **크롤러 허용** — `src/app/robots.ts` 에서 네이버(`Yeti`)와 다음(`Daumoa`)을 명시적으로 허용하고 있습니다.
 
-### 언어별 · 국가별 · 도시별 검색 랜딩 페이지
+### 검색 랜딩 페이지 (언어 · 국가 · 국내 지역 · 주제 · 도시)
 
 | 검색 패턴 | 주소 | 개수 | 데이터 |
 | --- | --- | --- | --- |
-| 영어 통역 · 영어 번역 | `/language/english` | 14 | `src/data/language-data.ts` |
-| 일본 통역 · 일본 현지 통역 | `/country/japan` | 26 | `src/data/country-data.ts` |
-| 도쿄 현지 통역 | `/global/tokyo` | 42 | `src/data/city-pages.ts` |
+| 영어 통역 · 영어 번역 · 한영 통역 | `/language/english` | 39 | `language-data.ts` · `language-data-more.ts` |
+| 일본 통역 · 일본 현지 통역 | `/country/japan` | 106 | `country-data*.ts` · 도시 목록 `country-cities.ts` |
+| 서울 통역 · 판교 통역사 · 송도 통번역 | `/korea/seoul` | 17 | `korea-regions.ts` |
+| 동시통역 · 반도체 통역 · 계약서 번역 · 통역사 섭외 비용 | `/topic/simultaneous-interpretation` | 56 | `topic-data-modes.ts` · `-fields.ts` · `-docs.ts` |
+| 도쿄 현지 통역 | `/global/tokyo` | 42 | `city-pages.ts` |
 
-세 종류가 **언어 ↔ 국가 ↔ 도시** 로 서로 링크됩니다. 도시 페이지의 빵부스러기가
-홈 › 해외 지원 › 국가 › 도시 이고, 통역·문서 지원·해외 지원 페이지 하단에 언어별·국가별
-색인이 있어 검색 로봇이 따라 내려갈 수 있습니다. 조립 로직은 `src/data/seo-pages.ts` 입니다.
+**페이지를 늘리지 않는 원칙** — 도시 421곳(해외)과 동 · 구 · 산단 168곳(국내)은 페이지를 따로 만들지 않고
+국가 · 광역 페이지 본문에 이름으로 담습니다. 이름만 바꾼 비슷한 페이지를 수백 장 찍어내면 검색엔진이
+복제 문서로 판단해 사이트 전체 순위를 낮춥니다. 특정 도시를 키우고 싶으면 `city-pages.ts` 에
+그 도시의 **실제 내용** 을 써서 한 곳씩 추가하세요.
+
+서로 링크되는 구조: 언어 ↔ 국가 ↔ 도시, 국내 지역 ↔ 지역, 주제 ↔ 관련 주제. 통역·문서 지원·해외 지원
+페이지 하단에 색인이 있어 검색 로봇이 따라 내려갈 수 있습니다. 조립 로직은 `src/data/seo-pages.ts` 입니다.
 
 ```bash
 npm run check:cities      # 데이터 정합성 · 페이지 사이 문장 중복 검사
 npm run build && npx next start -p 3000 &
 npm run audit:seo         # 사이트맵 전체 URL 을 열어 h1 · title · description · canonical · 링크 점검
+node scripts/audit-keywords.mjs http://127.0.0.1:3000   # 네이버 키워드 반영률 (docs/naver-keywords/*.txt)
 ```
+
+`audit-keywords` 는 ✓ 정확히 일치 / ◐ 부분 일치 / ✗ 없음 으로 보여 줍니다. ◐ 는 "페이지를 더 만들라" 가
+아니라 "이 표현을 쓸 자연스러운 자리가 있는가" 를 사람이 판단하기 위한 목록입니다.
 
 > 사이트맵의 `lastModified` 는 일부러 넣지 않았습니다. 빌드할 때마다 "지금" 으로 찍으면
 > 모든 페이지가 항상 방금 수정된 것처럼 보여 검색엔진이 이 값을 무시하게 됩니다.

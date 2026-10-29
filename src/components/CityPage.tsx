@@ -198,8 +198,8 @@ export default function CityPage({ page }: { page: CityPageData }) {
             {page.city} 일정이 정해지셨나요?
           </h2>
           <p className="mt-6 max-w-2xl text-[1.0625rem] leading-[1.9] text-white/80">
-            날짜와 미팅 성격을 알려주시면, 해당 날짜 기준으로 배정 가능한 통역사를 확인해
-            회신드립니다. 조건이 확정되지 않아도 괜찮습니다.
+            {page.city} 통역이 필요한 날짜와 미팅 성격을 알려주시면, 해당 날짜 기준으로 배정 가능한
+            {page.city} 현지 통역사를 확인해 회신드립니다. 조건이 확정되지 않아도 괜찮습니다.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <Cta href="/#contact" variant="invert" track={`city-${page.slug}-cta`}>

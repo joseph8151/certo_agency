@@ -33,6 +33,13 @@ export default function WhyCerto() {
                 확인한 뒤 그 자리에 맞는 사람을 배정합니다.
               </p>
             </Reveal>
+            <Reveal delay={160}>
+              <p className="mt-7 text-[0.9375rem] leading-[1.95] text-pretty text-navy/65">
+                체르토 에이전시는 비즈니스 통역업체이자 통번역업체로서 전문 통역사 섭외와 파견,
+                해외 통역사 섭외, 기업 문서 번역을 한 곳에서 지원합니다. 통역과 번역을 함께
+                맡기시면 미팅에서 쓴 용어가 문서에도 그대로 이어집니다.
+              </p>
+            </Reveal>
           </div>
         </div>
 

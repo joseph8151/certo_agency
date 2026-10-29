@@ -27,11 +27,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
     // 한글 브랜드명을 타이틀에 함께 둡니다. "체르토 에이전시" 검색 대응.
-    default: '체르토 에이전시 CERTO AGENCY | 국내·해외 전문 통역 번역 에이전시',
+    default: '체르토 에이전시 CERTO AGENCY | 통역업체 · 통번역업체 · 해외 통역사 섭외',
     template: '%s | CERTO AGENCY',
   },
   description:
-    '체르토 에이전시(CERTO AGENCY)는 국내 통역부터 해외 출장, 국제회의, 기업 미팅, 전문 번역까지 프로젝트에 적합한 전문 통역사와 번역가를 선별하여 매칭합니다.',
+    '체르토 에이전시(CERTO AGENCY)는 통역사 섭외와 파견, 해외 통역사 섭외, 국제회의·기업 미팅 통역, 계약서·기술문서 번역을 지원하는 비즈니스 통역업체이자 통번역업체입니다.',
   keywords: [...siteKeywords],
   authors: [{ name: site.name }],
   creator: site.name,
@@ -42,13 +42,13 @@ export const metadata: Metadata = {
     locale: site.locale,
     url: site.url,
     siteName: site.name,
-    title: '체르토 에이전시 CERTO AGENCY | 국내·해외 전문 통역 번역 에이전시',
+    title: '체르토 에이전시 CERTO AGENCY | 통역업체 · 통번역업체 · 해외 통역사 섭외',
     description:
       '체르토 에이전시는 국내 통역부터 해외 출장, 국제회의, 기업 미팅, 전문 번역까지 프로젝트에 적합한 전문 통역사와 번역가를 선별하여 매칭합니다.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: '체르토 에이전시 CERTO AGENCY | 국내·해외 전문 통역 번역 에이전시',
+    title: '체르토 에이전시 CERTO AGENCY | 통역업체 · 통번역업체 · 해외 통역사 섭외',
     description:
       '프로젝트에 적합한 전문 통역사와 번역가를 선별하여 매칭하는 글로벌 랭귀지 에이전시.',
   },
