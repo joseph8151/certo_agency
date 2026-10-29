@@ -162,12 +162,12 @@ export function HairlineGrid({
 
 /** 영문 라벨 + 국문 설명 카드 */
 export function LabelCard({
-  en,
+  label,
   ko,
   index = 0,
   tone = 'white',
 }: {
-  en: string;
+  label: string;
   ko: string;
   index?: number;
   tone?: Exclude<Tone, 'deep'>;
@@ -182,8 +182,8 @@ export function LabelCard({
   return (
     <Reveal delay={(index % 3) * 80} className={bg}>
       <div className="flex h-full flex-col gap-3 py-8 sm:px-6 lg:py-10">
-        <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-brand">
-          {en}
+        <p className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
+          {label}
         </p>
         <p className="text-[0.9375rem] leading-[1.8] text-pretty text-navy/70">{ko}</p>
       </div>
@@ -251,7 +251,7 @@ export function TagRow({ items, invert = false }: { items: readonly string[]; in
             />
           ) : null}
           <span
-            className={`text-[0.6875rem] font-semibold uppercase tracking-[0.2em] ${
+            className={`text-[0.75rem] font-semibold tracking-[0.04em] ${
               invert ? 'text-white/70' : 'text-brand'
             }`}
           >
@@ -275,7 +275,7 @@ export function SerifCopy({
 }) {
   return (
     <p
-      className={`font-serif text-title italic leading-[1.35] ${
+      className={`text-title font-medium leading-[1.45] tracking-tight ${
         invert ? 'text-white/95' : 'text-brand'
       } ${className}`}
     >

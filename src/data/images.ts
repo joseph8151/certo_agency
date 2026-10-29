@@ -30,6 +30,11 @@ export type ImageSlot = {
    * 인물이 한쪽에 몰린 사진은 이 값으로 잘리지 않게 잡아 줍니다. (기본 '50% 50%')
    */
   position?: string;
+  /**
+   * 사진 대신 코드로 그린 도식을 쓰는 슬롯.
+   * 사진을 확보하면 이 값을 지우고 src 만 교체하면 됩니다.
+   */
+  graphic?: 'line-map';
 };
 
 export const images = {
@@ -70,8 +75,9 @@ export const images = {
   },
   global: {
     src: '/images/global.svg',
+    graphic: 'line-map',
     ratio: '4 / 5',
-    alt: '해외 비즈니스 현장',
+    alt: '서울을 기점으로 북미, 유럽, 아시아, 중동, 오세아니아로 이어지는 연결 도식',
     subject: '공항 · 해외 컨벤션 센터 · 국제 전시회 현장, 세로형 구도',
   },
 } satisfies Record<string, ImageSlot>;

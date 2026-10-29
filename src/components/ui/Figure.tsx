@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import LineMap from './LineMap';
 import type { ImageSlot } from '@/data/images';
 
 type Props = {
@@ -36,16 +37,30 @@ export default function Figure({
       className={`relative isolate overflow-hidden bg-ivory-light ${toneClass} ${zoom ? 'zoom-slow' : ''} ${className}`}
       style={{ aspectRatio: ratio ?? image.ratio }}
     >
-      <Image
-        src={image.src}
-        alt={image.alt}
-        fill
-        sizes={sizes}
-        priority={priority}
-        loading={priority ? undefined : 'lazy'}
-        className="object-cover saturate-[0.9]"
-        style={image.position ? { objectPosition: image.position } : undefined}
-      />
+      {image.graphic === 'line-map' ? (
+        /*
+          해외 지원처럼 사진을 구하기 어려운 슬롯은 어두운 도형 대신
+          서비스 내용을 그대로 보여주는 연결 도식을 씁니다. 홈의 해외 섹션과 같은 언어입니다.
+        */
+        <div className="absolute inset-0 flex flex-col justify-between bg-brand-deep p-6 text-white sm:p-8">
+          <p className="text-[0.75rem] font-medium tracking-[0.04em] text-white/60">
+            서울을 기점으로
+          </p>
+          <LineMap className="h-auto w-full text-white/85" />
+          <p className="text-[0.75rem] text-white/60">북미 · 유럽 · 아시아 · 중동 · 오세아니아</p>
+        </div>
+      ) : (
+        <Image
+          src={image.src}
+          alt={image.alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          loading={priority ? undefined : 'lazy'}
+          className="object-cover saturate-[0.9]"
+          style={image.position ? { objectPosition: image.position } : undefined}
+        />
+      )}
     </div>
   );
 }

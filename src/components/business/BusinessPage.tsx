@@ -33,22 +33,12 @@ export default function BusinessPage() {
         aria-labelledby="business-heading"
         className="relative overflow-hidden bg-white pt-[calc(var(--header-height)+2.5rem)] lg:pt-[calc(var(--header-height)+4rem)]"
       >
-        <div
-          aria-hidden="true"
-          className="absolute inset-y-0 right-0 hidden w-[38%] bg-ivory-light lg:block"
-        />
-
         <div className="shell relative grid items-center gap-12 pb-16 lg:grid-cols-12 lg:gap-gutter lg:pb-24">
           <div className="lg:col-span-6">
             <Breadcrumb />
 
             <Reveal delay={60}>
               <p className="eyebrow mt-8">{page.hero.eyebrow}</p>
-            </Reveal>
-            <Reveal delay={100}>
-              <p className="mt-5 font-serif text-headline italic text-brand">
-                {page.hero.titleSerif}
-              </p>
             </Reveal>
             <Reveal delay={140}>
               <h1
@@ -84,15 +74,20 @@ export default function BusinessPage() {
             </Reveal>
           </div>
 
-          <div className="lg:col-span-5 lg:col-start-8">
-            <Reveal delay={120}>
+          <div className="lg:col-span-6">
+            <Reveal delay={120} className="relative">
+              {/* 홈 · 서비스 상세와 같은 헤어라인 프레임 */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 hidden translate-x-5 translate-y-5 border border-line-strong lg:block"
+              />
               <Figure
                 image={images.business}
-                ratio="4 / 5"
+                ratio="5 / 4"
                 tone="none"
                 priority
                 zoom={false}
-                sizes="(max-width: 1024px) 100vw, 40vw"
+                sizes="(max-width: 1024px) 100vw, 46vw"
               />
             </Reveal>
           </div>
@@ -140,8 +135,8 @@ export default function BusinessPage() {
                 <div className="flex items-baseline gap-4 lg:col-span-4">
                   <span className="font-serif text-3xl leading-none text-brand/40">{item.no}</span>
                   <div>
-                    <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-brand">
-                      {item.en}
+                    <p className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
+                      {item.label}
                     </p>
                     <h3 className="mt-2 text-[1.0625rem] font-medium text-navy">{item.title}</h3>
                   </div>
@@ -180,7 +175,7 @@ export default function BusinessPage() {
         </div>
 
         <Reveal delay={100}>
-          <p className="mt-14 text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/55">
+          <p className="mt-14 text-[0.75rem] font-semibold tracking-[0.04em] text-navy/55">
             {page.operations.listHeading}
           </p>
         </Reveal>
@@ -219,7 +214,7 @@ export default function BusinessPage() {
         />
 
         <Reveal delay={100}>
-          <p className="mt-14 text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/55">
+          <p className="mt-14 text-[0.75rem] font-semibold tracking-[0.04em] text-navy/55">
             {page.accountManagement.listHeading}
           </p>
         </Reveal>
@@ -244,7 +239,7 @@ export default function BusinessPage() {
         <div className="mt-16 lg:mt-20">
           <HairlineGrid columns={3} count={page.industries.items.length}>
             {page.industries.items.map((item, i) => (
-              <LabelCard key={item.en} en={item.en} ko={item.ko} index={i} />
+              <LabelCard key={item.label} label={item.label} ko={item.ko} index={i} />
             ))}
           </HairlineGrid>
         </div>
@@ -298,7 +293,7 @@ export default function BusinessPage() {
         />
 
         <Reveal delay={100}>
-          <p className="mt-14 text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/55">
+          <p className="mt-14 text-[0.75rem] font-semibold tracking-[0.04em] text-navy/55">
             {page.exhibition.listHeading}
           </p>
         </Reveal>
@@ -307,7 +302,7 @@ export default function BusinessPage() {
         </div>
 
         <Reveal delay={120}>
-          <p className="mt-14 text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/55">
+          <p className="mt-14 text-[0.75rem] font-semibold tracking-[0.04em] text-navy/55">
             {page.exhibition.regionsHeading}
           </p>
         </Reveal>
@@ -338,7 +333,7 @@ export default function BusinessPage() {
         />
 
         <Reveal delay={100}>
-          <p className="mt-14 text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/55">
+          <p className="mt-14 text-[0.75rem] font-semibold tracking-[0.04em] text-navy/55">
             {page.businessTrip.itineraryHeading}
           </p>
         </Reveal>
@@ -347,7 +342,7 @@ export default function BusinessPage() {
           {page.businessTrip.itinerary.map((item, i) => (
             <Reveal as="li" key={item.day} delay={i * 80}>
               <div className="flex flex-col gap-1 border-b border-line py-6 sm:flex-row sm:items-baseline sm:gap-10">
-                <span className="w-24 shrink-0 text-[0.8125rem] font-semibold uppercase tracking-[0.16em] text-brand">
+                <span className="w-24 shrink-0 text-[0.8125rem] font-semibold tracking-[0.04em] text-brand">
                   {item.day}
                 </span>
                 <span className="text-[1.0625rem] text-navy/80">{item.body}</span>
@@ -371,7 +366,7 @@ export default function BusinessPage() {
         />
 
         <Reveal delay={100}>
-          <p className="mt-14 text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/55">
+          <p className="mt-14 text-[0.75rem] font-semibold tracking-[0.04em] text-navy/55">
             {page.confidential.listHeading}
           </p>
         </Reveal>
@@ -411,7 +406,7 @@ export default function BusinessPage() {
         </div>
 
         <Reveal delay={100}>
-          <p className="mt-14 text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/55">
+          <p className="mt-14 text-[0.75rem] font-semibold tracking-[0.04em] text-navy/55">
             {page.translation.listHeading}
           </p>
         </Reveal>
@@ -420,7 +415,7 @@ export default function BusinessPage() {
         </div>
 
         <Reveal delay={120}>
-          <p className="mt-16 text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
+          <p className="mt-16 text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
             {page.translation.workflowHeading}
           </p>
         </Reveal>
@@ -428,10 +423,10 @@ export default function BusinessPage() {
           {page.translation.workflow.map((step, i) => (
             <Reveal as="li" key={step.no} delay={(i % 3) * 80} className="bg-white">
               <div className="flex h-full flex-col gap-3 py-8 sm:px-6 lg:py-10">
-                <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand/70">
+                <span className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand/70">
                   {step.no}
                 </span>
-                <h3 className="text-[1.0625rem] font-medium text-navy">{step.en}</h3>
+                <h3 className="text-[1.0625rem] font-medium text-navy">{step.label}</h3>
                 <p className="text-[0.9375rem] leading-[1.85] text-pretty text-navy/70">
                   {step.body}
                 </p>
@@ -468,7 +463,7 @@ export default function BusinessPage() {
         <div className="mt-14">
           <HairlineGrid columns={4} tone="ivory" count={page.quality.items.length}>
             {page.quality.items.map((item, i) => (
-              <LabelCard key={item.en} en={item.en} ko={item.ko} index={i} tone="ivory" />
+              <LabelCard key={item.label} label={item.label} ko={item.ko} index={i} tone="ivory" />
             ))}
           </HairlineGrid>
         </div>
@@ -499,8 +494,8 @@ export default function BusinessPage() {
                 <div className="flex items-baseline gap-4 lg:col-span-4">
                   <span className="font-serif text-2xl leading-none text-brand/40">{step.no}</span>
                   <div>
-                    <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-brand">
-                      {step.en}
+                    <p className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
+                      {step.label}
                     </p>
                     <h3 className="mt-1.5 text-[1.0625rem] font-medium text-navy">{step.title}</h3>
                   </div>
@@ -535,7 +530,7 @@ export default function BusinessPage() {
         <div className="mt-14">
           <HairlineGrid columns={4} tone="ivoryLight" count={page.network.items.length}>
             {page.network.items.map((item, i) => (
-              <LabelCard key={item.en} en={item.en} ko={item.ko} index={i} tone="ivoryLight" />
+              <LabelCard key={item.label} label={item.label} ko={item.ko} index={i} tone="ivoryLight" />
             ))}
           </HairlineGrid>
         </div>
@@ -557,7 +552,7 @@ export default function BusinessPage() {
         <div className="mt-14">
           <HairlineGrid columns={3} count={page.oneContact.items.length}>
             {page.oneContact.items.map((item, i) => (
-              <LabelCard key={item.en} en={item.en} ko={item.ko} index={i} />
+              <LabelCard key={item.label} label={item.label} ko={item.ko} index={i} />
             ))}
           </HairlineGrid>
         </div>
@@ -588,7 +583,7 @@ export default function BusinessPage() {
         </div>
 
         <Reveal delay={100}>
-          <p className="mt-14 text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-navy/55">
+          <p className="mt-14 text-[0.75rem] font-semibold tracking-[0.04em] text-navy/55">
             {page.procurement.listHeading}
           </p>
         </Reveal>
@@ -663,10 +658,10 @@ export default function BusinessPage() {
         <div className="mt-14">
           <HairlineGrid columns={3} count={page.cases.items.length}>
             {page.cases.items.map((item, i) => (
-              <Reveal key={item.en} delay={(i % 3) * 80} className="bg-white">
+              <Reveal key={item.label} delay={(i % 3) * 80} className="bg-white">
                 <article className="flex h-full flex-col gap-4 py-9 sm:px-6 lg:py-11">
-                  <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-brand">
-                    {item.en}
+                  <p className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
+                    {item.label}
                   </p>
                   <h3 className="text-[1.0625rem] font-medium text-navy">{item.title}</h3>
                   <p className="text-[0.9375rem] leading-[1.85] text-pretty text-navy/70">
@@ -813,7 +808,7 @@ export default function BusinessPage() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-gutter">
           <div className="lg:col-span-4">
             <Reveal>
-              <Eyebrow>Corporate FAQ</Eyebrow>
+              <Eyebrow>자주 묻는 질문</Eyebrow>
             </Reveal>
             <Reveal delay={80}>
               <MultilineHeading
@@ -890,7 +885,7 @@ export default function BusinessPage() {
         <Reveal delay={160}>
           <div className="mt-16 border-t border-line-invert pt-12">
             <SerifCopy text={page.finalCta.tagline} invert />
-            <p className="mt-6 text-[0.8125rem] uppercase tracking-[0.16em] text-white/55">
+            <p className="mt-6 text-[0.8125rem] tracking-[0.04em] text-white/55">
               {page.finalCta.scope}
             </p>
             <div className="mt-10">
@@ -906,7 +901,7 @@ export default function BusinessPage() {
       <Section labelledBy="business-related-heading">
         <Reveal>
           <h2 id="business-related-heading" className="eyebrow">
-            Other Services
+            다른 서비스
           </h2>
         </Reveal>
 
@@ -945,7 +940,7 @@ function Breadcrumb() {
       <ol className="flex items-center gap-2 text-[0.75rem] tracking-wide text-navy/65">
         <li>
           <Link href="/" className="link-underline">
-            Home
+            홈
           </Link>
         </li>
         <li aria-hidden="true">/</li>
