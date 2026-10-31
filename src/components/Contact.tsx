@@ -64,7 +64,9 @@ export default function Contact() {
 
       if (!response.ok) {
         setErrors(result?.errors ?? {});
-        setServerMessage(result?.message ?? '문의 접수에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+        setServerMessage(
+          result?.message ?? '문의 접수에 실패했습니다. 잠시 후 다시 시도해 주세요.',
+        );
         setServerDebug(result?.debug ? JSON.stringify(result.debug, null, 2) : '');
         setStatus('error');
         return;
@@ -84,7 +86,7 @@ export default function Contact() {
     <section id="contact" aria-labelledby="contact-heading" className="bg-white py-section">
       <div className="shell grid gap-14 lg:grid-cols-12 lg:gap-gutter">
         {/* 좌: 안내 */}
-        <div className="lg:col-span-4">
+        <div className="lg:sticky lg:top-[calc(var(--header-height)+2rem)] lg:col-span-4 lg:self-start">
           <SectionHeading
             eyebrow="상담 신청"
             title={<span id="contact-heading">CERTO에 문의하기</span>}
@@ -151,8 +153,8 @@ export default function Contact() {
               <div className="mt-12 border-t border-line pt-8">
                 <p className="eyebrow">문의 전에</p>
                 <p className="mt-4 text-[0.9375rem] leading-[1.85] text-pretty text-navy/70">
-                  확정된 정보가 없어도 괜찮습니다. 언어와 대략적인 일정만 알려주셔도 가능 여부를 먼저
-                  확인해 드립니다.
+                  확정된 정보가 없어도 괜찮습니다. 언어와 대략적인 일정만 알려주셔도 가능 여부를
+                  먼저 확인해 드립니다.
                 </p>
                 <p className="mt-5 text-[0.875rem] leading-relaxed text-navy/65">
                   견적 확인만을 위한 문의도 편하게 남겨주세요.
@@ -436,7 +438,7 @@ export default function Contact() {
                     type="submit"
                     data-cta="contact-submit"
                     disabled={status === 'submitting'}
-                    className="inline-flex w-full items-center justify-center gap-2.5 rounded-xs bg-brand px-9 py-4 text-[0.9375rem] font-medium text-white transition-colors duration-500 ease-certo hover:bg-brand-deep disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                    className="inline-flex w-full items-center justify-center gap-2.5 rounded-xs bg-brand-deep px-9 py-4 text-[0.9375rem] font-medium text-white transition-colors duration-500 ease-certo hover:bg-brand disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
                   >
                     {status === 'submitting' ? '접수 중…' : 'CERTO에 문의하기'}
                     <span aria-hidden="true">→</span>
@@ -468,12 +470,12 @@ function FieldGroup({
   return (
     <fieldset className="mt-12 first:mt-0">
       <legend className="mb-1 flex flex-wrap items-baseline gap-x-4 gap-y-1">
-        <span className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
-          {label}
-        </span>
+        <span className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">{label}</span>
         {hint ? <span className="text-[0.75rem] text-navy/65">{hint}</span> : null}
       </legend>
-      <div className="grid gap-x-8 gap-y-7 border-t border-line pt-7 sm:grid-cols-2">{children}</div>
+      <div className="grid gap-x-8 gap-y-7 border-t border-line pt-7 sm:grid-cols-2">
+        {children}
+      </div>
     </fieldset>
   );
 }

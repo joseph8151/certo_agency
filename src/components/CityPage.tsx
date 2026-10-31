@@ -23,79 +23,90 @@ export default function CityPage({ page }: { page: CityPageData }) {
         className="hero-glow bg-white pt-[calc(var(--header-height)+3rem)] lg:pt-[calc(var(--header-height)+5rem)]"
       >
         <div className="shell pb-16 lg:pb-24">
-          <Reveal>
-            <nav aria-label="Breadcrumb" className="text-[0.75rem] tracking-wide text-navy/65">
-              <Link href="/" className="hover:text-brand">
-                홈
-              </Link>
-              <span className="mx-2 text-navy/40">/</span>
-              <Link href="/global" className="hover:text-brand">
-                해외 지원
-              </Link>
-              {country ? (
-                <>
-                  <span className="mx-2 text-navy/40">/</span>
-                  <Link href={`/country/${country.slug}`} className="hover:text-brand">
-                    {country.name} 통역
+          <div className="grid gap-14 lg:grid-cols-12 lg:items-end lg:gap-gutter">
+            <div className="lg:col-span-7">
+              <Reveal>
+                <nav aria-label="Breadcrumb" className="text-[0.75rem] tracking-wide text-navy/65">
+                  <Link href="/" className="hover:text-brand">
+                    홈
                   </Link>
-                </>
-              ) : null}
-              <span className="mx-2 text-navy/40">/</span>
-              <span className="text-navy" aria-current="page">
-                {page.city}
-              </span>
-            </nav>
-          </Reveal>
+                  <span className="mx-2 text-navy/40">/</span>
+                  <Link href="/global" className="hover:text-brand">
+                    해외 지원
+                  </Link>
+                  {country ? (
+                    <>
+                      <span className="mx-2 text-navy/40">/</span>
+                      <Link href={`/country/${country.slug}`} className="hover:text-brand">
+                        {country.name} 통역
+                      </Link>
+                    </>
+                  ) : null}
+                  <span className="mx-2 text-navy/40">/</span>
+                  <span className="text-navy" aria-current="page">
+                    {page.city}
+                  </span>
+                </nav>
+              </Reveal>
 
-          <Reveal delay={80}>
-            <p className="eyebrow mt-8">
-              {page.country} · {page.city}
-            </p>
-          </Reveal>
+              <Reveal delay={80}>
+                <p className="eyebrow mt-8">
+                  {page.country} · {page.city}
+                </p>
+              </Reveal>
 
-          <Reveal delay={140}>
-            <h1
-              id="city-heading"
-              className="mt-6 text-display font-medium tracking-tight text-navy"
-            >
-              {page.city} 현지 통역
-            </h1>
-          </Reveal>
+              <Reveal delay={140}>
+                <h1
+                  id="city-heading"
+                  className="mt-6 text-display font-medium tracking-tight text-navy"
+                >
+                  {page.city} 현지 통역
+                </h1>
+              </Reveal>
 
-          <Reveal delay={200}>
-            <p className="mt-9 max-w-2xl text-[1.0625rem] leading-[1.9] text-pretty text-navy/70">
-              {page.lead}
-            </p>
-          </Reveal>
+              <Reveal delay={200}>
+                <p className="mt-9 max-w-xl text-[1.0625rem] leading-[1.95] text-pretty text-navy/70">
+                  {page.lead}
+                </p>
+              </Reveal>
 
-          <Reveal delay={260}>
-            <dl className="mt-12 grid gap-px border-t border-line bg-line sm:grid-cols-2">
-              <div className="bg-white py-6 sm:pr-8">
-                <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
-                  시차
-                </dt>
-                <dd className="mt-3 text-[0.9375rem] leading-[1.8] text-navy/70">
-                  {page.timeDiff}
-                </dd>
-              </div>
-              <div className="bg-white py-6 sm:pl-8">
-                <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-brand">
-                  언어
-                </dt>
-                <dd className="mt-3 text-[0.9375rem] leading-[1.8] text-navy/70">
-                  {page.language}
-                </dd>
-              </div>
-            </dl>
-          </Reveal>
-
-          <Reveal delay={320}>
-            <div className="mt-11">
-              <Cta href="/#contact" track={`city-${page.slug}-hero`}>
-                {page.city} 통역 문의하기
-              </Cta>
+              <Reveal delay={260}>
+                <div className="mt-11">
+                  <Cta href="/#contact" track={`city-${page.slug}-hero`}>
+                    {page.city} 통역 문의하기
+                  </Cta>
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
+
+            {/* 개요 패널 — 국가 · 언어 페이지와 같은 오프셋 프레임 */}
+            <Reveal delay={200} className="lg:col-span-4 lg:col-start-9">
+              <div className="relative">
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 translate-x-3 translate-y-3 border border-brand/25"
+                />
+                <dl className="relative bg-ivory-light px-7 py-2 lg:px-9">
+                  {[
+                    { label: '시차', value: page.timeDiff },
+                    { label: '언어', value: page.language },
+                    ...(page.venues.length
+                      ? [{ label: '주요 행사장', value: page.venues.join(' · ') }]
+                      : []),
+                  ].map((fact) => (
+                    <div key={fact.label} className="border-b border-line py-6 last:border-b-0">
+                      <dt className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
+                        {fact.label}
+                      </dt>
+                      <dd className="mt-2.5 text-[0.9375rem] leading-[1.8] text-pretty text-navy/80">
+                        {fact.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
