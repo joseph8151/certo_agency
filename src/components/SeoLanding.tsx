@@ -13,6 +13,14 @@ import { site } from '@/data/site';
 export default function SeoLanding({ page }: { page: SeoPageData }) {
   const track = page.path.replace(/\//g, '-').replace(/^-/, '');
 
+  // 히어로(흰색) 다음부터 흰색 ↔ 아이보리를 번갈아 놓아 섹션 경계가 항상 보이게 합니다.
+  let n = 0;
+  const nextTone = () => (n++ % 2 === 0 ? 'bg-ivory-light' : 'bg-white');
+  const sectionTones = page.sections.map(nextTone);
+  const notesTone = nextTone();
+  const cityTone = page.cityBlock ? nextTone() : null;
+  const faqTone = nextTone();
+
   return (
     <>
       <StructuredData page={page} />
@@ -23,63 +31,79 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
         className="bg-white pt-[calc(var(--header-height)+3rem)] lg:pt-[calc(var(--header-height)+5rem)]"
       >
         <div className="shell pb-16 lg:pb-24">
-          <Reveal>
-            <nav aria-label="현재 위치" className="text-[0.75rem] tracking-wide text-navy/65">
-              <ol className="flex flex-wrap items-center gap-2">
-                {page.breadcrumb.map((crumb, i) => (
-                  <li key={crumb.label} className="flex items-center gap-2">
-                    {i > 0 ? <span className="text-navy/40">/</span> : null}
-                    {crumb.href ? (
-                      <Link href={crumb.href} className="hover:text-brand">
-                        {crumb.label}
-                      </Link>
-                    ) : (
-                      <span className="text-navy" aria-current="page">
-                        {crumb.label}
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ol>
-            </nav>
-          </Reveal>
+          <div className="grid gap-14 lg:grid-cols-12 lg:items-end lg:gap-gutter">
+            <div className="lg:col-span-7">
+              <Reveal>
+                <nav aria-label="현재 위치" className="text-[0.75rem] tracking-wide text-navy/65">
+                  <ol className="flex flex-wrap items-center gap-2">
+                    {page.breadcrumb.map((crumb, i) => (
+                      <li key={crumb.label} className="flex items-center gap-2">
+                        {i > 0 ? <span className="text-navy/40">/</span> : null}
+                        {crumb.href ? (
+                          <Link href={crumb.href} className="hover:text-brand">
+                            {crumb.label}
+                          </Link>
+                        ) : (
+                          <span className="text-navy" aria-current="page">
+                            {crumb.label}
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                </nav>
+              </Reveal>
 
-          <Reveal delay={80}>
-            <p className="eyebrow mt-8">{page.eyebrow}</p>
-          </Reveal>
+              <Reveal delay={80}>
+                <p className="eyebrow mt-8">{page.eyebrow}</p>
+              </Reveal>
 
-          <Reveal delay={140}>
-            <h1 id="seo-heading" className="mt-6 text-display font-medium tracking-tight text-navy">
-              {page.h1}
-            </h1>
-          </Reveal>
+              <Reveal delay={140}>
+                <h1
+                  id="seo-heading"
+                  className="mt-6 text-display font-medium tracking-tight text-navy"
+                >
+                  {page.h1}
+                </h1>
+              </Reveal>
 
-          <Reveal delay={200}>
-            <p className="mt-9 max-w-2xl text-[1.0625rem] leading-[1.9] text-pretty text-navy/70">
-              {page.lead}
-            </p>
-          </Reveal>
+              <Reveal delay={200}>
+                <p className="mt-9 max-w-xl text-[1.0625rem] leading-[1.95] text-pretty text-navy/70">
+                  {page.lead}
+                </p>
+              </Reveal>
 
-          <Reveal delay={260}>
-            <dl className="mt-12 grid gap-px border-t border-line bg-line sm:grid-cols-2">
-              {page.facts.map((fact, i) => (
-                <div key={fact.label} className={`bg-white py-6 ${i === 0 ? 'sm:pr-8' : 'sm:pl-8'}`}>
-                  <dt className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
-                    {fact.label}
-                  </dt>
-                  <dd className="mt-3 text-[0.9375rem] leading-[1.8] text-navy/70">{fact.value}</dd>
+              <Reveal delay={260}>
+                <div className="mt-11">
+                  <Cta href="/#contact" track={`${track}-hero`}>
+                    {page.ctaLabel}
+                  </Cta>
                 </div>
-              ))}
-            </dl>
-          </Reveal>
-
-          <Reveal delay={320}>
-            <div className="mt-11">
-              <Cta href="/#contact" track={`${track}-hero`}>
-                {page.ctaLabel}
-              </Cta>
+              </Reveal>
             </div>
-          </Reveal>
+
+            {/* 개요 패널 — 히어로 이미지와 같은 hairline 오프셋 프레임 */}
+            <Reveal delay={200} className="lg:col-span-4 lg:col-start-9">
+              <div className="relative">
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 translate-x-3 translate-y-3 border border-brand/25"
+                />
+                <dl className="relative bg-ivory-light px-7 py-2 lg:px-9">
+                  {page.facts.map((fact) => (
+                    <div key={fact.label} className="border-b border-line py-6 last:border-b-0">
+                      <dt className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
+                        {fact.label}
+                      </dt>
+                      <dd className="mt-2.5 text-[0.9375rem] leading-[1.8] text-pretty text-navy/80">
+                        {fact.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
@@ -88,7 +112,7 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
         <section
           key={section.heading}
           aria-labelledby={`seo-section-${index}`}
-          className={`border-y border-line py-section ${index % 2 === 0 ? 'bg-ivory-light' : 'bg-white'}`}
+          className={`border-y border-line py-section ${sectionTones[index]}`}
         >
           <div className="shell">
             <SectionHeading
@@ -98,13 +122,15 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
             />
             <div className="mt-16 grid gap-px border-t border-line bg-line lg:mt-20 lg:grid-cols-3">
               {section.items.map((item, i) => (
-                <Reveal
-                  key={item.title}
-                  delay={(i % 3) * 90}
-                  className={index % 2 === 0 ? 'bg-ivory-light' : 'bg-white'}
-                >
-                  <article className="flex h-full flex-col gap-4 py-9 lg:px-8 lg:py-11">
-                    <h3 className="text-[1.0625rem] font-medium text-navy">{item.title}</h3>
+                <Reveal key={item.title} delay={(i % 3) * 90} className={sectionTones[index]}>
+                  <article className="flex h-full flex-col gap-4 py-9 lg:px-9 lg:py-12">
+                    <span
+                      aria-hidden="true"
+                      className="font-serif text-[1.75rem] leading-none lining-nums tabular-nums text-brand/45"
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <h3 className="mt-2 text-[1.0625rem] font-medium text-navy">{item.title}</h3>
                     <p className="text-[0.9375rem] leading-[1.85] text-pretty text-navy/70">
                       {item.body}
                     </p>
@@ -115,7 +141,7 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
                 <div
                   key={`filler-${i}`}
                   aria-hidden="true"
-                  className={`hidden lg:block ${index % 2 === 0 ? 'bg-ivory-light' : 'bg-white'}`}
+                  className={`hidden lg:block ${sectionTones[index]}`}
                 />
               ))}
             </div>
@@ -124,7 +150,7 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
       ))}
 
       {/* ── 유의사항 + 연결 링크 ─────────────────────── */}
-      <section aria-labelledby="seo-notes" className="bg-white py-section">
+      <section aria-labelledby="seo-notes" className={`py-section ${notesTone}`}>
         <div className="shell grid gap-16 lg:grid-cols-12 lg:gap-gutter">
           <div className="lg:col-span-7">
             <p className="eyebrow">사전 확인</p>
@@ -141,47 +167,6 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
                 </div>
               ))}
             </dl>
-
-            {page.cityBlock ? (
-              <div className="mt-16">
-                <h2 className="text-title font-medium tracking-tight text-navy">
-                  {page.cityBlock.heading}
-                </h2>
-                <p className="mt-5 max-w-2xl text-[0.9375rem] leading-[1.9] text-pretty text-navy/70">
-                  {page.cityBlock.intro}
-                </p>
-                {page.cityBlock.groups.map((group) => (
-                  <div key={group.label ?? 'all'} className="mt-8">
-                    {group.label ? (
-                      <h3 className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
-                        {group.label}
-                      </h3>
-                    ) : null}
-                    <ul className="mt-4 flex flex-wrap gap-x-2 gap-y-2">
-                      {group.cities.map((city) => {
-                        const href = page.cityBlock?.linked[city];
-                        const cls =
-                          'inline-block border border-line px-3.5 py-1.5 text-[0.875rem] text-navy/80';
-                        return (
-                          <li key={city}>
-                            {href ? (
-                              <Link
-                                href={href}
-                                className={`${cls} border-brand/40 text-brand transition-colors duration-300 hover:bg-brand hover:text-white`}
-                              >
-                                {city} 통역
-                              </Link>
-                            ) : (
-                              <span className={cls}>{city} 통역</span>
-                            )}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            ) : null}
           </div>
 
           <div className="lg:col-span-4 lg:col-start-9">
@@ -190,35 +175,111 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
                 <h2 className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
                   {group.heading}
                 </h2>
-                <ul className="mt-5 border-t border-line">
-                  {group.links.map((link) => (
-                    <li key={link.href} className="border-b border-line">
-                      <Link
-                        href={link.href}
-                        className="flex items-baseline justify-between gap-4 py-4 text-[0.9375rem] text-navy transition-colors duration-300 hover:text-brand"
-                      >
-                        <span>{link.label}</span>
-                        {link.note ? (
-                          <span className="hidden text-[0.8125rem] text-navy/55 sm:inline">
-                            {link.note}
-                          </span>
-                        ) : (
-                          <span aria-hidden="true" className="text-navy/40">
-                            →
-                          </span>
-                        )}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                {group.links.length > 6 ? (
+                  <ul className="mt-5 flex flex-wrap gap-2 border-t border-line pt-5">
+                    {group.links.map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          className="inline-block border border-line px-3 py-1.5 text-[0.8125rem] text-navy/75 transition-colors duration-300 hover:border-brand hover:text-brand"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <ul className="mt-5 border-t border-line">
+                    {group.links.map((link) => (
+                      <li key={link.href} className="border-b border-line">
+                        <Link
+                          href={link.href}
+                          className="flex items-baseline justify-between gap-4 py-4 text-[0.9375rem] text-navy transition-colors duration-300 hover:text-brand"
+                        >
+                          <span>{link.label}</span>
+                          {link.note ? (
+                            <span className="hidden text-[0.8125rem] text-navy/55 sm:inline">
+                              {link.note}
+                            </span>
+                          ) : (
+                            <span aria-hidden="true" className="text-navy/40">
+                              →
+                            </span>
+                          )}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* ── 도시 · 지역 목록 ───────────────────────── */}
+      {page.cityBlock ? (
+        <section
+          aria-labelledby="seo-cities"
+          className={`border-y border-line py-section ${cityTone}`}
+        >
+          <div className="shell grid gap-12 lg:grid-cols-12 lg:gap-gutter">
+            <div className="lg:col-span-4">
+              <p className="eyebrow">
+                주요 지역 {page.cityBlock.groups.flatMap((g) => g.cities).length}곳
+              </p>
+              <h2 id="seo-cities" className="mt-6 text-title font-medium tracking-tight text-navy">
+                {page.cityBlock.heading}
+              </h2>
+              <p className="mt-6 text-[0.9375rem] leading-[1.9] text-pretty text-navy/70">
+                {page.cityBlock.intro}
+              </p>
+            </div>
+
+            <div className="lg:col-span-7 lg:col-start-6">
+              {page.cityBlock.groups.map((group, gi) => (
+                <div
+                  key={group.label ?? 'all'}
+                  className={gi > 0 ? 'mt-10 border-t border-line pt-8' : ''}
+                >
+                  {group.label ? (
+                    <h3 className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
+                      {group.label}
+                    </h3>
+                  ) : null}
+                  <ul className={`flex flex-wrap gap-2 ${group.label ? 'mt-4' : ''}`}>
+                    {group.cities.map((city) => {
+                      const href = page.cityBlock?.linked[city];
+                      const base =
+                        'inline-flex items-center gap-1.5 border px-3.5 py-2 text-[0.875rem] leading-none transition-colors duration-300';
+                      return (
+                        <li key={city}>
+                          {href ? (
+                            <Link
+                              href={href}
+                              className={`${base} border-brand/40 bg-white text-brand hover:border-brand hover:bg-brand hover:text-white`}
+                            >
+                              {city} 통역
+                              <span aria-hidden="true">→</span>
+                            </Link>
+                          ) : (
+                            <span className={`${base} border-line bg-white/70 text-navy/75`}>
+                              {city} 통역
+                            </span>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       {/* ── FAQ ───────────────────────────────────── */}
-      <section aria-labelledby="seo-faq" className="bg-ivory-light py-section">
+      <section aria-labelledby="seo-faq" className={`py-section ${faqTone}`}>
         <div className="shell">
           <SectionHeading
             eyebrow="자주 묻는 질문"

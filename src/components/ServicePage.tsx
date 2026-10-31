@@ -402,7 +402,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
           <div className="lg:col-span-4 lg:col-start-9">
             <Reveal>
               <div className="border-l-2 border-brand/25 pl-6">
-                <p className="eyebrow">Pricing</p>
+                <p className="eyebrow">요금 안내</p>
                 <h2 className="mt-5 text-[1.25rem] font-semibold leading-snug text-navy">
                   {page.factorsHeading}
                 </h2>
@@ -471,7 +471,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
       >
         <div className="shell max-w-3xl text-center">
           <Reveal>
-            <p className="eyebrow-invert">Start Your Project</p>
+            <p className="eyebrow-invert">상담 안내</p>
           </Reveal>
           <Reveal delay={90}>
             <h2 id="page-cta-heading" className="mt-7 text-headline font-medium text-white">
@@ -498,7 +498,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
         <div className="shell">
           <Reveal>
             <h2 id="related-heading" className="eyebrow">
-              Other Services
+              다른 서비스
             </h2>
           </Reveal>
 
