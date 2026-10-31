@@ -32,7 +32,12 @@ export type CityPage = {
   faqs: { q: string; a: string }[];
 };
 
-export const cityPages: CityPage[] = [
+import { asiaNePages } from './city-pages-asia-ne';
+import { asiaSePages } from './city-pages-asia-se';
+import { westPages } from './city-pages-west';
+import { worldPages } from './city-pages-world';
+
+const corePages: CityPage[] = [
   {
     slug: 'tokyo',
     city: '도쿄',
@@ -1865,5 +1870,7 @@ export const cityPages: CityPage[] = [
     ],
   },
 ];
+
+export const cityPages: CityPage[] = [...corePages, ...asiaNePages, ...asiaSePages, ...westPages, ...worldPages];
 
 export const cityPageBySlug = Object.fromEntries(cityPages.map((page) => [page.slug, page]));

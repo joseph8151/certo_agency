@@ -20,7 +20,7 @@ export default function CityPage({ page }: { page: CityPageData }) {
       {/* ── Hero ──────────────────────────────────── */}
       <section
         aria-labelledby="city-heading"
-        className="bg-white pt-[calc(var(--header-height)+3rem)] lg:pt-[calc(var(--header-height)+5rem)]"
+        className="hero-glow bg-white pt-[calc(var(--header-height)+3rem)] lg:pt-[calc(var(--header-height)+5rem)]"
       >
         <div className="shell pb-16 lg:pb-24">
           <Reveal>
@@ -112,7 +112,7 @@ export default function CityPage({ page }: { page: CityPageData }) {
           <div className="mt-16 grid gap-px border-t border-line bg-line lg:mt-20 lg:grid-cols-3">
             {page.scenes.map((scene, i) => (
               <Reveal key={scene.title} delay={(i % 3) * 90} className="bg-ivory-light">
-                <article className="flex h-full flex-col gap-4 py-9 lg:px-8 lg:py-11">
+                <article className="card-line flex h-full flex-col gap-4 py-9 lg:px-8 lg:py-11">
                   <h2 className="text-[1.0625rem] font-medium text-navy">{scene.title}</h2>
                   <p className="text-[0.9375rem] leading-[1.85] text-pretty text-navy/70">
                     {scene.body}
@@ -121,7 +121,11 @@ export default function CityPage({ page }: { page: CityPageData }) {
               </Reveal>
             ))}
             {Array.from({ length: (3 - (page.scenes.length % 3)) % 3 }).map((_, i) => (
-              <div key={`filler-${i}`} aria-hidden="true" className="hidden bg-ivory-light lg:block" />
+              <div
+                key={`filler-${i}`}
+                aria-hidden="true"
+                className="hidden bg-ivory-light lg:block"
+              />
             ))}
           </div>
         </div>
@@ -130,21 +134,23 @@ export default function CityPage({ page }: { page: CityPageData }) {
       {/* ── 전시장 · 현장 메모 ────────────────────── */}
       <section aria-labelledby="notes-heading" className="bg-white py-section">
         <div className="shell grid gap-16 lg:grid-cols-12 lg:gap-gutter">
-          <div className="lg:col-span-5">
-            <SectionHeading
-              eyebrow="주요 전시장"
-              title={<span id="notes-heading">주요 전시장 · 행사장</span>}
-            />
-            <ul className="mt-10 border-t border-line">
-              {page.venues.map((venue) => (
-                <li key={venue} className="border-b border-line py-4 text-[0.9375rem] text-navy">
-                  {venue}
-                </li>
-              ))}
-            </ul>
-          </div>
+          {page.venues.length ? (
+            <div className="lg:col-span-5">
+              <SectionHeading
+                eyebrow="주요 전시장"
+                title={<span id="notes-heading">주요 전시장 · 행사장</span>}
+              />
+              <ul className="mt-10 border-t border-line">
+                {page.venues.map((venue) => (
+                  <li key={venue} className="border-b border-line py-4 text-[0.9375rem] text-navy">
+                    {venue}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
 
-          <div className="lg:col-span-7">
+          <div className={page.venues.length ? 'lg:col-span-7' : 'lg:col-span-9'}>
             <p className="eyebrow">사전 확인</p>
             <h2 className="mt-6 text-title font-medium tracking-tight text-navy">
               일정을 잡기 전에

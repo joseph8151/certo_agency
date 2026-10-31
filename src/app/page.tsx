@@ -1,6 +1,7 @@
 import Business from '@/components/Business';
 import Clients from '@/components/Clients';
 import Contact from '@/components/Contact';
+import Coverage from '@/components/Coverage';
 import CorporateRetainer from '@/components/CorporateRetainer';
 import DomesticInterpretation from '@/components/DomesticInterpretation';
 import FAQ from '@/components/FAQ';
@@ -90,6 +91,7 @@ export default function HomePage() {
     <main id="main">
       <Hero />
       <TrustBar />
+      <Coverage />
       <WhyCerto />
       <Services />
       <DomesticInterpretation />

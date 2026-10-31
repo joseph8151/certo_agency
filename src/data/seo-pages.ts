@@ -22,6 +22,7 @@ import { koreaRegions, type KoreaRegion } from './korea-regions';
 import { modeTopics } from './topic-data-modes';
 import { fieldTopics } from './topic-data-fields';
 import { docTopics, costTopics } from './topic-data-docs';
+import { guideTopics } from './topic-data-guides';
 import type { TopicData, TopicGroup } from './topic-data-types';
 
 export type SeoItem = { title: string; body: string };
@@ -93,7 +94,7 @@ export type CountryData = {
 
 export const languages: LanguageData[] = languageData;
 export const regions: KoreaRegion[] = koreaRegions;
-export const topics: TopicData[] = [...modeTopics, ...fieldTopics, ...docTopics, ...costTopics];
+export const topics: TopicData[] = [...modeTopics, ...fieldTopics, ...docTopics, ...costTopics, ...guideTopics];
 export const topicBySlug = Object.fromEntries(topics.map((t) => [t.slug, t]));
 
 export const topicGroupLabels: Record<TopicGroup, string> = {
@@ -102,6 +103,7 @@ export const topicGroupLabels: Record<TopicGroup, string> = {
   field: '분야별',
   document: '문서 번역',
   cost: '비용 · 업체 선택',
+  guide: '실무 가이드',
 };
 export const countries: CountryData[] = countryData;
 

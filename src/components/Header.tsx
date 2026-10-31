@@ -9,12 +9,17 @@ export default function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   /** 서비스 상세 페이지에서 현재 메뉴를 표시합니다. (홈 앵커 링크는 제외) */
   const isCurrent = (href: string) => !href.includes('#') && href === pathname;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(max > 0 ? Math.min(window.scrollY / max, 1) : 0);
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -143,6 +148,12 @@ export default function Header() {
           </p>
         </nav>
       </div>
+      {/* 읽은 위치 — 헤더 하단의 가는 선 */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-[-1px] h-px origin-left bg-brand transition-opacity duration-500"
+        style={{ transform: `scaleX(${progress})`, opacity: scrolled ? 1 : 0 }}
+      />
     </header>
   );
 }

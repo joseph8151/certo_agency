@@ -96,7 +96,10 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
       </section>
 
       {/* ── Intro ─────────────────────────────────── */}
-      <section aria-labelledby="intro-heading" className="border-y border-line bg-ivory-light py-section">
+      <section
+        aria-labelledby="intro-heading"
+        className="border-y border-line bg-ivory-light py-section"
+      >
         <div className="shell grid gap-12 lg:grid-cols-12 lg:gap-gutter">
           <div className="lg:col-span-5">
             <Reveal>
@@ -238,11 +241,13 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
             <div className="mt-12 grid gap-x-10 gap-y-12 lg:grid-cols-2">
               {(
                 (page.slug === 'translation'
-                  ? ['document', 'cost']
-                  : ['mode', 'situation', 'field', 'cost']) as TopicGroup[]
+                  ? ['document', 'cost', 'guide']
+                  : ['mode', 'situation', 'field', 'cost', 'guide']) as TopicGroup[]
               ).map((group) => {
                 const list = topics.filter(
-                  (t) => t.group === group && (group !== 'cost' || t.parent === page.slug),
+                  (t) =>
+                    t.group === group &&
+                    ((group !== 'cost' && group !== 'guide') || t.parent === page.slug),
                 );
                 if (!list.length) return null;
                 return (
@@ -255,9 +260,12 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
                         <li key={t.slug} className="border-b border-line">
                           <Link
                             href={`/topic/${t.slug}`}
-                            className="block py-3.5 text-[0.9375rem] text-navy transition-colors duration-300 hover:text-brand"
+                            className="row-link py-4 text-[0.9375rem] text-navy"
                           >
-                            {t.name}
+                            <span>{t.name}</span>
+                            <span aria-hidden="true" className="row-arrow">
+                              →
+                            </span>
                           </Link>
                         </li>
                       ))}
@@ -293,9 +301,14 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
                   <li key={lang.slug} className="border-b border-line">
                     <Link
                       href={`/language/${lang.slug}`}
-                      className="block py-4 text-[0.9375rem] text-navy transition-colors duration-300 hover:text-brand"
+                      className="row-link py-4 text-[0.9375rem] text-navy"
                     >
-                      {lang.name} {page.slug === 'translation' ? '번역' : '통역'}
+                      <span>
+                        {lang.name} {page.slug === 'translation' ? '번역' : '통역'}
+                      </span>
+                      <span aria-hidden="true" className="row-arrow">
+                        →
+                      </span>
                     </Link>
                   </li>
                 ))}
@@ -311,9 +324,12 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
                     <li key={region.slug} className="border-b border-line">
                       <Link
                         href={`/korea/${region.slug}`}
-                        className="block py-4 text-[0.9375rem] text-navy transition-colors duration-300 hover:text-brand"
+                        className="row-link py-4 text-[0.9375rem] text-navy"
                       >
-                        {region.name} 통역
+                        <span>{region.name} 통역</span>
+                        <span aria-hidden="true" className="row-arrow">
+                          →
+                        </span>
                       </Link>
                     </li>
                   ))}
@@ -330,9 +346,12 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
                     <li key={country.slug} className="border-b border-line">
                       <Link
                         href={`/country/${country.slug}`}
-                        className="block py-4 text-[0.9375rem] text-navy transition-colors duration-300 hover:text-brand"
+                        className="row-link py-4 text-[0.9375rem] text-navy"
                       >
-                        {country.name} 통역
+                        <span>{country.name} 통역</span>
+                        <span aria-hidden="true" className="row-arrow">
+                          →
+                        </span>
                       </Link>
                     </li>
                   ))}

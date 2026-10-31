@@ -37,7 +37,8 @@ const { koreaRegions } = load('korea-regions');
 const { modeTopics } = load('topic-data-modes');
 const { fieldTopics } = load('topic-data-fields');
 const { docTopics, costTopics } = load('topic-data-docs');
-const topics = [...modeTopics, ...fieldTopics, ...docTopics, ...costTopics];
+const { guideTopics } = load('topic-data-guides');
+const topics = [...modeTopics, ...fieldTopics, ...docTopics, ...costTopics, ...guideTopics];
 
 const problems = [];
 const check = (label, bad) => {

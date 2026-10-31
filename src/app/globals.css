@@ -130,6 +130,42 @@
   }
 }
 
+@layer components {
+  /* 카드 상단에 brand 선이 왼쪽에서 그려지는 hover */
+  .card-line {
+    @apply relative;
+  }
+
+  .card-line::before {
+    content: '';
+    @apply absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-brand transition-transform duration-700 ease-certo;
+  }
+
+  .card-line:hover::before {
+    @apply scale-x-100;
+  }
+
+  /* 목록 링크 — hover 시 화살표가 오른쪽으로 살짝 이동 */
+  .row-link {
+    @apply flex items-baseline justify-between gap-4 transition-colors duration-300 hover:text-brand;
+  }
+
+  .row-link .row-arrow {
+    @apply text-navy/35 transition-all duration-500 ease-certo;
+  }
+
+  .row-link:hover .row-arrow {
+    @apply translate-x-1 text-brand;
+  }
+
+  /* 히어로 배경의 은은한 광택 — 장식이 아니라 깊이감만 줍니다 */
+  .hero-glow {
+    background-image:
+      radial-gradient(60rem 28rem at 88% -8%, rgba(37, 87, 140, 0.07), transparent 70%),
+      radial-gradient(40rem 22rem at -6% 108%, rgba(247, 244, 238, 0.9), transparent 70%);
+  }
+}
+
 @layer utilities {
   /* 아주 약한 image zoom */
   .zoom-slow img {

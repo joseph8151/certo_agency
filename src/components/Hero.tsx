@@ -8,7 +8,7 @@ export default function Hero() {
     <section
       id="top"
       aria-labelledby="hero-heading"
-      className="relative overflow-hidden bg-white pt-[calc(var(--header-height)+2.5rem)] lg:pt-[calc(var(--header-height)+4.5rem)]"
+      className="hero-glow relative overflow-hidden bg-white pt-[calc(var(--header-height)+2.5rem)] lg:pt-[calc(var(--header-height)+4.5rem)]"
     >
       <div className="shell relative grid items-center gap-14 pb-16 lg:grid-cols-12 lg:gap-gutter lg:pb-24">
         {/* 좌: 카피 */}

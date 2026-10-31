@@ -7,7 +7,7 @@
  */
 import type { SeoItem } from './seo-pages';
 
-export type TopicGroup = 'mode' | 'situation' | 'field' | 'document' | 'cost';
+export type TopicGroup = 'mode' | 'situation' | 'field' | 'document' | 'cost' | 'guide';
 
 export type TopicData = {
   slug: string;

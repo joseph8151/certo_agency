@@ -28,7 +28,7 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
       {/* ── Hero ──────────────────────────────────── */}
       <section
         aria-labelledby="seo-heading"
-        className="bg-white pt-[calc(var(--header-height)+3rem)] lg:pt-[calc(var(--header-height)+5rem)]"
+        className="hero-glow bg-white pt-[calc(var(--header-height)+3rem)] lg:pt-[calc(var(--header-height)+5rem)]"
       >
         <div className="shell pb-16 lg:pb-24">
           <div className="grid gap-14 lg:grid-cols-12 lg:items-end lg:gap-gutter">
@@ -123,7 +123,7 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
             <div className="mt-16 grid gap-px border-t border-line bg-line lg:mt-20 lg:grid-cols-3">
               {section.items.map((item, i) => (
                 <Reveal key={item.title} delay={(i % 3) * 90} className={sectionTones[index]}>
-                  <article className="flex h-full flex-col gap-4 py-9 lg:px-9 lg:py-12">
+                  <article className="card-line flex h-full flex-col gap-4 py-9 lg:px-9 lg:py-12">
                     <span
                       aria-hidden="true"
                       className="font-serif text-[1.75rem] leading-none lining-nums tabular-nums text-brand/45"
@@ -192,17 +192,14 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
                   <ul className="mt-5 border-t border-line">
                     {group.links.map((link) => (
                       <li key={link.href} className="border-b border-line">
-                        <Link
-                          href={link.href}
-                          className="flex items-baseline justify-between gap-4 py-4 text-[0.9375rem] text-navy transition-colors duration-300 hover:text-brand"
-                        >
+                        <Link href={link.href} className="row-link py-4 text-[0.9375rem] text-navy">
                           <span>{link.label}</span>
                           {link.note ? (
                             <span className="hidden text-[0.8125rem] text-navy/55 sm:inline">
                               {link.note}
                             </span>
                           ) : (
-                            <span aria-hidden="true" className="text-navy/40">
+                            <span aria-hidden="true" className="row-arrow">
                               →
                             </span>
                           )}

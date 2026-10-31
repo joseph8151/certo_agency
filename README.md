@@ -444,8 +444,8 @@ CSP 는 넣지 않았습니다. 정적 프리렌더를 유지하면서 nonce 를
 | 영어 통역 · 영어 번역 · 한영 통역 | `/language/english` | 39 | `language-data.ts` · `language-data-more.ts` |
 | 일본 통역 · 일본 현지 통역 | `/country/japan` | 106 | `country-data*.ts` · 도시 목록 `country-cities.ts` |
 | 서울 통역 · 판교 통역사 · 송도 통번역 | `/korea/seoul` | 17 | `korea-regions.ts` |
-| 동시통역 · 반도체 통역 · 계약서 번역 · 통역사 섭외 비용 | `/topic/simultaneous-interpretation` | 56 | `topic-data-modes.ts` · `-fields.ts` · `-docs.ts` |
-| 도쿄 현지 통역 | `/global/tokyo` | 42 | `city-pages.ts` |
+| 동시통역 · 반도체 통역 · 계약서 번역 · 통역사 섭외 비용 · 실무 가이드 | `/topic/simultaneous-interpretation` | 73 | `topic-data-modes.ts` · `-fields.ts` · `-docs.ts` · `-guides.ts` |
+| 도쿄 현지 통역 | `/global/tokyo` | 105 | `city-pages.ts` · `city-pages-*.ts` |
 
 **페이지를 늘리지 않는 원칙** — 도시 421곳(해외)과 동 · 구 · 산단 168곳(국내)은 페이지를 따로 만들지 않고
 국가 · 광역 페이지 본문에 이름으로 담습니다. 이름만 바꾼 비슷한 페이지를 수백 장 찍어내면 검색엔진이
