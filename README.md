@@ -468,6 +468,17 @@ node scripts/audit-keywords.mjs http://127.0.0.1:3000   # 네이버 키워드 �
 > 사이트맵의 `lastModified` 는 일부러 넣지 않았습니다. 빌드할 때마다 "지금" 으로 찍으면
 > 모든 페이지가 항상 방금 수정된 것처럼 보여 검색엔진이 이 값을 무시하게 됩니다.
 
+
+### 생성형 AI 검색 (GEO)
+
+ChatGPT · Perplexity · Claude · Gemini 같은 답변 엔진이 사이트를 정확히 읽도록 세 가지를 둡니다.
+
+- `robots.txt` — OAI-SearchBot · ChatGPT-User · GPTBot · PerplexityBot · ClaudeBot · Google-Extended 등을 명시적으로 허용합니다. 학습용 수집을 원하지 않으면 `src/app/robots.ts` 에서 GPTBot · ClaudeBot · Google-Extended · Applebot-Extended 줄만 지우세요.
+- `/llms.txt` · `/llms-full.txt` — 회사 개요, 공개 요금, 대응 범위, 주요 페이지를 데이터 파일에서 자동 생성합니다. (`src/lib/llms.ts`) 페이지를 추가하면 함께 갱신됩니다.
+- 구조화 데이터 — 전 페이지의 `ProfessionalService` 에 언어 40개와 전문 분야(`knowsAbout`)를 담았습니다.
+
+llms.txt 는 확정된 표준이 아니며 모든 엔진이 읽는 것도 아닙니다. 노출을 보장하는 장치가 아니라 정확한 정보를 건네기 위한 안내문입니다.
+
 ### 도시별 현지 통역 페이지
 
 "도쿄 현지 통역" 같은 검색어는 **그 문구가 제목인 페이지**가 있어야 잡힙니다.
