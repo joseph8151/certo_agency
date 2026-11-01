@@ -24,6 +24,7 @@ import {
   topics,
   topicGroupLabels,
 } from '@/data/seo-pages';
+import { enPages, enPath } from '@/data/en/pages';
 import { allServicePages } from '@/data/services';
 import { businessInfo, contactInfo, site } from '@/data/site';
 import type { TopicGroup } from '@/data/topic-data-types';
@@ -83,6 +84,10 @@ export function buildLlmsTxt(): string {
     lines.push('', `## ${topicGroupLabels[group]}`);
     list.forEach((t) => lines.push(link(t.name, `/topic/${t.slug}`, oneLine(t.lead, 90))));
   }
+
+  lines.push('', '## English site (for visitors to Korea)');
+  lines.push(link('CERTO AGENCY – interpreters and translators in Korea', '/en'));
+  enPages.forEach((p) => lines.push(link(p.name, enPath(p), oneLine(p.lead, 90))));
 
   lines.push('', '## Optional');
   lines.push('', '### 국내 지역별 통역');

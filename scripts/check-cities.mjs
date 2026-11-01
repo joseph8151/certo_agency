@@ -14,6 +14,7 @@
  */
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import { posix } from 'node:path';
 import ts from 'typescript';
 
 // TS 데이터 파일을 그대로 읽어 평가합니다. (정규식으로 긁지 않으므로 구조가 바뀌어도 안전)
@@ -24,7 +25,8 @@ function load(name) {
   const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: 'ES2022' } });
   const mod = { exports: {} };
   cache[name] = mod;
-  const req = (id) => (id.startsWith('./') ? load(id.slice(2)) : createRequire(import.meta.url)(id));
+  const req = (id) =>
+    id.startsWith('.') ? load(posix.normalize(posix.join(posix.dirname(name), id))) : createRequire(import.meta.url)(id);
   new Function('exports', 'require', 'module', outputText)(mod.exports, req, mod);
   return mod.exports;
 }
@@ -107,6 +109,16 @@ for (const t of topics) {
 check('주제 slug 중복', slugDup(topics.map((t) => t.slug)));
 check('주제 related 가 가리키는 없는 slug', topics.flatMap((t) => t.related.filter((r) => !topics.some((x) => x.slug === r)).map((r) => `${t.slug}→${r}`)));
 check('주제 title 중복', slugDup(topics.map((t) => `${t.name} | ${t.alsoSearched.slice(0, 2).join(' · ')}`)));
+const { enPages, enPageKey } = load('en/pages');
+check('영문 페이지 key 중복', slugDup(enPages.map(enPageKey)));
+check('영문 related 가 가리키는 없는 페이지', enPages.flatMap((p) => p.related.filter((k) => !enPages.some((x) => enPageKey(x) === k)).map((k) => `${enPageKey(p)}→${k}`)));
+check('영문 seoTitle 중복', slugDup(enPages.map((p) => p.seoTitle)));
+for (const p of enPages) {
+  add(p.lead, `영문:${p.name}`);
+  p.items.forEach((i) => add(i.body, `영문:${p.name}`));
+  p.notes.forEach((n) => add(n.body, `영문:${p.name}`));
+  p.faqs.forEach((f) => { add(f.q, `영문:${p.name}`); add(f.a, `영문:${p.name}`); });
+}
 const dup = [...sentences.entries()].filter(([, w]) => new Set(w).size > 1).map(([t, w]) => `${[...new Set(w)].join(' = ')}: "${t.slice(0, 40)}…"`);
 check('페이지 사이에 중복된 문장', dup);
 

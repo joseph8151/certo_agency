@@ -469,6 +469,24 @@ node scripts/audit-keywords.mjs http://127.0.0.1:3000   # 네이버 키워드 �
 > 모든 페이지가 항상 방금 수정된 것처럼 보여 검색엔진이 이 값을 무시하게 됩니다.
 
 
+
+### 영문 사이트 (/en) — 한국을 방문하는 외국 기업 대상
+
+| 주소 | 내용 | 데이터 |
+| --- | --- | --- |
+| `/en` | 홈 (서비스 · 도시 · 언어 · 요금 · 가이드 · FAQ · 문의) | `src/app/(en)/en/page.tsx` |
+| `/en/services/*` | 서비스 7개 | `src/data/en/services.ts` |
+| `/en/interpreter/*` | 도시 9곳 (Seoul · Busan …) | `src/data/en/cities.ts` |
+| `/en/language/*` | Korean–English 등 10개 언어 | `src/data/en/languages.ts` |
+| `/en/guides/*` | 가이드 5편 | `src/data/en/guides.ts` |
+| `/en/contact` | 문의 폼 | `src/components/en/EnContactForm.tsx` |
+
+- 한국어 페이지는 `src/app/(ko)`, 영문은 `src/app/(en)/en` 에 있고 **각각 별도의 root layout** 입니다. 그래서 영문 페이지의 `<html lang="en">` 이 서버 HTML 부터 정확합니다.
+- 구글용: 영문 페이지는 자기 canonical, 한국어 홈 ↔ `/en` 은 hreflang(`ko` · `en` · `x-default`) 로 연결하고 `sitemap.xml` 에 모두 포함됩니다. 영문 JSON-LD 는 `ProfessionalService` · `Service` · `FAQPage` · `BreadcrumbList` 입니다.
+- 요금은 한국어 사이트의 `pricing.ts` 숫자를 그대로 읽습니다. (두 사이트가 어긋나지 않습니다)
+- **문의 폼은 Formspree 로 접수합니다.** https://formspree.io 에서 폼을 만들고 나온 `https://formspree.io/f/xxxxxxxx` 주소를 `NEXT_PUBLIC_FORMSPREE_ENDPOINT` 에 넣거나 `src/data/en/site.ts` 의 `FORMSPREE_ENDPOINT` 에 붙여 넣으세요. 값이 비어 있으면 폼 대신 이메일 안내가 보입니다. 이 주소는 공개되어도 되는 값입니다.
+- 새 영문 페이지는 해당 데이터 파일에 항목을 추가하면 라우트 · 사이트맵 · 홈 목록에 자동으로 따라옵니다. `npm run check:cities` 가 중복 문장과 깨진 링크를 검사합니다.
+
 ### 생성형 AI 검색 (GEO)
 
 ChatGPT · Perplexity · Claude · Gemini 같은 답변 엔진이 사이트를 정확히 읽도록 세 가지를 둡니다.

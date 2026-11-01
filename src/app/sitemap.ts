@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { cityPages } from '@/data/city-pages';
 import { countries, languages, regions, topics } from '@/data/seo-pages';
 import { allServicePages } from '@/data/services';
+import { enPages, enPath } from '@/data/en/pages';
 import { site } from '@/data/site';
 
 /**
@@ -13,7 +14,25 @@ import { site } from '@/data/site';
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
-    { url: site.url, changeFrequency: 'monthly', priority: 1 },
+    {
+      url: site.url,
+      changeFrequency: 'monthly',
+      priority: 1,
+      alternates: { languages: { ko: site.url, en: `${site.url}/en` } },
+    },
+    // 영문 (한국을 방문하는 외국 기업 대상) — 홈은 한국어 홈과 hreflang 으로 짝을 이룹니다.
+    {
+      url: `${site.url}/en`,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+      alternates: { languages: { ko: site.url, en: `${site.url}/en` } },
+    },
+    { url: `${site.url}/en/contact`, changeFrequency: 'monthly', priority: 0.6 },
+    ...enPages.map((p) => ({
+      url: `${site.url}${enPath(p)}`,
+      changeFrequency: 'monthly' as const,
+      priority: p.section === 'services' ? 0.8 : 0.7,
+    })),
     ...allServicePages.map((page) => ({
       url: `${site.url}/${page.slug}`,
       changeFrequency: 'monthly' as const,

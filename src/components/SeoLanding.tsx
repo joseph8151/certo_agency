@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Cta from './ui/Button';
 import Reveal from './ui/Reveal';
 import SectionHeading from './ui/SectionHeading';
-import type { SeoPageData } from '@/data/seo-pages';
+import type { SeoPageData, SeoUi } from '@/data/seo-pages';
 import { site } from '@/data/site';
 
 /**
@@ -10,7 +10,24 @@ import { site } from '@/data/site';
  * 데이터는 src/data/seo-pages.ts 의 조립 함수가 만들어 줍니다.
  * 디자인은 도시 페이지(CityPage)와 같은 구조 · 같은 토큰을 씁니다.
  */
+const koUi: SeoUi = {
+  lang: 'ko',
+  breadcrumbAria: '현재 위치',
+  notesEyebrow: '사전 확인',
+  regionsEyebrow: (n) => `주요 지역 ${n}곳`,
+  chip: (name) => `${name} 통역`,
+  faqEyebrow: '자주 묻는 질문',
+  faqTitle: (h1) => `${h1.split('과 ')[0]} 자주 묻는 질문`,
+  ctaBody:
+    '날짜와 미팅 성격을 알려주시면, 해당 일정 기준으로 배정 가능한 통역사를 확인해 회신드립니다. 조건이 확정되지 않아도 괜찮습니다.',
+  ctaPrimary: '통역 문의하기',
+  ctaSecondary: { label: '해외 지원 보기', href: '/global' },
+  contactHref: '/#contact',
+  orgId: `${site.url}#organization`,
+};
+
 export default function SeoLanding({ page }: { page: SeoPageData }) {
+  const ui = page.ui ?? koUi;
   const track = page.path.replace(/\//g, '-').replace(/^-/, '');
 
   // 히어로(흰색) 다음부터 흰색 ↔ 아이보리를 번갈아 놓아 섹션 경계가 항상 보이게 합니다.
@@ -23,7 +40,7 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
 
   return (
     <>
-      <StructuredData page={page} />
+      <StructuredData page={page} ui={ui} />
 
       {/* ── Hero ──────────────────────────────────── */}
       <section
@@ -34,7 +51,10 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
           <div className="grid gap-14 lg:grid-cols-12 lg:items-end lg:gap-gutter">
             <div className="lg:col-span-7">
               <Reveal>
-                <nav aria-label="현재 위치" className="text-[0.75rem] tracking-wide text-navy/65">
+                <nav
+                  aria-label={ui.breadcrumbAria}
+                  className="text-[0.75rem] tracking-wide text-navy/65"
+                >
                   <ol className="flex flex-wrap items-center gap-2">
                     {page.breadcrumb.map((crumb, i) => (
                       <li key={crumb.label} className="flex items-center gap-2">
@@ -75,7 +95,7 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
 
               <Reveal delay={260}>
                 <div className="mt-11">
-                  <Cta href="/#contact" track={`${track}-hero`}>
+                  <Cta href={ui.contactHref} track={`${track}-hero`}>
                     {page.ctaLabel}
                   </Cta>
                 </div>
@@ -153,7 +173,7 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
       <section aria-labelledby="seo-notes" className={`py-section ${notesTone}`}>
         <div className="shell grid gap-16 lg:grid-cols-12 lg:gap-gutter">
           <div className="lg:col-span-7">
-            <p className="eyebrow">사전 확인</p>
+            <p className="eyebrow">{ui.notesEyebrow}</p>
             <h2 id="seo-notes" className="mt-6 text-title font-medium tracking-tight text-navy">
               {page.notesHeading}
             </h2>
@@ -223,7 +243,7 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
           <div className="shell grid gap-12 lg:grid-cols-12 lg:gap-gutter">
             <div className="lg:col-span-4">
               <p className="eyebrow">
-                주요 지역 {page.cityBlock.groups.flatMap((g) => g.cities).length}곳
+                {ui.regionsEyebrow(page.cityBlock.groups.flatMap((g) => g.cities).length)}
               </p>
               <h2 id="seo-cities" className="mt-6 text-title font-medium tracking-tight text-navy">
                 {page.cityBlock.heading}
@@ -256,12 +276,12 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
                               href={href}
                               className={`${base} border-brand/40 bg-white text-brand hover:border-brand hover:bg-brand hover:text-white`}
                             >
-                              {city} 통역
+                              {ui.chip(city)}
                               <span aria-hidden="true">→</span>
                             </Link>
                           ) : (
                             <span className={`${base} border-line bg-white/70 text-navy/75`}>
-                              {city} 통역
+                              {ui.chip(city)}
                             </span>
                           )}
                         </li>
@@ -279,8 +299,8 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
       <section aria-labelledby="seo-faq" className={`py-section ${faqTone}`}>
         <div className="shell">
           <SectionHeading
-            eyebrow="자주 묻는 질문"
-            title={<span id="seo-faq">{page.h1.split('과 ')[0]} 자주 묻는 질문</span>}
+            eyebrow={ui.faqEyebrow}
+            title={<span id="seo-faq">{ui.faqTitle(page.h1)}</span>}
           />
           <div className="mt-14 border-t border-line">
             {page.faqs.map((faq) => (
@@ -306,16 +326,17 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
         <div className="shell">
           <h2 className="max-w-2xl text-title font-medium tracking-tight">{page.ctaTitle}</h2>
           <p className="mt-6 max-w-2xl text-[1.0625rem] leading-[1.9] text-white/80">
-            날짜와 미팅 성격을 알려주시면, 해당 일정 기준으로 배정 가능한 통역사를 확인해
-            회신드립니다. 조건이 확정되지 않아도 괜찮습니다.
+            {ui.ctaBody}
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
-            <Cta href="/#contact" variant="invert" track={`${track}-cta`}>
-              통역 문의하기
+            <Cta href={ui.contactHref} variant="invert" track={`${track}-cta`}>
+              {ui.ctaPrimary}
             </Cta>
-            <Cta href="/global" variant="invertOutline" track={`${track}-global`}>
-              해외 지원 보기
-            </Cta>
+            {ui.ctaSecondary ? (
+              <Cta href={ui.ctaSecondary.href} variant="invertOutline" track={`${track}-secondary`}>
+                {ui.ctaSecondary.label}
+              </Cta>
+            ) : null}
           </div>
         </div>
       </section>
@@ -323,7 +344,7 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
   );
 }
 
-function StructuredData({ page }: { page: SeoPageData }) {
+function StructuredData({ page, ui }: { page: SeoPageData; ui: SeoUi }) {
   const url = `${site.url}${page.path}`;
 
   const service = {
@@ -332,7 +353,8 @@ function StructuredData({ page }: { page: SeoPageData }) {
     name: page.serviceName,
     description: page.lead,
     url,
-    provider: { '@id': `${site.url}#organization` },
+    inLanguage: ui.lang,
+    provider: { '@id': ui.orgId },
   };
 
   const breadcrumb = {

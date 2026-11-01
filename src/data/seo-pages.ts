@@ -28,6 +28,23 @@ import type { TopicData, TopicGroup } from './topic-data-types';
 export type SeoItem = { title: string; body: string };
 export type SeoLink = { label: string; href: string; note?: string };
 
+/** 템플릿 안의 고정 문구 — 언어별로 바뀝니다. 기본값(한국어)은 components/SeoLanding.tsx 에 있습니다. */
+export type SeoUi = {
+  lang: 'ko' | 'en';
+  breadcrumbAria: string;
+  notesEyebrow: string;
+  regionsEyebrow: (count: number) => string;
+  chip: (name: string) => string;
+  faqEyebrow: string;
+  faqTitle: (h1: string) => string;
+  ctaBody: string;
+  ctaPrimary: string;
+  ctaSecondary?: { label: string; href: string };
+  contactHref: string;
+  /** 구조화 데이터의 조직 식별자 */
+  orgId: string;
+};
+
 /** 페이지 템플릿(components/SeoLanding.tsx)이 그대로 렌더링하는 형태 */
 export type SeoPageData = {
   /** 사이트 내 경로 — /language/english */
@@ -46,6 +63,8 @@ export type SeoPageData = {
   cityBlock?: { heading: string; intro: string; groups: CityGroup[]; linked: Record<string, string> };
   ctaTitle: string;
   ctaLabel: string;
+  /** 화면 문구 — 생략하면 한국어. 영문 페이지는 이 값으로 모든 라벨을 바꿉니다. */
+  ui?: SeoUi;
   /* 메타 · 구조화 데이터 */
   seoTitle: string;
   seoDescription: string;

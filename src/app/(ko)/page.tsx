@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Business from '@/components/Business';
 import Clients from '@/components/Clients';
 import Contact from '@/components/Contact';
@@ -21,6 +22,11 @@ import WhyCerto from '@/components/WhyCerto';
 import { faqs } from '@/data/content';
 import { pricingFaqs, pricingIntro, pricingPlans } from '@/data/pricing';
 import { site } from '@/data/site';
+
+/** 한국어 홈과 영문 홈(/en)을 hreflang 으로 서로 연결합니다. */
+export const metadata: Metadata = {
+  alternates: { canonical: '/', languages: { ko: '/', en: '/en', 'x-default': '/en' } },
+};
 
 /**
  * FAQ 가 실제로 존재하는 홈에서만 FAQPage 구조화 데이터를 출력합니다.
