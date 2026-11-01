@@ -31,9 +31,7 @@ export default function Footer() {
 
           {/* 메뉴 */}
           <nav aria-label="푸터 메뉴" className="lg:col-span-3">
-            <h2 className="text-[0.75rem] font-semibold tracking-[0.04em] text-navy/65">
-              메뉴
-            </h2>
+            <h2 className="text-[0.75rem] font-semibold tracking-[0.04em] text-navy/65">메뉴</h2>
             <ul className="mt-5 space-y-3">
               {footerNavigation.map((item) => (
                 <li key={item.href}>
@@ -45,14 +43,22 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href="/en"
+                  hrefLang="en"
+                  lang="en"
+                  className="link-underline text-[0.875rem] text-navy/75 transition-colors duration-300 hover:text-navy"
+                >
+                  English (for visitors to Korea)
+                </Link>
+              </li>
             </ul>
           </nav>
 
           {/* 연락처 — 공개 연락처가 없으면 문의 폼으로만 안내합니다. */}
           <div className="lg:col-span-3 lg:col-start-10">
-            <h2 className="text-[0.75rem] font-semibold tracking-[0.04em] text-navy/65">
-              문의
-            </h2>
+            <h2 className="text-[0.75rem] font-semibold tracking-[0.04em] text-navy/65">문의</h2>
 
             {hasPublicContact ? (
               <ul className="mt-5 space-y-3 text-[0.875rem] text-navy/75">

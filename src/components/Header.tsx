@@ -79,6 +79,15 @@ export default function Header() {
 
         <div className="flex items-center gap-3">
           <Link
+            href="/en"
+            hrefLang="en"
+            lang="en"
+            data-cta="header-lang-en"
+            className="hidden text-[0.8125rem] font-medium tracking-wide text-navy/60 transition-colors duration-300 hover:text-navy md:inline-block"
+          >
+            English
+          </Link>
+          <Link
             href={cta.href}
             data-cta="header-primary"
             className="hidden rounded-xs bg-brand-deep px-6 py-3 text-[0.8125rem] font-medium text-white transition-colors duration-500 ease-certo hover:bg-brand md:inline-block"
@@ -139,6 +148,16 @@ export default function Header() {
             className="mt-8 rounded-xs bg-brand-deep px-6 py-5 text-center text-base font-medium text-white"
           >
             {cta.primary}
+          </Link>
+
+          <Link
+            href="/en"
+            hrefLang="en"
+            lang="en"
+            onClick={() => setOpen(false)}
+            className="mt-5 py-3 text-center text-sm text-navy/60"
+          >
+            English
           </Link>
 
           <p className="mt-6 pb-4 text-center text-xs leading-relaxed tracking-wide text-navy/65">
