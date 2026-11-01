@@ -60,6 +60,7 @@ export default function Business() {
               <Figure
                 image={images.business}
                 tone="blue"
+                frame
                 sizes="(max-width: 1024px) 100vw, 62vw"
               />
             </Reveal>

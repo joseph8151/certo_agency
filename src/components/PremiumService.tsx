@@ -39,7 +39,7 @@ export default function PremiumService() {
               <article
                 className={`flex h-full flex-col p-8 lg:p-10 ${
                   plan.highlight
-                    ? 'border border-brand/30 border-t-2 border-t-brand bg-white'
+                    ? 'border border-brand/30 border-t-2 border-t-brand-deep bg-white shadow-[0_28px_60px_-34px_rgba(23,59,94,0.38)]'
                     : 'border border-line bg-transparent'
                 }`}
               >

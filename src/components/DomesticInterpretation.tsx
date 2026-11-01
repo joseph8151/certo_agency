@@ -14,6 +14,7 @@ export default function DomesticInterpretation() {
             <Figure
               image={images.domestic}
               tone="none"
+              frame
               sizes="(max-width: 1024px) 100vw, 38vw"
               className="hidden lg:block"
             />

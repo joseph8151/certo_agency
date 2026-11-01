@@ -37,6 +37,7 @@ export default function Services() {
                       image={images[area.imageKey]}
                       ratio="4 / 3"
                       tone="none"
+                      frame
                       sizes="(max-width: 1024px) 100vw, 46vw"
                     />
                   </Reveal>

@@ -41,41 +41,53 @@ export default function Coverage() {
   ];
 
   return (
-    <section aria-labelledby="coverage-heading" className="bg-white py-section">
-      <div className="shell">
+    <section
+      aria-labelledby="coverage-heading"
+      className="on-dark relative overflow-hidden bg-brand-deep py-section text-white"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)',
+          backgroundSize: '72px 72px',
+        }}
+      />
+      <div className="shell relative">
         <Reveal>
-          <p className="eyebrow">대응 범위</p>
+          <p className="eyebrow-invert">대응 범위</p>
           <h2
             id="coverage-heading"
-            className="mt-6 max-w-2xl text-headline font-medium tracking-tight text-navy"
+            className="mt-6 max-w-2xl text-headline font-medium tracking-tight text-white"
           >
             어느 나라, 어느 도시의 일정이든 먼저 확인해 드립니다.
           </h2>
         </Reveal>
 
-        <ul className="mt-14 grid gap-px border-y border-line bg-line sm:grid-cols-2 lg:mt-16 lg:grid-cols-4">
+        <ul className="mt-14 grid gap-px border-y border-white/15 bg-white/15 grid-cols-2 lg:mt-16 lg:grid-cols-4">
           {stats.map((stat, i) => (
-            <Reveal as="li" key={stat.label} delay={i * 90} className="list-none bg-white">
+            <Reveal as="li" key={stat.label} delay={i * 90} className="list-none bg-brand-deep">
               <Link
                 href={stat.href}
-                className="group flex h-full flex-col px-1 py-9 transition-colors duration-300 sm:px-8 lg:py-11"
+                className="group flex h-full flex-col px-4 py-8 transition-colors duration-300 sm:px-8 lg:py-11"
               >
-                <span className="font-serif text-[3rem] leading-none lining-nums tabular-nums text-navy lg:text-[3.5rem]">
+                <span className="font-serif text-[2.25rem] leading-none sm:text-[3rem] lining-nums tabular-nums text-white lg:text-[3.75rem]">
                   {stat.value}
-                  <span className="ml-1.5 font-sans text-[0.9375rem] font-medium text-brand">
+                  <span className="ml-1.5 font-sans text-[0.9375rem] font-medium text-white/60">
                     {stat.unit}
                   </span>
                 </span>
-                <span className="mt-6 text-[1.0625rem] font-medium text-navy transition-colors duration-300 group-hover:text-brand">
+                <span className="mt-6 text-[1.0625rem] font-medium text-white transition-colors duration-300 group-hover:text-white/70">
                   {stat.label}
                 </span>
-                <span className="mt-2 text-[0.875rem] text-navy/60">{stat.note}</span>
+                <span className="mt-2 text-[0.875rem] text-white/55">{stat.note}</span>
               </Link>
             </Reveal>
           ))}
         </ul>
 
-        <p className="mt-8 max-w-2xl text-[0.875rem] leading-[1.9] text-pretty text-navy/60">
+        <p className="mt-8 max-w-2xl text-[0.875rem] leading-[1.9] text-pretty text-white/55">
           날짜와 언어, 분야에 따라 배정 가능한 통역사가 달라 일정을 알려주시면 해당 날짜 기준으로
           확인해 회신드립니다. 정세나 규제로 방문이 제한되는 지역은 안전 확인을 먼저 안내합니다.
         </p>

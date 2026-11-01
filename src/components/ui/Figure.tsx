@@ -19,6 +19,8 @@ type Props = {
    * 이미지 무게를 동일하게 맞출 때 사용합니다.
    */
   ratio?: string;
+  /** 이미지 뒤로 어긋나게 놓이는 가는 선 프레임 — 홈 히어로와 같은 장식 */
+  frame?: boolean;
 };
 
 export default function Figure({
@@ -29,12 +31,13 @@ export default function Figure({
   className = '',
   zoom = true,
   ratio,
+  frame = false,
 }: Props) {
   const toneClass = tone === 'blue' ? 'tone-blue' : tone === 'ivory' ? 'tone-ivory' : '';
 
-  return (
+  const figure = (
     <div
-      className={`relative isolate overflow-hidden bg-ivory-light ${toneClass} ${zoom ? 'zoom-slow' : ''} ${className}`}
+      className={`relative isolate overflow-hidden bg-ivory-light ${toneClass} ${zoom ? 'zoom-slow' : ''} ${frame ? '' : className}`}
       style={{ aspectRatio: ratio ?? image.ratio }}
     >
       {image.graphic === 'line-map' ? (
@@ -61,6 +64,18 @@ export default function Figure({
           style={image.position ? { objectPosition: image.position } : undefined}
         />
       )}
+    </div>
+  );
+
+  if (!frame) return figure;
+
+  return (
+    <div className={`relative ${className}`}>
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 translate-x-3 translate-y-3 border border-brand/25"
+      />
+      {figure}
     </div>
   );
 }
