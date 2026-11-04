@@ -9,9 +9,11 @@ import {
   languageOptions,
   serviceOptions,
 } from '@/data/content';
+import { FORMSPREE_ENDPOINT } from '@/data/formspree';
 import { contactInfo, hasPublicContact } from '@/data/site';
 import {
   emptyInquiry,
+  INQUIRY_LABELS,
   validateInquiry,
   type InquiryErrors,
   type InquiryPayload,
@@ -55,6 +57,35 @@ export default function Contact() {
     setServerDebug('');
 
     try {
+      // 상담 문의는 Formspree 로 받습니다. 주소가 아직 없을 때만 기존 접수 경로로 보냅니다.
+      if (FORMSPREE_ENDPOINT) {
+        if (values.website) {
+          // 봇이 채우는 숨김 필드 — 조용히 성공 처리하고 보내지 않습니다.
+          setValues(emptyInquiry);
+          setStatus('success');
+          return;
+        }
+        const body: Record<string, string> = { _subject: `[체르토] 새 문의 — ${values.name}` };
+        INQUIRY_LABELS.forEach(([key, label]) => {
+          const value = (values[key] ?? '').trim();
+          if (value) body[label] = value;
+        });
+        body.email = values.email;
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(body),
+        });
+        if (!res.ok) {
+          setServerMessage('문의 접수에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+          setStatus('error');
+          return;
+        }
+        setValues(emptyInquiry);
+        setStatus('success');
+        return;
+      }
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

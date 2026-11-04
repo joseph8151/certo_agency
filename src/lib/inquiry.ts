@@ -85,3 +85,21 @@ export function validateInquiry(data: InquiryPayload): InquiryErrors {
 
   return errors;
 }
+
+/** Formspree 로 보낼 때 받은편지함에 보이는 항목 이름 */
+export const INQUIRY_LABELS: [keyof InquiryPayload, string][] = [
+  ['name', '의뢰인 / 회사명'],
+  ['phone', '연락처'],
+  ['email', '이메일'],
+  ['service', '서비스'],
+  ['interpretationType', '통역 방식'],
+  ['language', '희망 언어'],
+  ['country', '국가 · 지역'],
+  ['location', '장소'],
+  ['startDate', '시작일'],
+  ['endDate', '종료일'],
+  ['time', '시간'],
+  ['headcount', '참석 인원'],
+  ['industry', '산업 분야'],
+  ['message', '프로젝트 내용'],
+];

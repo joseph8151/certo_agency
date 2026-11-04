@@ -15,15 +15,8 @@ export const enSite = {
   locale: 'en_US',
 } as const;
 
-/**
- * Formspree 문의 접수 주소.
- *
- * https://formspree.io 에서 폼을 만들면 `https://formspree.io/f/xxxxxxxx` 형태의 주소가 나옵니다.
- * 이 주소는 공개되어도 되는 값입니다. (폼 제출용 주소이며 비밀 키가 아닙니다)
- * 아래 상수에 붙여 넣거나, 환경 변수 NEXT_PUBLIC_FORMSPREE_ENDPOINT 로 지정하세요.
- * 값이 비어 있으면 문의 폼 대신 이메일 안내가 표시됩니다.
- */
-export const FORMSPREE_ENDPOINT = (process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || '').trim();
+/** Formspree 주소는 한국어 사이트와 같은 값을 씁니다. (src/data/formspree.ts) */
+export { FORMSPREE_ENDPOINT } from '../formspree';
 
 export const enContact = {
   email: contactInfo.email,

@@ -484,7 +484,7 @@ node scripts/audit-keywords.mjs http://127.0.0.1:3000   # 네이버 키워드 �
 - 한국어 페이지는 `src/app/(ko)`, 영문은 `src/app/(en)/en` 에 있고 **각각 별도의 root layout** 입니다. 그래서 영문 페이지의 `<html lang="en">` 이 서버 HTML 부터 정확합니다.
 - 구글용: 영문 페이지는 자기 canonical, 한국어 홈 ↔ `/en` 은 hreflang(`ko` · `en` · `x-default`) 로 연결하고 `sitemap.xml` 에 모두 포함됩니다. 영문 JSON-LD 는 `ProfessionalService` · `Service` · `FAQPage` · `BreadcrumbList` 입니다.
 - 요금은 한국어 사이트의 `pricing.ts` 숫자를 그대로 읽습니다. (두 사이트가 어긋나지 않습니다)
-- **문의 폼은 Formspree 로 접수합니다.** https://formspree.io 에서 폼을 만들고 나온 `https://formspree.io/f/xxxxxxxx` 주소를 `NEXT_PUBLIC_FORMSPREE_ENDPOINT` 에 넣거나 `src/data/en/site.ts` 의 `FORMSPREE_ENDPOINT` 에 붙여 넣으세요. 값이 비어 있으면 폼 대신 이메일 안내가 보입니다. 이 주소는 공개되어도 되는 값입니다.
+- **상담 문의는 한국어 · 영문 모두 Formspree 로 접수합니다.** https://formspree.io 에서 폼을 만들고 나온 `https://formspree.io/f/xxxxxxxx` 주소를 `src/data/formspree.ts` 의 `FORMSPREE_ENDPOINT` 에 붙여 넣으세요. (환경 변수 `NEXT_PUBLIC_FORMSPREE_ENDPOINT` 도 되지만 빌드 시점 값이라 Cloudflare 에서는 소스에 직접 두는 편이 안전합니다.) 이 주소는 공개되어도 되는 값입니다. 주소가 비어 있는 동안 한국어 폼은 기존 경로(`/api/contact`)로, 영문 폼은 이메일 안내로 대체됩니다.
 - 새 영문 페이지는 해당 데이터 파일에 항목을 추가하면 라우트 · 사이트맵 · 홈 목록에 자동으로 따라옵니다. `npm run check:cities` 가 중복 문장과 깨진 링크를 검사합니다.
 
 ### 생성형 AI 검색 (GEO)
