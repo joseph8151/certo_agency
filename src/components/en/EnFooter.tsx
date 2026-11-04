@@ -60,16 +60,6 @@ export default function EnFooter() {
                   {enContact.email}
                 </a>
               </li>
-              <li>
-                <a
-                  href={`tel:${enContact.phone.replace(/[^0-9+]/g, '')}`}
-                  data-cta="en-footer-phone"
-                  className="link-underline"
-                >
-                  {enContact.phone}
-                </a>
-                <span className="mt-1 block text-[0.8125rem] text-navy/60">{enContact.hours}</span>
-              </li>
               <li className="leading-relaxed">{enContact.address}</li>
             </ul>
             <Link

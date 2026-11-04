@@ -113,7 +113,10 @@ export const enLanguages: EnPage[] = [
         q: 'Can the same interpreter handle both Japanese and English?',
         a: 'Some can. Tell us the languages used in the meeting and we plan accordingly.',
       },
-      { q: 'Is Japanese translation available too?', a: 'Yes. We translate Korean business documents into Japanese, including contracts and product sheets.' },
+      {
+        q: 'Is Japanese translation available too?',
+        a: 'Yes. We translate Korean business documents into Japanese, including contracts and product sheets.',
+      },
     ],
     related: [
       'services/business-interpreter-korea',
@@ -341,7 +344,10 @@ export const enLanguages: EnPage[] = [
         q: 'Can you interpret for French-speaking African delegations?',
         a: 'Please ask with your dates; availability varies.',
       },
-      { q: 'Do you offer French translation?', a: 'Yes. Brochures, contracts and product descriptions can be translated between Korean and French.' },
+      {
+        q: 'Do you offer French translation?',
+        a: 'Yes. Brochures, contracts and product descriptions can be translated between Korean and French.',
+      },
     ],
     related: [
       'services/business-interpreter-korea',
@@ -392,7 +398,10 @@ export const enLanguages: EnPage[] = [
     ],
     faqs: [
       { q: 'Do you cover Latin American delegations?', a: 'Please ask with your dates and topic.' },
-      { q: 'Is Spanish translation available?', a: 'Yes. Contracts, spec sheets and brochures can be translated between Korean and Spanish.' },
+      {
+        q: 'Is Spanish translation available?',
+        a: 'Yes. Contracts, spec sheets and brochures can be translated between Korean and Spanish.',
+      },
     ],
     related: [
       'services/trade-show-interpreter-korea',
@@ -500,7 +509,10 @@ export const enLanguages: EnPage[] = [
         q: 'Do you interpret for Central Asian delegations?',
         a: 'Yes. Tell us the countries and languages used in the meeting.',
       },
-      { q: 'Is Russian translation available?', a: 'Yes. We translate commercial and technical documents between Korean and Russian.' },
+      {
+        q: 'Is Russian translation available?',
+        a: 'Yes. We translate commercial and technical documents between Korean and Russian.',
+      },
     ],
     related: [
       'services/business-interpreter-korea',

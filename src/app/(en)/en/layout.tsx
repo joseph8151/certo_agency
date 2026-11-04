@@ -73,7 +73,6 @@ function OrganizationSchema() {
       addressCountry: postalAddress.addressCountry,
     },
     email: enContact.email,
-    telephone: enContact.phone,
   };
   return (
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(org) }} />

@@ -27,8 +27,6 @@ export const FORMSPREE_ENDPOINT = (process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT ||
 
 export const enContact = {
   email: contactInfo.email,
-  phone: contactInfo.phone,
-  hours: 'Mon–Fri 09:00–18:00 KST (UTC+9)',
   address: '2F A9, 39-26 Gangnam-daero 8-gil, Seocho-gu, Seoul, Republic of Korea',
 } as const;
 
