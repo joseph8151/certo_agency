@@ -23,7 +23,7 @@ import { site } from '@/data/site';
  * 검색 노출용 크롤러(OAI-SearchBot · PerplexityBot · Claude-SearchBot)는 유지하는 편이 좋습니다.
  */
 export default function robots(): MetadataRoute.Robots {
-  const allow = { allow: '/', disallow: '/api/' };
+  const allow = { allow: '/', disallow: ['/api/', '/admin'] };
 
   return {
     rules: [

@@ -10,6 +10,20 @@
   },
 
   /*
+   * 통역 실적 게시판 데이터베이스 (Cloudflare D1)
+   * 테이블 정의는 migrations/0001_board.sql 입니다.
+   * database_id 는 비밀값이 아닙니다. 계정 안에서 이 DB 를 가리키는 주소일 뿐입니다.
+   */
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "certo-agency-board",
+      "database_id": "c17ee11b-5dbe-4d88-bfd9-a59899867c11",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  /*
    * 빌드는 여기서 처리하지 않습니다.
    * `wrangler deploy` 는 OpenNext 프로젝트를 감지하면 곧바로
    * `opennextjs-cloudflare deploy` 로 넘어가기 때문에 wrangler 의 build hook 이

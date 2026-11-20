@@ -1,3 +1,8 @@
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
+
+// `next dev` 에서도 Cloudflare 바인딩(D1)을 로컬로 흉내 냅니다. 빌드 · 배포에는 영향이 없습니다.
+initOpenNextCloudflareForDev();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,

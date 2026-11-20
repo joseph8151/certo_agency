@@ -487,6 +487,27 @@ node scripts/audit-keywords.mjs http://127.0.0.1:3000   # 네이버 키워드 �
 - **상담 문의는 한국어 · 영문 모두 Formspree 로 접수합니다.** https://formspree.io 에서 폼을 만들고 나온 `https://formspree.io/f/xxxxxxxx` 주소를 `src/data/formspree.ts` 의 `FORMSPREE_ENDPOINT` 에 붙여 넣으세요. (환경 변수 `NEXT_PUBLIC_FORMSPREE_ENDPOINT` 도 되지만 빌드 시점 값이라 Cloudflare 에서는 소스에 직접 두는 편이 안전합니다.) 이 주소는 공개되어도 되는 값입니다. 주소가 비어 있는 동안 한국어 폼은 기존 경로(`/api/contact`)로, 영문 폼은 이메일 안내로 대체됩니다.
 - 새 영문 페이지는 해당 데이터 파일에 항목을 추가하면 라우트 · 사이트맵 · 홈 목록에 자동으로 따라옵니다. `npm run check:cities` 가 중복 문장과 깨진 링크를 검사합니다.
 
+
+### 통역 실적 게시판 (/board) — 직원이 직접 올리는 글
+
+우리가 마친 통역 업무를 "국가 + 도시 + 언어 + 통역 업무 완료" 형식의 짧은 글로 쌓는 게시판입니다. 글이 많아질수록 "나라 + 현지 통역" 같은 검색어에 걸리는 페이지가 늘어납니다.
+
+| 주소 | 내용 |
+| --- | --- |
+| `/board` | 공개 목록 (20건씩, 번호 · 제목 · 날짜) |
+| `/board/[번호]` | 글 상세 — 제목 · 날짜 · 본문, 글 속 나라 · 도시 · 언어를 찾아 안내 페이지로 자동 연결, 이전 · 다음 글, `Article` 구조화 데이터 |
+| `/admin` | 직원용 관리자 (로그인 → 목록 · 새 글 · 수정 · 숨기기 · 삭제), `/admin/help` 사용 설명서 |
+
+- 글은 **Cloudflare D1** (`certo-agency-board`, binding `DB`)에 저장되고 `wrangler.jsonc` 에 연결되어 있습니다. 테이블은 `migrations/0001_board.sql` 이며 운영 DB 에는 이미 적용했습니다. 글을 올리면 **배포 없이 바로** 사이트에 보입니다.
+- 사이트맵(`/sitemap.xml`)은 요청 때마다 DB 를 읽어 새 글을 자동으로 포함합니다. `/admin` 은 `robots.txt` 에서 막고 `noindex` 입니다.
+- **최초 설정 (한 번만)** — Cloudflare 대시보드 → Workers & Pages → certo-agency → Settings → Variables and secrets 에서 **Secret** 두 개를 만들고 배포합니다. 반드시 Type 이 `Secret` 이어야 합니다. (`Text` 는 배포 때 사라집니다.)
+  - `BOARD_ADMIN_PASSWORD` — 직원이 로그인할 비밀번호 (8자 이상)
+  - `BOARD_SESSION_SECRET` — 로그인 쿠키 서명용 임의의 긴 문자열 (16자 이상, 직원은 몰라도 됨)
+  - 설정 전에는 `/admin` 이 "비밀번호가 설정되지 않았습니다" 로 잠겨 있습니다. 코드에 기본 비밀번호는 없습니다.
+- 로컬 시험: `.dev.vars` 에 위 두 값을 적고(`.gitignore` 에 포함됨) `npx wrangler d1 execute certo-agency-board --local --file migrations/0001_board.sql` 후 `npm run cf:preview`.
+- 직원용 설명서: `docs/board-manual.md` (같은 내용이 `/admin/help` 에도 보입니다). 내용은 `src/data/board-manual.ts` 에서 고치고 `node scripts/board-manual.mjs` 로 md 를 다시 만듭니다.
+- 지금은 텍스트 글만 지원합니다. 사진을 올리려면 Cloudflare R2 를 연결해야 합니다.
+
 ### 생성형 AI 검색 (GEO)
 
 ChatGPT · Perplexity · Claude · Gemini 같은 답변 엔진이 사이트를 정확히 읽도록 세 가지를 둡니다.

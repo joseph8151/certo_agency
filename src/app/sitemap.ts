@@ -3,6 +3,7 @@ import { cityPages } from '@/data/city-pages';
 import { countries, languages, regions, topics } from '@/data/seo-pages';
 import { allServicePages } from '@/data/services';
 import { enPages, enPath } from '@/data/en/pages';
+import { allPublishedForSitemap } from '@/lib/board/db';
 import { site } from '@/data/site';
 
 /**
@@ -12,8 +13,20 @@ import { site } from '@/data/site';
  * 모든 페이지가 항상 방금 수정된 것처럼 보여 검색엔진이 이 값을 무시하게 됩니다.
  * 실제 수정일을 관리할 수 있게 되면 그때 페이지별로 넣으세요.
  */
-export default function sitemap(): MetadataRoute.Sitemap {
+export const dynamic = 'force-dynamic';
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // 게시판 글은 DB 에서 읽습니다. DB 를 읽지 못하면 글 없이 나머지만 내보냅니다.
+  const posts = await allPublishedForSitemap().catch(() => []);
+
   return [
+    { url: `${site.url}/board`, changeFrequency: 'weekly', priority: 0.7 },
+    ...posts.map((p) => ({
+      url: `${site.url}/board/${p.id}`,
+      lastModified: p.updated_at.replace(' ', 'T') + 'Z',
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
     {
       url: site.url,
       changeFrequency: 'monthly',

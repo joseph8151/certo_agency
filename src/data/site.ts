@@ -110,6 +110,7 @@ export const navigation: NavItem[] = [
   { label: '문서 지원', href: '/translation' },
   { label: '해외 지원', href: '/global' },
   { label: '기업 서비스', href: '/business' },
+  { label: '통역 실적', href: '/board' },
   { label: '상담 절차', href: '/#process' },
   { label: '문의', href: '/#contact' },
 ];
@@ -120,6 +121,7 @@ export const footerNavigation: NavItem[] = [
   { label: '문서 지원', href: '/translation' },
   { label: '해외 지원', href: '/global' },
   { label: '기업 서비스', href: '/business' },
+  { label: '통역 실적', href: '/board' },
   { label: '문의', href: '/#contact' },
 ];
 
