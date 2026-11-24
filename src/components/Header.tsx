@@ -166,14 +166,24 @@ export default function Header() {
           ))}
 
           {contactInfo.phone ? (
-            <CallButton
-              phone={contactInfo.phone}
-              label="전화 상담"
-              hours={contactInfo.phoneHours}
-              variant="outline"
-              track="mobile-menu-phone"
-              className="mt-8 w-full py-5"
-            />
+            <>
+              <CallButton
+                phone={contactInfo.phone}
+                label="전화 상담"
+                hours={contactInfo.phoneHours}
+                variant="outline"
+                track="mobile-menu-phone"
+                className="mt-8 w-full py-5"
+              />
+              <CallButton
+                phone={contactInfo.phone}
+                kind="sms"
+                label="문자 상담"
+                variant="outline"
+                track="mobile-menu-sms"
+                className="mt-3 w-full py-5"
+              />
+            </>
           ) : null}
 
           <Link

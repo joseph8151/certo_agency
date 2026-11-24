@@ -213,6 +213,14 @@ export default function EnHome() {
                   track="en-hero-phone"
                   className="w-full sm:w-auto"
                 />
+                <CallButton
+                  phone={enContact.phone}
+                  kind="sms"
+                  label="Text us"
+                  variant="outline"
+                  track="en-hero-sms"
+                  className="w-full sm:hidden"
+                />
               </div>
             </Reveal>
             <Reveal delay={340}>
@@ -555,6 +563,14 @@ export default function EnHome() {
                 hours={enContact.hours}
                 track="en-home-phone"
                 className="mt-4 w-full"
+              />
+              <CallButton
+                phone={enContact.phone}
+                kind="sms"
+                label="Text us"
+                variant="outline"
+                track="en-home-sms"
+                className="mt-3 w-full md:hidden"
               />
             </div>
           </div>

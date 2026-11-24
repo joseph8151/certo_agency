@@ -5,7 +5,10 @@ import { contactInfo } from '@/data/site';
 
 export default function FinalCta() {
   return (
-    <section aria-labelledby="final-cta-heading" className="on-dark bg-brand-deep py-section text-white">
+    <section
+      aria-labelledby="final-cta-heading"
+      className="on-dark bg-brand-deep py-section text-white"
+    >
       <div className="shell max-w-4xl text-center">
         <Reveal>
           <p className="eyebrow-invert">상담 안내</p>

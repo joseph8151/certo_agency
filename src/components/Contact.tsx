@@ -138,6 +138,14 @@ export default function Contact() {
                   track="contact-phone"
                   className="mt-4 w-full"
                 />
+                <CallButton
+                  phone={contactInfo.phone}
+                  kind="sms"
+                  label="문자 상담"
+                  variant="outline"
+                  track="contact-sms"
+                  className="mt-3 w-full md:hidden"
+                />
               </div>
             ) : null}
 

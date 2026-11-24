@@ -1,12 +1,14 @@
-import { telHref } from '@/lib/phone';
+import { smsHref, telHref } from '@/lib/phone';
 
 type Variant = 'solid' | 'outline' | 'invert' | 'invertOutline' | 'icon';
 
 type CallButtonProps = {
   phone: string;
+  /** tel: 전화 (기본) · sms: 문자 */
+  kind?: 'tel' | 'sms';
   /** 버튼 앞 문구. 예) 전화 상담 */
   label?: string;
-  /** 번호 아래 작은 안내. 예) 평일 09:00 – 18:00 */
+  /** 번호 아래 작은 안내. 예) 전화 · 문자 · 주말 상담 가능 */
   hours?: string;
   variant?: Variant;
   /** GA4 / GTM 클릭 추적용 data-cta */
@@ -27,6 +29,23 @@ const variants: Record<Variant, string> = {
     'border border-line-invert px-7 py-4 text-[0.9375rem] text-white hover:border-white hover:bg-white/10',
   icon: 'h-11 w-11 bg-brand-deep text-white hover:bg-brand',
 };
+
+export function MessageIcon({ className = 'h-[1.05em] w-[1.05em]' }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.6-.8L3 21l1.9-5.1A8.3 8.3 0 0 1 3 11.5 8.5 8.5 0 0 1 12 3a8.5 8.5 0 0 1 9 8.5z" />
+    </svg>
+  );
+}
 
 export function PhoneIcon({ className = 'h-[1.05em] w-[1.05em]' }: { className?: string }) {
   return (
@@ -51,6 +70,7 @@ export function PhoneIcon({ className = 'h-[1.05em] w-[1.05em]' }: { className?:
  */
 export default function CallButton({
   phone,
+  kind = 'tel',
   label,
   hours,
   variant = 'solid',
@@ -58,7 +78,7 @@ export default function CallButton({
   ariaLabel,
   className = '',
 }: CallButtonProps) {
-  const href = telHref(phone);
+  const href = kind === 'sms' ? smsHref(phone) : telHref(phone);
   if (!href) return null;
 
   return (
@@ -68,14 +88,20 @@ export default function CallButton({
       aria-label={ariaLabel ?? `${label ? `${label} ` : ''}${phone}`}
       className={`${base} ${variants[variant]} ${className}`}
     >
-      <PhoneIcon className={variant === 'icon' ? 'h-5 w-5' : undefined} />
+      {kind === 'sms' ? (
+        <MessageIcon className={variant === 'icon' ? 'h-5 w-5' : undefined} />
+      ) : (
+        <PhoneIcon className={variant === 'icon' ? 'h-5 w-5' : undefined} />
+      )}
       {variant === 'icon' ? null : (
         <span className="flex flex-col items-start leading-tight">
           <span className="tabular-nums">
             {label ? <span className="mr-2 opacity-80">{label}</span> : null}
             {phone}
           </span>
-          {hours ? <span className="mt-0.5 text-[0.6875rem] font-normal opacity-70">{hours}</span> : null}
+          {hours ? (
+            <span className="mt-0.5 text-[0.6875rem] font-normal opacity-70">{hours}</span>
+          ) : null}
         </span>
       )}
     </a>

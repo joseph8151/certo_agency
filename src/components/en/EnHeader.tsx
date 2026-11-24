@@ -149,6 +149,14 @@ export default function EnHeader() {
             track="en-mobile-menu-phone"
             className="mt-8 w-full py-5"
           />
+          <CallButton
+            phone={enContact.phone}
+            kind="sms"
+            label="Text us"
+            variant="outline"
+            track="en-mobile-menu-sms"
+            className="mt-3 w-full py-5"
+          />
           <Link
             href={enCta.href}
             data-cta="en-mobile-menu-primary"

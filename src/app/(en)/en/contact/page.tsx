@@ -39,6 +39,14 @@ export default function ContactPage() {
                   track="en-contact-phone"
                   className="mt-4 w-full"
                 />
+                <CallButton
+                  phone={enContact.phone}
+                  kind="sms"
+                  label="Text us"
+                  variant="outline"
+                  track="en-contact-sms"
+                  className="mt-3 w-full md:hidden"
+                />
               </div>
               <dl className="mt-10 space-y-6 border-t border-line pt-8 text-[0.9375rem] text-navy/80">
                 <div>

@@ -5,22 +5,24 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { contactInfo, cta } from '@/data/site';
 import { enCta, enContact } from '@/data/en/site';
-import { telHref } from '@/lib/phone';
-import { PhoneIcon } from './ui/CallButton';
+import { smsHref, telHref } from '@/lib/phone';
+import { MessageIcon, PhoneIcon } from './ui/CallButton';
 
 const copy = {
   ko: {
-    call: '전화 상담',
+    call: '전화',
+    sms: '문자',
     callAria: `전화 상담 ${contactInfo.phone}`,
-    inquiry: cta.primary,
+    inquiry: '상담 신청',
     href: cta.href,
     phone: contactInfo.phone,
     hours: contactInfo.phoneHours,
   },
   en: {
-    call: 'Call us',
+    call: 'Call',
+    sms: 'Text',
     callAria: `Call CERTO AGENCY ${enContact.phone}`,
-    inquiry: enCta.label,
+    inquiry: 'Get a quote',
     href: enCta.href,
     phone: enContact.phone,
     hours: '',
@@ -38,6 +40,7 @@ export default function StickyCta({ locale = 'ko' }: { locale?: 'ko' | 'en' }) {
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
   const tel = telHref(t.phone);
+  const sms = smsHref(t.phone);
   const onEnContact = locale === 'en' && pathname.startsWith('/en/contact');
 
   useEffect(() => {
@@ -83,11 +86,23 @@ export default function StickyCta({ locale = 'ko' }: { locale?: 'ko' | 'en' }) {
             {t.call}
           </a>
         ) : null}
+        {sms ? (
+          <a
+            href={sms}
+            data-cta="sticky-sms-mobile"
+            aria-label={`${t.sms} ${t.phone}`}
+            tabIndex={visible ? 0 : -1}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xs border border-brand/40 bg-white px-4 py-4 text-[0.9375rem] font-semibold text-brand-deep"
+          >
+            <MessageIcon />
+            {t.sms}
+          </a>
+        ) : null}
         <Link
           href={t.href}
           data-cta="sticky-mobile"
           tabIndex={visible ? 0 : -1}
-          className="flex flex-[1.4] items-center justify-center gap-2 rounded-xs bg-brand-deep px-4 py-4 text-[0.9375rem] font-medium text-white"
+          className="flex flex-[1.8] items-center justify-center gap-2 rounded-xs bg-brand-deep px-4 py-4 text-[0.9375rem] font-medium text-white"
         >
           {t.inquiry}
           <span aria-hidden="true">→</span>
@@ -110,7 +125,9 @@ export default function StickyCta({ locale = 'ko' }: { locale?: 'ko' | 'en' }) {
             <PhoneIcon className="h-[1.1rem] w-[1.1rem]" />
           </span>
           <span className="flex flex-col leading-tight">
-            <span className="text-[0.6875rem] opacity-75">{t.call}</span>
+            <span className="text-[0.6875rem] opacity-75">
+              {locale === 'en' ? 'Call us' : '전화 상담'}
+            </span>
             <span className="text-[0.9375rem] font-semibold tabular-nums tracking-wide">
               {t.phone}
             </span>

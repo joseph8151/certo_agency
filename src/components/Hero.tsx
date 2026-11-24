@@ -32,8 +32,8 @@ export default function Hero() {
 
           <Reveal delay={180}>
             <p className="mt-9 max-w-xl text-[1.0625rem] leading-[1.9] text-pretty text-navy/70">
-              통역부터 계약서 검토, 회의록, 해외 출장 지원까지. 중요한 비즈니스 일정에 필요한
-              업무를 한 곳에서 연결합니다.
+              통역부터 계약서 검토, 회의록, 해외 출장 지원까지. 중요한 비즈니스 일정에 필요한 업무를
+              한 곳에서 연결합니다.
             </p>
           </Reveal>
 
@@ -60,6 +60,14 @@ export default function Hero() {
                   variant="outline"
                   track="hero-phone"
                   className="w-full sm:w-auto"
+                />
+                <CallButton
+                  phone={contactInfo.phone}
+                  kind="sms"
+                  label="문자 상담"
+                  variant="outline"
+                  track="hero-sms"
+                  className="w-full sm:hidden"
                 />
               </div>
             ) : null}
