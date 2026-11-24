@@ -1,10 +1,11 @@
 import Link from 'next/link';
+import CallButton from './ui/CallButton';
 import Cta from './ui/Button';
 import Reveal from './ui/Reveal';
 import SectionHeading from './ui/SectionHeading';
 import type { CityPage as CityPageData } from '@/data/city-pages';
 import { countries } from '@/data/seo-pages';
-import { site } from '@/data/site';
+import { contactInfo, site } from '@/data/site';
 
 /**
  * 도시별 현지 통역 페이지 템플릿.
@@ -225,6 +226,12 @@ export default function CityPage({ page }: { page: CityPageData }) {
             <Cta href="/global" variant="invertOutline" track={`city-${page.slug}-global`}>
               해외 통역 서비스 보기
             </Cta>
+            <CallButton
+              phone={contactInfo.phone}
+              label="전화 상담"
+              variant="invertOutline"
+              track={`city-${page.slug}-phone`}
+            />
           </div>
         </div>
       </section>

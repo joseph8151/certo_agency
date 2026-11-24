@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { telHref } from '@/lib/phone';
+import { PhoneIcon } from './ui/CallButton';
 import { businessInfo, contactInfo, footerNavigation, hasPublicContact, site } from '@/data/site';
 
 export default function Footer() {
@@ -76,12 +78,18 @@ export default function Footer() {
                 {contactInfo.phone ? (
                   <li>
                     <a
-                      href={`tel:${contactInfo.phone.replace(/[^0-9+]/g, '')}`}
+                      href={telHref(contactInfo.phone)}
                       data-cta="footer-phone"
-                      className="link-underline"
+                      className="inline-flex items-center gap-2 text-[1.0625rem] font-semibold tabular-nums text-navy transition-colors hover:text-brand"
                     >
+                      <PhoneIcon />
                       {contactInfo.phone}
                     </a>
+                    {contactInfo.phoneHours ? (
+                      <span className="mt-1 block text-[0.8125rem] text-navy/60">
+                        {contactInfo.phoneHours}
+                      </span>
+                    ) : null}
                   </li>
                 ) : null}
                 {contactInfo.address ? (

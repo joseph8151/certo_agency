@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import EnContactForm from '@/components/en/EnContactForm';
+import CallButton from '@/components/ui/CallButton';
 import Reveal from '@/components/ui/Reveal';
 import { enContact } from '@/data/en/site';
 
@@ -27,6 +28,18 @@ export default function ContactPage() {
                   reply with a quote.
                 </p>
               </Reveal>
+              <div className="mt-10 border border-brand/25 bg-ivory-light p-6">
+                <p className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
+                  Prefer to call?
+                </p>
+                <CallButton
+                  phone={enContact.phone}
+                  label="Call us"
+                  hours={enContact.hours}
+                  track="en-contact-phone"
+                  className="mt-4 w-full"
+                />
+              </div>
               <dl className="mt-10 space-y-6 border-t border-line pt-8 text-[0.9375rem] text-navy/80">
                 <div>
                   <dt className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
@@ -36,19 +49,6 @@ export default function ContactPage() {
                     <a href={`mailto:${enContact.email}`} className="link-underline">
                       {enContact.email}
                     </a>
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
-                    Phone
-                  </dt>
-                  <dd className="mt-2">
-                    <a href={`tel:${enContact.phone.replace(/[^0-9+]/g, '')}`} className="link-underline">
-                      {enContact.phone}
-                    </a>
-                    <span className="mt-1 block text-[0.8125rem] text-navy/60">
-                      {enContact.hours}
-                    </span>
                   </dd>
                 </div>
                 <div>

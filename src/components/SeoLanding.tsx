@@ -1,9 +1,10 @@
 import Link from 'next/link';
+import CallButton from './ui/CallButton';
 import Cta from './ui/Button';
 import Reveal from './ui/Reveal';
 import SectionHeading from './ui/SectionHeading';
 import type { SeoPageData, SeoUi } from '@/data/seo-pages';
-import { site } from '@/data/site';
+import { contactInfo, site } from '@/data/site';
 
 /**
  * 언어별 · 국가별 검색 랜딩 페이지 템플릿.
@@ -337,6 +338,12 @@ export default function SeoLanding({ page }: { page: SeoPageData }) {
                 {ui.ctaSecondary.label}
               </Cta>
             ) : null}
+            <CallButton
+              phone={contactInfo.phone}
+              label={ui.lang === 'en' ? 'Call us' : '전화 상담'}
+              variant="invertOutline"
+              track={`${track}-phone`}
+            />
           </div>
         </div>
       </section>

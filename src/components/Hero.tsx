@@ -1,7 +1,9 @@
 import Cta from './ui/Button';
 import Figure from './ui/Figure';
 import Reveal from './ui/Reveal';
+import CallButton from './ui/CallButton';
 import { images } from '@/data/images';
+import { contactInfo } from '@/data/site';
 
 export default function Hero() {
   return (
@@ -49,6 +51,18 @@ export default function Hero() {
                 견적 문의하기
               </Cta>
             </div>
+            {contactInfo.phone ? (
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+                <CallButton
+                  phone={contactInfo.phone}
+                  label="전화 상담"
+                  hours={contactInfo.phoneHours}
+                  variant="outline"
+                  track="hero-phone"
+                  className="w-full sm:w-auto"
+                />
+              </div>
+            ) : null}
           </Reveal>
 
           <Reveal delay={340}>

@@ -6,7 +6,8 @@ import Figure from '@/components/ui/Figure';
 import Reveal from '@/components/ui/Reveal';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { enPages, enPath } from '@/data/en/pages';
-import { enPricing, enPricingNotes, enSite } from '@/data/en/site';
+import CallButton from '@/components/ui/CallButton';
+import { enContact, enPricing, enPricingNotes, enSite } from '@/data/en/site';
 import { images } from '@/data/images';
 import { languages } from '@/data/seo-pages';
 
@@ -202,6 +203,16 @@ export default function EnHome() {
                 >
                   See pricing
                 </Cta>
+              </div>
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+                <CallButton
+                  phone={enContact.phone}
+                  label="Call us"
+                  hours={enContact.hours}
+                  variant="outline"
+                  track="en-hero-phone"
+                  className="w-full sm:w-auto"
+                />
               </div>
             </Reveal>
             <Reveal delay={340}>
@@ -534,6 +545,18 @@ export default function EnHome() {
               title={<span id="en-contact">Request a quote</span>}
               lead="Tell us about your visit. We check interpreter availability for your dates and reply with a quote."
             />
+            <div className="mt-10 border border-brand/25 bg-ivory-light p-6">
+              <p className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
+                Prefer to call?
+              </p>
+              <CallButton
+                phone={enContact.phone}
+                label="Call us"
+                hours={enContact.hours}
+                track="en-home-phone"
+                className="mt-4 w-full"
+              />
+            </div>
           </div>
           <div className="lg:col-span-7 lg:col-start-6">
             <EnContactForm source="en-home" />

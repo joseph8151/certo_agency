@@ -1,5 +1,7 @@
 import Cta from './ui/Button';
+import CallButton from './ui/CallButton';
 import Reveal from './ui/Reveal';
+import { contactInfo } from '@/data/site';
 
 export default function FinalCta() {
   return (
@@ -30,6 +32,12 @@ export default function FinalCta() {
             <Cta href="#contact" variant="invertOutline" track="final-cta-business">
               비즈니스 지원 문의하기
             </Cta>
+            <CallButton
+              phone={contactInfo.phone}
+              label="전화 상담"
+              variant="invertOutline"
+              track="final-cta-phone"
+            />
           </div>
         </Reveal>
 

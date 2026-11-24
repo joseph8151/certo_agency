@@ -2,13 +2,14 @@ import Link from 'next/link';
 import { cityPages } from '@/data/city-pages';
 import { countries, languages, regions, topicGroupLabels, topics } from '@/data/seo-pages';
 import type { TopicGroup } from '@/data/topic-data-types';
+import CallButton from './ui/CallButton';
 import Cta from './ui/Button';
 import Figure from './ui/Figure';
 import Reveal from './ui/Reveal';
 import SectionHeading from './ui/SectionHeading';
 import { images } from '@/data/images';
 import type { ServicePage as ServicePageData } from '@/data/services';
-import { site } from '@/data/site';
+import { contactInfo, site } from '@/data/site';
 
 /**
  * 서비스 상세 페이지 템플릿.
@@ -503,10 +504,16 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
             </p>
           </Reveal>
           <Reveal delay={220}>
-            <div className="mt-10 flex justify-center">
+            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
               <Cta href="/#contact" variant="invert" track={`${page.slug}-cta`}>
                 {page.ctaLabel}
               </Cta>
+              <CallButton
+                phone={contactInfo.phone}
+                label="전화 상담"
+                variant="invertOutline"
+                track={`${page.slug}-phone`}
+              />
             </div>
           </Reveal>
         </div>

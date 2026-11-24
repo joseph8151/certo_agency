@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Cormorant_Garamond, Inter } from 'next/font/google';
 import '../../globals.css';
+import StickyCta from '@/components/StickyCta';
 import EnFooter from '@/components/en/EnFooter';
 import EnHeader from '@/components/en/EnHeader';
 import { enContact, enSite } from '@/data/en/site';
@@ -93,6 +94,7 @@ export default function EnRootLayout({ children }: { children: React.ReactNode }
         <EnHeader />
         {children}
         <EnFooter />
+        <StickyCta locale="en" />
         <OrganizationSchema />
       </body>
     </html>

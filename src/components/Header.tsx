@@ -3,7 +3,9 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { cta, navigation, site } from '@/data/site';
+import { contactInfo, cta, navigation, site } from '@/data/site';
+import { telHref } from '@/lib/phone';
+import CallButton, { PhoneIcon } from './ui/CallButton';
 
 export default function Header() {
   const pathname = usePathname();
@@ -87,6 +89,17 @@ export default function Header() {
           >
             English
           </Link>
+          {contactInfo.phone ? (
+            <a
+              href={telHref(contactInfo.phone)}
+              data-cta="header-phone"
+              aria-label={`전화 상담 ${contactInfo.phone}`}
+              className="hidden items-center gap-2 rounded-xs border border-brand/35 px-4 py-[0.6rem] text-[0.8125rem] font-semibold tabular-nums tracking-wide text-brand-deep transition-colors duration-300 hover:border-brand hover:bg-brand/5 md:inline-flex"
+            >
+              <PhoneIcon />
+              {contactInfo.phone}
+            </a>
+          ) : null}
           <Link
             href={cta.href}
             data-cta="header-primary"
@@ -94,6 +107,17 @@ export default function Header() {
           >
             {cta.primary}
           </Link>
+
+          {/* 모바일 — 헤더에서 바로 전화 */}
+          {contactInfo.phone ? (
+            <CallButton
+              phone={contactInfo.phone}
+              variant="icon"
+              track="header-phone-mobile"
+              ariaLabel={`전화 상담 ${contactInfo.phone}`}
+              className="md:hidden"
+            />
+          ) : null}
 
           {/* 햄버거 */}
           <button
@@ -141,11 +165,22 @@ export default function Header() {
             </Link>
           ))}
 
+          {contactInfo.phone ? (
+            <CallButton
+              phone={contactInfo.phone}
+              label="전화 상담"
+              hours={contactInfo.phoneHours}
+              variant="outline"
+              track="mobile-menu-phone"
+              className="mt-8 w-full py-5"
+            />
+          ) : null}
+
           <Link
             href={cta.href}
             data-cta="mobile-menu-primary"
             onClick={() => setOpen(false)}
-            className="mt-8 rounded-xs bg-brand-deep px-6 py-5 text-center text-base font-medium text-white"
+            className="mt-3 rounded-xs bg-brand-deep px-6 py-5 text-center text-base font-medium text-white"
           >
             {cta.primary}
           </Link>

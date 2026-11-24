@@ -1,6 +1,7 @@
 'use client';
 
 import { useId, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
+import CallButton from './ui/CallButton';
 import Reveal from './ui/Reveal';
 import SectionHeading from './ui/SectionHeading';
 import {
@@ -125,8 +126,23 @@ export default function Contact() {
           />
 
           <Reveal delay={160}>
+            {contactInfo.phone ? (
+              <div className="mt-10 border border-brand/25 bg-ivory-light p-6">
+                <p className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
+                  급할 땐 전화로
+                </p>
+                <CallButton
+                  phone={contactInfo.phone}
+                  label="전화 상담"
+                  hours={contactInfo.phoneHours}
+                  track="contact-phone"
+                  className="mt-4 w-full"
+                />
+              </div>
+            ) : null}
+
             {hasPublicContact ? (
-              <dl className="mt-12 space-y-6 border-t border-line pt-8">
+              <dl className="mt-10 space-y-6 border-t border-line pt-8">
                 {contactInfo.email ? (
                   <div>
                     <dt className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
@@ -140,28 +156,6 @@ export default function Contact() {
                       >
                         {contactInfo.email}
                       </a>
-                    </dd>
-                  </div>
-                ) : null}
-
-                {contactInfo.phone ? (
-                  <div>
-                    <dt className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
-                      전화
-                    </dt>
-                    <dd className="mt-2">
-                      <a
-                        href={`tel:${contactInfo.phone.replace(/[^0-9+]/g, '')}`}
-                        data-cta="contact-phone"
-                        className="link-underline text-[0.9375rem] text-navy"
-                      >
-                        {contactInfo.phone}
-                      </a>
-                      {contactInfo.phoneHours ? (
-                        <span className="mt-1 block text-[0.8125rem] text-navy/65">
-                          {contactInfo.phoneHours}
-                        </span>
-                      ) : null}
                     </dd>
                   </div>
                 ) : null}

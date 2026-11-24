@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { telHref } from '@/lib/phone';
+import { PhoneIcon } from '@/components/ui/CallButton';
 import { enContact, enNavigation, enSite } from '@/data/en/site';
 
 export default function EnFooter() {
@@ -62,10 +64,11 @@ export default function EnFooter() {
               </li>
               <li>
                 <a
-                  href={`tel:${enContact.phone.replace(/[^0-9+]/g, '')}`}
+                  href={telHref(enContact.phone)}
                   data-cta="en-footer-phone"
-                  className="link-underline"
+                  className="inline-flex items-center gap-2 text-[1.0625rem] font-semibold tabular-nums text-navy transition-colors hover:text-brand"
                 >
+                  <PhoneIcon />
                   {enContact.phone}
                 </a>
                 <span className="mt-1 block text-[0.8125rem] text-navy/60">{enContact.hours}</span>

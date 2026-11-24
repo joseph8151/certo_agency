@@ -2,7 +2,9 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { enCta, enNavigation } from '@/data/en/site';
+import { enContact, enCta, enNavigation } from '@/data/en/site';
+import { telHref } from '@/lib/phone';
+import CallButton, { PhoneIcon } from '@/components/ui/CallButton';
 
 export default function EnHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -74,6 +76,15 @@ export default function EnHeader() {
           >
             한국어
           </Link>
+          <a
+            href={telHref(enContact.phone)}
+            data-cta="en-header-phone"
+            aria-label={`Call us ${enContact.phone}`}
+            className="hidden items-center gap-2 rounded-xs border border-brand/35 px-4 py-[0.6rem] text-[0.8125rem] font-semibold tabular-nums tracking-wide text-brand-deep transition-colors duration-300 hover:border-brand hover:bg-brand/5 md:inline-flex"
+          >
+            <PhoneIcon />
+            {enContact.phone}
+          </a>
           <Link
             href={enCta.href}
             data-cta="en-header-primary"
@@ -81,6 +92,14 @@ export default function EnHeader() {
           >
             {enCta.label}
           </Link>
+
+          <CallButton
+            phone={enContact.phone}
+            variant="icon"
+            track="en-header-phone-mobile"
+            ariaLabel={`Call us ${enContact.phone}`}
+            className="md:hidden"
+          />
 
           <button
             type="button"
@@ -122,11 +141,19 @@ export default function EnHeader() {
               </span>
             </Link>
           ))}
+          <CallButton
+            phone={enContact.phone}
+            label="Call us"
+            hours={enContact.hours}
+            variant="outline"
+            track="en-mobile-menu-phone"
+            className="mt-8 w-full py-5"
+          />
           <Link
             href={enCta.href}
             data-cta="en-mobile-menu-primary"
             onClick={() => setOpen(false)}
-            className="mt-8 rounded-xs bg-brand-deep px-6 py-5 text-center text-base font-medium text-white"
+            className="mt-3 rounded-xs bg-brand-deep px-6 py-5 text-center text-base font-medium text-white"
           >
             {enCta.label}
           </Link>
