@@ -57,8 +57,8 @@ export type ContactInfo = {
 
 export const contactInfo: ContactInfo = {
   email: 'certo@certo.kr',
-  phone: '',
-  phoneHours: '',
+  phone: '010-7748-4644',
+  phoneHours: '평일 09:00 – 18:00',
   kakao: '',
   address: '',
   addressDetail: '',

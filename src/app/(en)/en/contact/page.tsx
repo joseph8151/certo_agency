@@ -40,6 +40,19 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <dt className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
+                    Phone
+                  </dt>
+                  <dd className="mt-2">
+                    <a href={`tel:${enContact.phone.replace(/[^0-9+]/g, '')}`} className="link-underline">
+                      {enContact.phone}
+                    </a>
+                    <span className="mt-1 block text-[0.8125rem] text-navy/60">
+                      {enContact.hours}
+                    </span>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-[0.75rem] font-semibold tracking-[0.04em] text-brand">
                     Office
                   </dt>
                   <dd className="mt-2 leading-relaxed">{enContact.address}</dd>
